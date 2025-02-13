@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<title>SRA | Online Payment</title>
+	<title>SRA | Online Application</title>
 	<link href="{{asset('template/inspinia/css/bootstrap.min.css')}}" rel="stylesheet">
 	<link href="{{asset('template/inspinia/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
 	<link href="{{asset('template/inspinia/css/animate.css')}}" rel="stylesheet">
@@ -174,8 +174,8 @@
 		<div class="carousel-item active">
 			<div class="container">
 				<div class="carousel-caption blank">
-					<h1>S R A<br/> Online Payment System</h1>
-					<p>Specifically designed for Regulatory Transactions.</p>
+					<h1>S R A<br/> Online Application</h1>
+{{--					<p>Specifically designed for Regulatory Transactions.</p>--}}
 				</div>
 			</div>
 			<!-- Set background for slide in css -->

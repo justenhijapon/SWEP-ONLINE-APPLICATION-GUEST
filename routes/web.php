@@ -52,8 +52,14 @@
         Route::resource('std/premix','PremixController',[
             'as' => 'std'
         ]);
+        Route::resource('ImportedCommodities','User\ImportedCommoditiesController');
+
 	});
-	Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.verify_email');
+
+
+
+
+Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.verify_email');
 	Route::get('/sendmail', 'User\UserController@sendEmailVerification');
 
 	Route::group(['prefix'=>'admin', 'as' => 'admin.', 'middleware' => ['check.admin_route']], function () {
@@ -90,6 +96,11 @@
     Route::get('printTransactionReport', 'PaymentController@printTransactionReport')->name('printTransactionReport');
     Route::get('printTransactionReportDaily', 'PaymentController@printTransactionReportDaily')->name('printTransactionReportDaily');
     Route::get('printTransactionReportClient', 'PaymentController@printTransactionReportClient')->name('printTransactionReportClient');
+
+//Route::get('/printTransactionIc/{slug}', 'User\ImportedCommoditiesController@printTransactionIc')->name('printTransactionIc');
+    Route::get('printTransactionIc', 'User\ImportedCommoditiesController@printTransactionIc')->name('printTransactionIc');
+
+
 
 	Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 	Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');

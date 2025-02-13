@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>SWEP | Online Payment</title>
+  <link rel="shortcut icon" href="{{ asset('favicon.PNG') }}">
+
+  <title>SWEP | Online Application</title>
   @include('layouts.css-plugins')
 </head>
 <body>
@@ -22,7 +24,7 @@
           MIS - <strong>VISAYAS</strong>
         </div>
         <div>
-          <strong>Copyright</strong> Sugar Regulatory Administration &copy; 2021
+          <strong>Copyright</strong> Sugar Regulatory Administration &copy; 2025
         </div>
       </div>
     </div>

@@ -29,6 +29,7 @@
 <!-- Sparkline -->
 <script src="{{ asset('template/inspinia/js/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
 
+
 <!-- Sparkline demo data  -->
 <script src="{{ asset('template/inspinia/js/demo/sparkline-demo.js') }}"></script>
 

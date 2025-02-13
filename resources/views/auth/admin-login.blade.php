@@ -4,7 +4,7 @@
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SRA Online Payment</title>
+  <title>SRA Online Application</title>
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -41,7 +41,7 @@
 
 	<div class="login-box">
 	  <div class="login-logo">
-	    <span style="font-size: 35px;">SWEP RD ONLINE PAYMENT ADMIN LOGIN FORM</span>
+	    <span style="font-size: 35px;">SWEP-ONLINE APPLICATION ADMIN LOGIN FORM</span>
 	  </div>
 
 		@if(Session::has('AUTH_AUTHENTICATED'))

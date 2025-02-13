@@ -186,6 +186,65 @@ class __html{
 
     }
 
+    public static function token_header(){
+        $token = '"csrf-token"';
+        return "'X-CSRF-TOKEN': $('meta[name=".$token."]').attr('content'),";
+    }
+
+    public static function timestamp($obj, $class){
+
+        if(!empty($obj->updater)){
+            $updated_by  = $obj->updater->lastname.', '.Helper::acronym($obj->updater->firstname);
+            $updated_by_time = date("M. d, Y | h:i A",strtotime($obj->updated_at));
+        }else{
+            $updated_by  = 'N/A';
+            $updated_by_time = 'N/A';
+        }
+
+        if(!empty($obj->creator)){
+            $created_by  = $obj->creator->lastname.', '.Helper::acronym($obj->creator->firstname);
+            $created_by_time = date("M. d, Y | h:i A",strtotime($obj->updated_at));
+        }else{
+            $created_by  = 'N/A';
+            $created_by_time = 'N/A';
+        }
+
+        return '<div class="col-md-'.$class.'" style="font-size: 14px">
+			<div class="stamps">
+				<small class="no-margin">
+					Encoded by: 
+					<b>
+						'.$created_by.'
+					</b> 
+				</small>
+				<br>
+				<small class="no-margin">
+					Timestamp: 
+					<b>
+						'.date("M. d, Y | h:i A",strtotime($created_by_time)).'
+					</b> 
+				</small>
+			</div>
+		</div>
+		<div class="col-md-'.$class.'"  style="font-size: 14px">
+
+			<div class="stamps">
+				<small class="no-margin">
+					Last updated by: 
+					<b>
+						'.$updated_by.'
+					</b> 
+				</small>
+				<br>
+				<small class="no-margin">
+					Timestamp: 
+					<b>
+						'.$updated_by_time.'
+					</b> 
+				</small>
+			</div>
+		</div>';
+    }
 
 
     public static function filter_close($id){
@@ -218,8 +277,6 @@ class __html{
        return Input::except('q', 'page', 'sort', 'direction') ? '' : 'collapsed-box';
 
     }
-
-
 
     public static function previous_route(){
 
