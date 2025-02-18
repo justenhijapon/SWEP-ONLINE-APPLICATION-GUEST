@@ -42,7 +42,8 @@
 
 <script type="text/javascript" src="{{ asset('template/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 
-<script type="text/javascript" src="{{asset('template/plugins/jquery-confirm/dist/jquery-confirm.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('template/plugins/jquery-confirm/jquery-confirm.js')}}"></script>
+<script type="text/javascript" src="{{asset('template/plugins/jquery-confirm/jquery-confirm.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/plugins/typeahead/js/bootstrap-typeahead.min.js')}}"></script>
 
 <!-- ChartJS -->

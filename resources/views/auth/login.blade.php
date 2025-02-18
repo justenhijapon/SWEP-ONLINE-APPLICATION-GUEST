@@ -14,15 +14,25 @@
 	<link href="{{asset('template/inspinia/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 	<link href="{{asset('template/inspinia/css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 	<style>
+		{{--.landing-page .header-back.one {--}}
+		{{--	background: url('{{asset('template/inspinia/img/landing/header_one_1_logo.png')}}') 50% 0 no-repeat;--}}
+		{{--}--}}
+		{{--.landing-page .header-back.two {--}}
+		{{--	background: url('{{asset('template/inspinia/img/landing/header_one_1_logo.png')}}') 50% 0 no-repeat;--}}
+		{{--}--}}
 		.landing-page .header-back.one {
-			background: url('{{asset('template/inspinia/img/landing/header_one_1_logo.png')}}') 50% 0 no-repeat;
+			background: url('{{asset('images/Banner/OnlineApplication-Banner.gif')}}') 50% 0 no-repeat;
 		}
 		.landing-page .header-back.two {
-			background: url('{{asset('template/inspinia/img/landing/header_one_1_logo.png')}}') 50% 0 no-repeat;
+			background: url('{{asset('images/Banner/OnlineApplication-Banner.gif')}}') 50% 0 no-repeat;
 		}
+
+		{{--.landing-page .header-back.two {--}}
+		{{--	background: url('{{asset('images/Banner/OnlineApplication-Banner.png')}}') 50% 0 no-repeat;--}}
+		{{--}--}}
 	</style>
 </head>
-<body id="page-top" class="landing-page no-skin-config">
+<body id="home" class="landing-page no-skin-config">
 <div class="navbar-wrapper">
 	<nav class="navbar navbar-default navbar-fixed-top navbar-expand-md" role="navigation">
 		<div class="container">
@@ -34,7 +44,7 @@
 			</div>
 			<div class="collapse navbar-collapse justify-content-end" id="navbar">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a class="nav-link page-scroll" href="#page-top">Home</a></li>
+					<li><a class="nav-link page-scroll" href="#home">Home</a></li>
 					<li><a data-toggle="modal" data-target="#verifyTransactionModal">Verify</a></li>
 					<li><a class="nav-link page-scroll" href="#contact">Contact</a></li>
 					<li><a data-toggle="modal" href="#modal-form-pre">Pre-Registration</a></li>
@@ -63,15 +73,15 @@
 							</div>
 							<div class="panel-body">
 								<div class="row">
-										{!! __form::a_textbox( 6,'Username','username', 'text', 'Username','', 'required')!!}
-										{!! __form::a_textbox( 6,'Password','password', 'text', 'Password','', 'required')!!}
+{{--										{!! __form::a_textbox( 6,'Username','username', 'text', 'Username','', 'required')!!}--}}
+									{!! __form::a_textbox( 6,'Email Address','email', 'text', 'Email Address','', 'required')!!}
+									{!! __form::a_textbox( 6,'Password','password', 'text', 'Password','', 'required')!!}
 										{!! __form::a_textbox( 4,'Last Name','lastName', 'text', 'Last Name','', 'required')!!}
 										{!! __form::a_textbox( 4,'First Name','firstName', 'text', 'First Name','', 'required')!!}
 										{!! __form::a_textbox( 4,'Middle Name','middleName', 'text', 'Middle Name','', '')!!}
 										{!! __form::a_select(4, 'Gender', 'gender', ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'], '', 'required') !!}
 										{!! __form::a_textbox( 4,'Birthday','birthday', 'date', 'Birthday','', 'required')!!}
 										{!! __form::a_textbox( 4,'Phone Number','phoneNumber', 'text', 'Phone Number','', 'required')!!}
-										{!! __form::a_textbox( 6,'Email Address','email', 'text', 'Email Address','', 'required')!!}
 									<div class="col-sm-12 m-t-lg">
 										<div class="panel panel-primary">
 											<div class="panel-heading">
@@ -127,7 +137,7 @@
 				<div class="row">
 					<div class="col-sm-6 b-r">
 						<h3 class="m-t-none m-b">Sign in</h3>
-						<p>SRA | ONLINE PAYMENT</p>
+						<p>SRA | ONLINE APPLICATION</p>
 						<form class="m-t" method="POST" action="{{ route('auth.login') }}">
 							@csrf
 							<div class="form-group">
@@ -174,7 +184,7 @@
 		<div class="carousel-item active">
 			<div class="container">
 				<div class="carousel-caption blank">
-					<h1>S R A<br/> Online Application</h1>
+{{--					<h1>S R A<br/> Online Application</h1>--}}
 {{--					<p>Specifically designed for Regulatory Transactions.</p>--}}
 				</div>
 			</div>
@@ -183,15 +193,15 @@
 		</div>
 		<div class="carousel-item">
 			<div class="container">
-				<div class="carousel-caption">
-					<h1>Integrity<br/>
-						Innovativeness<br/>
-						Competence<br/>
-						Professionalism</br>
-						Accountability</h1>
-				</div>
+{{--				<div class="carousel-caption">--}}
+{{--					<h1>Integrity<br/>--}}
+{{--						Innovativeness<br/>--}}
+{{--						Competence<br/>--}}
+{{--						Professionalism</br>--}}
+{{--						Accountability</h1>--}}
+{{--				</div>--}}
 			<!--<div class="carousel-image wow zoomIn">
-					<img src="{{asset('template/inspinia/img/landing/laptop_1.png')}}" alt="laptop"/>
+{{--					<img src="{{asset('template/inspinia/img/landing/laptop_1.png')}}" alt="laptop"/>/--}}
 				</div>-->
 			</div>
 			<!-- Set background for slide in css -->
@@ -275,7 +285,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12 text-center m-t-lg m-b-lg">
-				<p><strong>&copy; 2021 Sugar Regulatory Administration</strong></div>
+				<p><strong>&copy; 2025 Sugar Regulatory Administration</strong></div>
 		</div>
 	</div>
 </section>

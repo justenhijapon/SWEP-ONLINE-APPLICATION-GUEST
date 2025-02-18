@@ -128,9 +128,9 @@
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4 style="color: darkslategray">REQUIRED DOCUMENTS</h4>
+                                    <h4 style="color: darkslategray">REQUIRED ATTACHED DOCUMENTS</h4>
                                     <ul>
-                                        <li><p class="text-bold">Application Form</p></li>
+                                        <li><p class="text-bold">Application Form (Notarized)</p></li>
                                         <li><p class="text-bold">Affidavit</p></li>
                                         <li><p class="text-bold">Bill of Landing</p></li>
                                         <li><p class="text-bold">Commercial Invoice</p></li>
@@ -175,7 +175,8 @@
 
         $("#importedCommoditiesForm").submit(function(e){
             e.preventDefault();
-             form = $(this);
+             let form = $(this);
+             // var formData = new FormData(this)
             formData = form.serialize();
             $.ajax({
                 url : "{{route('dashboard.ImportedCommodities.store')}}",
@@ -185,6 +186,7 @@
                     {!! __html::token_header() !!}
                 },
                 success: function (res) {
+                    $('form').trigger("reset");
                     $('.content-wrapper').html(res);
                     swal({
                         title: 'Success!',
@@ -205,38 +207,45 @@
             })
         })
 
-        {{--$("#bioEnergyForm").submit(function (e) {--}}
+        {{--$("#importedCommoditiesForm").submit(function(e) {--}}
         {{--    e.preventDefault();--}}
-        {{--    let form = $(this);--}}
-        {{--    let formData = new FormData(this);--}}
-        {{--    loading_btn(form);--}}
+        {{--    form = $(this);--}}
+        {{--    formData = form.serialize();--}}
         {{--    $.ajax({--}}
         {{--        url: "{{route('dashboard.ImportedCommodities.store')}}",--}}
+        {{--        data: formData,--}}
         {{--        type: 'POST',--}}
-        //         data: new FormData(this),
-        //         processData: false,
-        //         contentType: false,
         {{--        headers: {--}}
         {{--            {!! __html::token_header() !!}--}}
         {{--        },--}}
-        {{--        success: function (res) {--}}
-        {{--            $('form').trigger("reset");--}}
-        {{--            $('#btnBioEnergySubmit').removeAttr("disabled");--}}
-        {{--            $('#btnBioEnergySubmit').prop("disabled", false);--}}
-        {{--            $('#btnBioEnergySubmit').html('<i class="fa fa-save"></i> Save');--}}
-        //             Swal.fire({
+        //         success: function(res) {
+        //             swal({
         //                 title: 'Success!',
-        //                 text: 'New Application successfully added!',
+        //                 text: res.message,
         //                 icon: 'success',
         //                 confirmButtonText: 'Done'
-        //             })
-        {{--        },--}}
-        {{--        error: function (res) {--}}
-        {{--            errored(form,res)--}}
+        //             }).then(() => {
+        //                 setTimeout(() => {
+        //                     window.location.replace(res.redirect);
+        //                 }, 1000); // Redirect to index page
+        //             });
+        //         },
+        {{--        error: function(res) {--}}
+        {{--            swal({--}}
+        {{--                title: "Error!",--}}
+        {{--                text: res.responseJSON.message,--}}
+        {{--                icon: "error"--}}
+        {{--            });--}}
+        {{--            console.log(res);--}}
+        {{--            errored(form, res);--}}
         {{--        }--}}
+        {{--    });--}}
+        {{--});--}}
 
-        {{--    })--}}
-        {{--})--}}
+
+
+
+
 
 
         $("#img_url").fileinput({

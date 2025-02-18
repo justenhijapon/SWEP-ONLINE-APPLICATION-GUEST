@@ -176,6 +176,7 @@ function notify(message, type){
     );
 }
 
+
 function notify_saved(){
     $.notify(
         {
@@ -372,4 +373,30 @@ function errored_modal(button,response){
     $(modal_id+" .loader").fadeOut(function(){
         $(modal_id+" .modal-content").html($(".modal-404").html());
     });
+}
+
+
+
+
+
+function populate_modal2(btn, response){
+    target_modal = btn.attr('data-target');
+    $(target_modal +" #modal_loader").fadeOut(function() {
+        $(target_modal +" .modal-content").html(response);
+        $('.datepicker').each(function(){
+            $(this).datepicker({
+                autoclose: true,
+                dateFormat: "mm/dd/yy",
+                orientation: "bottom"
+            });
+        });
+        $("ol.sortable").sortable();
+    });
+}
+
+function populate_modal2_error(response){
+    if(response.status == 503){
+        notify('Error: '+ response.responseJSON.message, 'danger');
+    }
+    alert(response.responseJSON.message);
 }

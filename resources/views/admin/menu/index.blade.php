@@ -239,7 +239,7 @@
 	//index of functions -- .functions_index_btn click
 	$('body').on('click','.functions_index_btn', function(){
 		b = $(this);//button
-		m = b.attr('data-target');//modal
+		m = b.attr('data-target');//modaledit_menu_btn
 		$(m+" .modal-content").html(modal_loader);
 		slug = b.attr('data');
 		uri = "{{route('admin.functions.index',['menu_slug'=> 'slugg'])}}";

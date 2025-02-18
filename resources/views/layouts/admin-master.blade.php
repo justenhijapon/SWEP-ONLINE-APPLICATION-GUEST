@@ -21,7 +21,7 @@
       </div>
       <div class="footer">
         <div class="float-right">
-          MIS - <strong>VISAYAS</strong>
+{{--          MIS - <strong>VISAYAS</strong>--}}
         </div>
         <div>
           <strong>Copyright</strong> Sugar Regulatory Administration &copy; 2025

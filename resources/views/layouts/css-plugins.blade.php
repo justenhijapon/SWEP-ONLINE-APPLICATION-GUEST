@@ -22,7 +22,7 @@
 {{-- Datatables--}}
 <link rel="stylesheet" href="{{asset('template/plugins/DataTables-Bootstrap4/datatables.min.css')}}">
 {{-- JQUERY CONFIRM--}}
-<link rel="stylesheet" href="{{asset('template/plugins/jquery-confirm/dist/jquery-confirm.min.css')}}">
+<link rel="stylesheet" href="{{asset('template/plugins/jquery-confirm/jquery-confirm.min.css')}}">
 {{-- FILE INPUT--}}
 <link href="{{asset('template/plugins/bootstrap-fileinput/css/fileinput.min.css')}}" media="all" rel="stylesheet" type="text/css" />
 

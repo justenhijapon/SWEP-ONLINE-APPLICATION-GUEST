@@ -98,6 +98,9 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
     Route::get('printTransactionReportClient', 'PaymentController@printTransactionReportClient')->name('printTransactionReportClient');
 
 //Route::get('/printTransactionIc/{slug}', 'User\ImportedCommoditiesController@printTransactionIc')->name('printTransactionIc');
+
+    Route::post('/ImportedCommodities/attachment/','User\ImportedCommoditiesController@edit')->name('ImportedCommodities.attachment');
+    Route::get('ImportedCommodities/attachment', 'User\ImportedCommoditiesController@attachment')->name('ImportedCommodities.attachment');
     Route::get('printTransactionIc', 'User\ImportedCommoditiesController@printTransactionIc')->name('printTransactionIc');
 
 
@@ -105,7 +108,12 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
 	Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 	Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 
-	// Route::group(['prefix' => 'shared', 'as' => 'shared.'], function(){
+    Route::get('view_file/{tableName}/{slug}','User\HomeController@viewFile')->name('view_file');
+    Route::get('view_file_custom/{tableName}/{slug}/{columnName}','User\HomeController@viewFileCustom')->name('view_file_custom');
+
+
+
+// Route::group(['prefix' => 'shared', 'as' => 'shared.'], function(){
 		
 	// });
 

@@ -45,9 +45,10 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => 'C:\swep_rd_storage\uploaded_documents',
+            'root' => env('STORAGE_LOCATION'),
+//            'root' => 'D:\local_swep_storage\online_application_storage',
         ],
-        
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -28,10 +28,22 @@ class ImportedCommoditiesController extends Controller
                     $destroy_route = "'".route("dashboard.ImportedCommodities.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
                     return '<div class="btn-group" role="group" aria-label="Basic example" style="height: 45%">
-                                        <button type="button" class="btn btn-success btn-lg btn-outline print_btn" data="'.$data->slug.'" id="printBtn'.$data->slug.'"><i class="fa fa-print"></i> Print</button>
-                                        <button type="button" class="btn btn-secondary btn-lg btn-outline view_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#view_modal">View</button>
+                                        <button type="button" class="btn btn-primary btn-lg btn-outline view_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#view_modal">Print Preview</button>
+                                        <button type="button" class="btn btn-secondary btn-lg btn-outline edit_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#edit_modal" title="Attachment" data-placement="top">Attachment</button>
+                                        
+                                        
+
+                                </a> 
+                                </button>
                                     </div>';
                 })
+//                <button type="button" class="btn btn-success btn-lg btn-outline print_btn" data="'.$data->slug.'" id="printBtn'.$data->slug.'"><i class="fa fa-print"></i> Print</button>
+
+//                <a type="button" href="'. route('dashboard.ImportedCommodities.edit', $data->slug).'"  data="'.$data->slug.'" class="btn btn-default btn-sm edit_roadMap_btn"  data-toggle="tooltip" data-original-title="Edit" data-placement="top">
+//                                        <i class="fa fa-edit"></i>
+
+                /*print_modal
+                 * <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">*/
 
 //                <a  href="'. route('dashboard.ImportedCommodities.show', $data->slug).'"    data="'.$data->slug.'" class="btn btn-default btn-sm view_my_btn" data-toggle="modal" data-target="#view_my_modal" title="" data-placement="top" data-original-title="View">
 //                                    <i class="fa fa-eye"></i>
@@ -94,23 +106,8 @@ class ImportedCommoditiesController extends Controller
         $ic->email = $request->email;
         $ic->address = $request->address;
         $ic->application_type = 'Clearance for Imported Commodities';
-
         $ic->user_created = Auth::guard('web')->user()->slug;
         $ic->user_updated = Auth::guard('web')->user()->slug;
-
-
-        // Handle file uploads
-//        $ic->bill_landing_path = $this->handleFileUpload($request, 'bill_landing_path');
-//        $ic->commercial_invoice_path = $this->handleFileUpload($request, 'commercial_invoice_path');
-//        $ic->packing_list_path = $this->handleFileUpload($request, 'packing_list_path');
-//        $ic->cert_origin = $this->handleFileUpload($request, 'cert_origin');
-//        $ic->cert_analysis_path = $this->handleFileUpload($request, 'cert_analysis_path');
-//        $ic->notarized_gmo_non_gmo_path = $this->handleFileUpload($request, 'notarized_gmo_non_gmo_path');
-//        $ic->important_declaration_path = $this->handleFileUpload($request, 'important_declaration_path');
-//        $ic->application_form_path = $this->handleFileUpload($request, 'application_form_path');
-//        $ic->affidavit_path = $this->handleFileUpload($request, 'affidavit_path');
-
-
         $ic->created_at = Carbon::now();
         $ic->updated_at = Carbon::now();
         $ic->date = Carbon::now()->format('Y-m-d H:i:s');
@@ -120,15 +117,27 @@ class ImportedCommoditiesController extends Controller
     }
 
 
-    // Helper method to handle file uploads
-    private function handleFileUpload($request, $fileInputName)
-    {
-        if ($request->hasFile($fileInputName)) {
-            $file = $request->file($fileInputName);
-            return $file->storeAs('imported_commodities', time() . '_' . $file->getClientOriginalName(), 'public');
-        }
-        return null; // Return null if no file was uploaded for this input
+
+    public function attachmentStore(ImportedCommoditiesFormRequest $request){
+        $ic = new ImportedCommodities();
+
+         // Handle file uploads
+        $ic->application_form_path = $this->handleFileUpload($request, 'application_form_path');
+        $ic->affidavit_path = $this->handleFileUpload($request, 'affidavit_path');
+       $ic->bill_landing_path = $this->handleFileUpload($request, 'bill_landing_path');
+       $ic->commercial_invoice_path = $this->handleFileUpload($request, 'commercial_invoice_path');
+       $ic->packing_list_path = $this->handleFileUpload($request, 'packing_list_path');
+       $ic->cert_origin_path = $this->handleFileUpload($request, 'cert_origin');
+       $ic->cert_analysis_path = $this->handleFileUpload($request, 'cert_analysis_path');
+       $ic->notarized_gmo_non_gmo_path = $this->handleFileUpload($request, 'notarized_gmo_non_gmo_path');
+       $ic->important_declaration_path = $this->handleFileUpload($request, 'important_declaration_path');
+
     }
+
+
+
+
+
 
 
 
@@ -140,12 +149,22 @@ class ImportedCommoditiesController extends Controller
 //        ]);
 //    }
 
-    public function show(Request $request){
-        $data = ImportedCommodities::query()->where('slug',$request->transactionId)->first();
+//    public function show(Request $request){
+//        $data = ImportedCommodities::query()->where('slug',$request->transactionId)->first();
+//
+//        return view('dashboard.ImportedCommodities.printIC')->with([
+//            'data'=>$data
+//        ]);
+//    }
 
-        return view('dashboard.ImportedCommodities.printIC')->with([
-            'data'=>$data
-        ]);
+    public function show($id){
+        if(Auth::guard('web')->check()) {
+            $data = ImportedCommodities::query()->where('slug', $id)->first();
+
+            return view('dashboard.ImportedCommodities.show')->with([
+                'data' => $data
+            ]);
+        }
     }
 
     public function printTransactionIc(Request $request){
@@ -156,12 +175,56 @@ class ImportedCommoditiesController extends Controller
         ]);
     }
 
-//    public function printTransactionIc($slug)
+
+
+
+    public function edit($slug)
+    {
+        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
+        return view('dashboard.ImportedCommodities.attachment', compact('data'));
+    }
+//    public function edit($slug)
 //    {
 //        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
-//
-//        return view('dashboard.ImportedCommodities.printIC', compact('data'));
+//        return view('dashboard.ImportedCommodities.edit', compact('data'));
 //    }
+
+    public function update(ImportedCommoditiesFormRequest $request, $slug){
+        $data = ImportedCommodities::query()->where('slug', '=', $slug)->first();
+        $data->bill_landing_path = $this->handleFileUpload($request, 'bill_landing_path');
+        $data->commercial_invoice_path = $this->handleFileUpload($request, 'commercial_invoice_path');
+        $data->packing_list_path = $this->handleFileUpload($request, 'packing_list_path');
+        $data->cert_origin = $this->handleFileUpload($request, 'cert_origin');
+        $data->cert_analysis_path = $this->handleFileUpload($request, 'cert_analysis_path');
+        $data->notarized_gmo_non_gmo_path = $this->handleFileUpload($request, 'notarized_gmo_non_gmo_path');
+        $data->important_declaration_path = $this->handleFileUpload($request, 'important_declaration_path');
+        $data->application_form_path = $this->handleFileUpload($request, 'application_form_path');
+        $data->affidavit_path = $this->handleFileUpload($request, 'affidavit_path');
+        $data->update();
+
+        return $data->only('slug');
+    }
+
+
+    // Helper method to handle file uploads
+//    private function handleFileUpload($request, $fileInputName)
+//    {
+//        if ($request->hasFile($fileInputName)) {
+//            $file = $request->file($fileInputName);
+//            return $file->storeAs('imported_commodities', time() . '_' . $file->getClientOriginalName(), 'public');
+//        }
+//        return null; // Return null if no file was uploaded for this input
+//    }
+
+    private function handleFileUpload($request, $fileInputName)
+    {
+        if ($request->hasFile($fileInputName)) {
+            $file = $request->file($fileInputName);
+            return $file->storeAs('imported_commodities', time() . '_' . $file->getClientOriginalName(), 'local');
+        }
+        return null; // Return null if no file was uploaded for this input
+    }
+
 
     public function changeStatus($slug, \Illuminate\Http\Request $request){
         $template = ImportedCommodities::query()->where('slug','=',$slug)->first();

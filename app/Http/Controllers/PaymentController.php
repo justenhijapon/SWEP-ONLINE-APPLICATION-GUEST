@@ -374,6 +374,7 @@ class PaymentController extends Controller
                         )
                     ];
                 }
+
             } else {
                 return [
                     'message' => 'Please attach supporting documents.',
