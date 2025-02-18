@@ -8,6 +8,7 @@ use App\Models\User\ImportedCommodities;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -122,32 +123,19 @@ class ImportedCommoditiesController extends Controller
         $ic = new ImportedCommodities();
 
          // Handle file uploads
-        $ic->application_form_path = $this->handleFileUpload($request, 'application_form_path');
-        $ic->affidavit_path = $this->handleFileUpload($request, 'affidavit_path');
        $ic->bill_landing_path = $this->handleFileUpload($request, 'bill_landing_path');
        $ic->commercial_invoice_path = $this->handleFileUpload($request, 'commercial_invoice_path');
        $ic->packing_list_path = $this->handleFileUpload($request, 'packing_list_path');
-       $ic->cert_origin_path = $this->handleFileUpload($request, 'cert_origin');
+       $ic->cert_origin = $this->handleFileUpload($request, 'cert_origin');
        $ic->cert_analysis_path = $this->handleFileUpload($request, 'cert_analysis_path');
        $ic->notarized_gmo_non_gmo_path = $this->handleFileUpload($request, 'notarized_gmo_non_gmo_path');
        $ic->important_declaration_path = $this->handleFileUpload($request, 'important_declaration_path');
-
+       $ic->application_form_path = $this->handleFileUpload($request, 'application_form_path');
+       $ic->affidavit_path = $this->handleFileUpload($request, 'affidavit_path');
     }
 
 
 
-
-
-
-
-
-//    public function show($slug){
-//        $data = ImportedCommodities::query()->where('slug',$slug)->first();
-//
-//        return view('dashboard.ImportedCommodities.show')->with([
-//            'data'=>$data
-//        ]);
-//    }
 
 //    public function show(Request $request){
 //        $data = ImportedCommodities::query()->where('slug',$request->transactionId)->first();
@@ -189,41 +177,62 @@ class ImportedCommoditiesController extends Controller
 //        return view('dashboard.ImportedCommodities.edit', compact('data'));
 //    }
 
-    public function update(ImportedCommoditiesFormRequest $request, $slug){
-        $data = ImportedCommodities::query()->where('slug', '=', $slug)->first();
-        $data->bill_landing_path = $this->handleFileUpload($request, 'bill_landing_path');
-        $data->commercial_invoice_path = $this->handleFileUpload($request, 'commercial_invoice_path');
-        $data->packing_list_path = $this->handleFileUpload($request, 'packing_list_path');
-        $data->cert_origin = $this->handleFileUpload($request, 'cert_origin');
-        $data->cert_analysis_path = $this->handleFileUpload($request, 'cert_analysis_path');
-        $data->notarized_gmo_non_gmo_path = $this->handleFileUpload($request, 'notarized_gmo_non_gmo_path');
-        $data->important_declaration_path = $this->handleFileUpload($request, 'important_declaration_path');
-        $data->application_form_path = $this->handleFileUpload($request, 'application_form_path');
-        $data->affidavit_path = $this->handleFileUpload($request, 'affidavit_path');
-        $data->update();
 
-        return $data->only('slug');
+
+
+
+    public function update(ImportedCommoditiesFormRequest $request, $slug)
+    {
+        $data = ImportedCommodities::where('slug', $slug)->firstOrFail(); // Use firstOrFail() for safety
+
+        // Only update if a new file is uploaded
+        if ($billLanding = $this->handleFileUpload($request, 'bill_landing_path', $slug)) {
+            $data->bill_landing_path = $billLanding;
+        }
+        if ($invoice = $this->handleFileUpload($request, 'commercial_invoice_path', $slug)) {
+            $data->commercial_invoice_path = $invoice;
+        }
+        if ($packingList = $this->handleFileUpload($request, 'packing_list_path', $slug)) {
+            $data->packing_list_path = $packingList;
+        }
+        if ($certOrigin = $this->handleFileUpload($request, 'cert_origin_path', $slug)) {
+            $data->cert_origin_path = $certOrigin;
+        }
+        if ($certAnalysis = $this->handleFileUpload($request, 'cert_analysis_path', $slug)) {
+            $data->cert_analysis_path = $certAnalysis;
+        }
+        if ($gmoCert = $this->handleFileUpload($request, 'notarized_gmo_non_gmo_path', $slug)) {
+            $data->notarized_gmo_non_gmo_path = $gmoCert;
+        }
+        if ($declaration = $this->handleFileUpload($request, 'important_declaration_path', $slug)) {
+            $data->important_declaration_path = $declaration;
+        }
+        if ($appForm = $this->handleFileUpload($request, 'application_form_path', $slug)) {
+            $data->application_form_path = $appForm;
+        }
+        if ($affidavit = $this->handleFileUpload($request, 'affidavit_path', $slug)) {
+            $data->affidavit_path = $affidavit;
+        }
+
+        $data->save();
+
+        return response()->json(['slug' => $data->slug]);
     }
 
-
-    // Helper method to handle file uploads
-//    private function handleFileUpload($request, $fileInputName)
-//    {
-//        if ($request->hasFile($fileInputName)) {
-//            $file = $request->file($fileInputName);
-//            return $file->storeAs('imported_commodities', time() . '_' . $file->getClientOriginalName(), 'public');
-//        }
-//        return null; // Return null if no file was uploaded for this input
-//    }
-
-    private function handleFileUpload($request, $fileInputName)
+    private function handleFileUpload(Request $request, $fileInputName, $slug)
     {
+        // Ensure the file is uploaded
         if ($request->hasFile($fileInputName)) {
             $file = $request->file($fileInputName);
-            return $file->storeAs('imported_commodities', time() . '_' . $file->getClientOriginalName(), 'local');
+            $folderPath = 'imported_commodities/' . $slug; // Store under slug folder
+
+            // Store the file and return the path
+            return $file->storeAs($folderPath, time() . '_' . $file->getClientOriginalName(), 'local');
         }
-        return null; // Return null if no file was uploaded for this input
+
+        return null; // Return null if no file was uploaded
     }
+
 
 
     public function changeStatus($slug, \Illuminate\Http\Request $request){

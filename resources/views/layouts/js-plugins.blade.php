@@ -57,7 +57,6 @@
 
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-<script type="text/javascript" src="{{ asset('template/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 {{--<script type="text/javascript" src="{{ asset('js/app_star.js') }}"></script>--}}
 {{-- Datatables --}}
 <script type="text/javascript" src="{{ asset('template/plugins/DataTables-Bootstrap4/datatables.min.js') }}"></script>
@@ -68,7 +67,7 @@
 <script src="{{asset('template/plugins/bootstrap-fileinput/js/fileinput.min.js')}}"></script>
 <script src="{{asset('template/plugins/bootstrap-fileinput/themes/fa/theme.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/plugins/typeahead/js/bootstrap-typeahead.min.js')}}"></script>
-
+<script type="text/javascript" src="{{ asset('template/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 
 <!-- Switchery -->
 <script src="{{ asset('template/inspinia/js/plugins/switchery/switchery.js') }}"></script>
@@ -105,8 +104,8 @@
 {{--<script type="text/javascript" src="{{ asset('template/plugins/DataTables-Bootstrap4/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('template/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 <script type="text/javascript" src="{{asset('template/plugins/jquery-confirm/dist/jquery-confirm.min.js')}}"></script>
-<script src="{{asset('template/plugins/bootstrap-fileinput/js/plugins/sortable.min.js')}}"></script>
-<script src="{{asset('template/plugins/bootstrap-fileinput/js/plugins/piexif.min.js')}}"></script>
-<script src="{{asset('template/plugins/bootstrap-fileinput/js/fileinput.min.js')}}"></script>
-<script src="{{asset('template/plugins/bootstrap-fileinput/themes/fa/theme.js')}}"></script>
-<script src="{{asset('template/plugins/autonum/main.js')}}" type="text/javascript"></script> --}}
+{{--<script src="{{asset('template/plugins/bootstrap-fileinput/js/plugins/sortable.min.js')}}"></script>--}}
+{{--<script src="{{asset('template/plugins/bootstrap-fileinput/js/plugins/piexif.min.js')}}"></script>--}}
+{{--<script src="{{asset('template/plugins/bootstrap-fileinput/js/fileinput.min.js')}}"></script>--}}
+{{--<script src="{{asset('template/plugins/bootstrap-fileinput/themes/fa/theme.js')}}"></script>--}}
+{{--<script src="{{asset('template/plugins/autonum/main.js')}}" type="text/javascript"></script>--}}

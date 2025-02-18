@@ -7,6 +7,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title>SRA | Online Application</title>
+	<link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 	<link href="{{asset('template/inspinia/css/bootstrap.min.css')}}" rel="stylesheet">
 	<link href="{{asset('template/inspinia/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
 	<link href="{{asset('template/inspinia/css/animate.css')}}" rel="stylesheet">

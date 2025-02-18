@@ -21,14 +21,11 @@ class ImportedCommoditiesFormRequest extends FormRequest
 
         if ($this->method() == 'POST') {
             $rules = [
-//                'img_url' => 'required',
-                ''
             ];
         }
 
         if ($this->method() == 'PATCH') {
             $rules = [
-                ''
             ];
         }
 
