@@ -177,23 +177,23 @@
 <!--LOGIN MODAL-->
 
 <div id="inSlider" class="carousel slide" data-ride="carousel" >
-	<ol class="carousel-indicators">
-		<li data-target="#inSlider" data-slide-to="0" class="active"></li>
-		<li data-target="#inSlider" data-slide-to="1"></li>
-	</ol>
+{{--	<ol class="carousel-indicators">--}}
+{{--		<li data-target="#inSlider" data-slide-to="0" class="active"></li>--}}
+{{--		<li data-target="#inSlider" data-slide-to="1"></li>--}}
+{{--	</ol>--}}
 	<div class="carousel-inner" role="listbox">
 		<div class="carousel-item active">
 			<div class="container">
-				<div class="carousel-caption blank">
+{{--				<div class="carousel-caption blank">--}}
 {{--					<h1>S R A<br/> Online Application</h1>--}}
 {{--					<p>Specifically designed for Regulatory Transactions.</p>--}}
-				</div>
+{{--				</div>--}}
 			</div>
 			<!-- Set background for slide in css -->
 			<div class="header-back two"></div>
 		</div>
-		<div class="carousel-item">
-			<div class="container">
+{{--		<div class="carousel-item">--}}
+{{--			<div class="container">--}}
 {{--				<div class="carousel-caption">--}}
 {{--					<h1>Integrity<br/>--}}
 {{--						Innovativeness<br/>--}}
@@ -201,24 +201,28 @@
 {{--						Professionalism</br>--}}
 {{--						Accountability</h1>--}}
 {{--				</div>--}}
-			<!--<div class="carousel-image wow zoomIn">
+{{--			<!--<div class="carousel-image wow zoomIn">--}}
 {{--					<img src="{{asset('template/inspinia/img/landing/laptop_1.png')}}" alt="laptop"/>/--}}
-				</div>-->
-			</div>
-			<!-- Set background for slide in css -->
-			<div class="header-back one"></div>
+{{--				</div>-->--}}
+{{--			</div>--}}
+{{--			<!-- Set background for slide in css -->--}}
+{{--			<div class="header-back one"></div>--}}
 
-		</div>
+{{--		</div>--}}
 	</div>
-	<a class="carousel-control-prev" href="#inSlider" role="button" data-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-	</a>
-	<a class="carousel-control-next" href="#inSlider" role="button" data-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-	</a>
+{{--	<a class="carousel-control-prev" href="#inSlider" role="button" data-slide="prev">--}}
+{{--		<span class="carousel-control-prev-icon" aria-hidden="true"></span>--}}
+{{--		<span class="sr-only">Previous</span>--}}
+{{--	</a>--}}
+{{--	<a class="carousel-control-next" href="#inSlider" role="button" data-slide="next">--}}
+{{--		<span class="carousel-control-next-icon" aria-hidden="true"></span>--}}
+{{--		<span class="sr-only">Next</span>--}}
+{{--	</a>--}}
 </div>
+{{--<div class=" banner-carousel banner-carousel-1 mb-0" style=" box-shadow: 1px 0.5px #888888; width: 100%; margin-left: auto; margin-right: auto;  object-fit: cover;" >--}}
+{{--	<div class="banner-carousel-item" style="background-image:url({{asset('images/Banner/OnlineApplication-Banner.gif')}});"></div>--}}
+{{--</div><!-- div banner-carousel end -->--}}
+{{--background: url('{{asset('images/Banner/OnlineApplication-Banner.gif')}}') 50% 0 no-repeat;--}}
 
 <section id="features" class="container services">
 	<div class="row">
@@ -270,7 +274,8 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12 text-center">
-				<a href="" class="btn btn-primary">Send us mail</a>
+				<a href="https://www.sra.gov.ph/contactUs/index" target="_blank" class="btn btn-primary">Send us mail</a>
+{{--				<a href="mailto:srahead@gov.ph" class="btn btn-primary">Send us mail</a>--}}
 				<p class="m-t-sm">
 					Or follow us on social platform
 				</p>
@@ -314,6 +319,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 <!-- Mainly scripts -->
 <script src="{{asset('template/inspinia/js/jquery-3.1.1.min.js')}}"></script>

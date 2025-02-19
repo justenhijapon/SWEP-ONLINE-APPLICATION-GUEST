@@ -125,8 +125,10 @@ class PreRegistrationController extends Controller
         $user->business_city = $preReg->business_city;
         $user->is_active = true;
         $user->is_verified = true;
+        $preReg->status = 'APPROVED';
         $user->created_at = Carbon::now();
         $user->updated_at = Carbon::now();
         $user->save();
+        $preReg->save();
     }
 }
