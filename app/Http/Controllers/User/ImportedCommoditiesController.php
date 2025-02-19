@@ -53,21 +53,21 @@ class ImportedCommoditiesController extends Controller
 //                                <button class="btn btn-default btn-sm print_request_btn"  data="'.$data->slug.'" data-toggle="tooltip" title="" data-placement="top" data-original-title="Print">
 //                                    <i class="fa fa-print"></i>
 //                                </button>
-//                ->editColumn('name',function($data){
-//                    return view('dashboard.ImportedCommodities.dtNameDetails')->with([
-//                        'data' => $data,
-//                    ]);
-//                })
-//                ->editColumn('productDescription',function($data){
-//                    return view('dashboard.ImportedCommodities.dtProductDescription')->with([
-//                        'data' => $data,
-//                    ]);
-//                })
-//                ->editColumn('purposeImportation',function($data){
-//                    return view('dashboard.ImportedCommodities.dtPurposeImportation')->with([
-//                        'data' => $data,
-//                    ]);
-//                })
+                ->editColumn('name',function($data){
+                    return view('dashboard.ImportedCommodities.dtNameDetails')->with([
+                        'data' => $data,
+                    ]);
+                })
+                ->editColumn('productDescription',function($data){
+                    return view('dashboard.ImportedCommodities.dtProductDescription')->with([
+                        'data' => $data,
+                    ]);
+                })
+                ->editColumn('purposeImportation',function($data){
+                    return view('dashboard.ImportedCommodities.dtPurposeImportation')->with([
+                        'data' => $data,
+                    ]);
+                })
 //                ->editColumn('message',function ($data){
 //                    return Str::limit($data->message,100,'...');
 //                })
