@@ -58,12 +58,12 @@ class ImportedCommoditiesController extends Controller
                         'data' => $data,
                     ]);
                 })
-                ->editColumn('productDescription',function($data){
+                ->editColumn('prod_description',function($data){
                     return view('dashboard.ImportedCommodities.dtProductDescription')->with([
                         'data' => $data,
                     ]);
                 })
-                ->editColumn('purposeImportation',function($data){
+                ->editColumn('purpose_importation',function($data){
                     return view('dashboard.ImportedCommodities.dtPurposeImportation')->with([
                         'data' => $data,
                     ]);
