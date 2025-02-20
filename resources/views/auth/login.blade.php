@@ -76,7 +76,7 @@
 								<div class="row">
 {{--										{!! __form::a_textbox( 6,'Username','username', 'text', 'Username','', 'required')!!}--}}
 									{!! __form::a_textbox( 6,'Email Address','email', 'text', 'Email Address','', 'required')!!}
-									{!! __form::a_textbox( 6,'Password','password', 'text', 'Password','', 'required')!!}
+									{!! __form::a_textbox( 6,'Password','password', 'password', 'Password','', 'required')!!}
 										{!! __form::a_textbox( 4,'Last Name','lastName', 'text', 'Last Name','', 'required')!!}
 										{!! __form::a_textbox( 4,'First Name','firstName', 'text', 'First Name','', 'required')!!}
 										{!! __form::a_textbox( 4,'Middle Name','middleName', 'text', 'Middle Name','', '')!!}
@@ -229,22 +229,22 @@
 		<div class="col-sm-3">
 			<h2>Mandate</h2>
 			<p>The legal mandate of SRA is embodied in Executive Order No. 18 dated May 28, 1986 creating the Sugar Regulatory Administration. It states .....</p>
-			<p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+			<p><a class="navy-link" href="https://www.sra.gov.ph/aboutUs/mandate" target="_blank" role="button">Details &raquo;</a></p>
 		</div>
 		<div class="col-sm-3">
 			<h2>Vision</h2>
 			<p>"By 2040, the Philippines shall have a globally competitive sugarcane insdustry that supports the food, power, and other related industries ...."</p>
-			<p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+			<p><a class="navy-link" href="https://www.sra.gov.ph/aboutUs/mandate" target="_blank" role="button">Details &raquo;</a></p>
 		</div>
 		<div class="col-sm-3">
 			<h2>Mission</h2>
 			<p>"SRA is a Government Owned and Controlled Corporation which formulate responsiveness development and regulatory policies, and provides RD & E services ....."</p>
-			<p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+			<p><a class="navy-link" href="https://www.sra.gov.ph/aboutUs/mandate" target="_blank" role="button">Details &raquo;</a></p>
 		</div>
 		<div class="col-sm-3">
 			<h2>Quality Policy</h2>
 			<p>"SRA is committed to promote the advancement and competitiveness of the sugarcane industry amidst global challenges. It shall continue to improve the way ......"</p>
-			<p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+			<p><a class="navy-link" href="https://www.sra.gov.ph/aboutUs/mandate" target="_blank" role="button">Details &raquo;</a></p>
 		</div>
 	</div>
 </section>
@@ -262,15 +262,30 @@
 			<div class="col-lg-3 ">
 				<address>
 					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
-					Sugar Center Bldg.,<br/>
-					North Avenue, Quezon City<br/>
+					Sugar Center Building, North Avenue Diliman, Quezon City, Philippines, 1101
 				</address>
 			</div>
-			<div class="col-lg-4">
-				<p class="text-color">
-					Sugar Regulatory Administration
-				</p>
+			<div class="col-lg-3">
+				<address>
+					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
+					Araneta St., Singcang, Bacolod City, <br/>
+					Negros Occidental, Philippines, 6100
+				</address>
 			</div>
+			<div class="col-lg-3">
+				<address>
+					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
+					(SRA-LA GRANJA) La Granja, La Carlota City,
+					Negros Occidental, Philippines, 6130
+				</address>
+			</div>
+			<div class="col-lg-3">
+				<address>
+					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
+					(SRA-LAREC) Floridablanca, Pampanga, Philippines, 2006
+				</address>
+			</div>
+
 		</div>
 		<div class="row">
 			<div class="col-lg-12 text-center">
@@ -282,7 +297,7 @@
 				<ul class="list-inline social-icon">
 					<li class="list-inline-item"><a href=""><i class="fa fa-twitter"></i></a>
 					</li>
-					<li class="list-inline-item"><a href=""><i class="fa fa-facebook"></i></a>
+					<li class="list-inline-item"><a href="https://www.facebook.com/sugarregulatoryadmin" target="_blank"><i class="fa fa-facebook"></i></a>
 					</li>
 					<li class="list-inline-item"><a href=""><i class="fa fa-linkedin"></i></a>
 					</li>

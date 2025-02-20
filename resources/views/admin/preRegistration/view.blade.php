@@ -46,5 +46,5 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-light approved" data="{{$preReg->slug}}">Approve</button>
+    <button type="button" class="btn btn-success approved" data="{{$preReg->slug}}">Approve</button>
 </div>

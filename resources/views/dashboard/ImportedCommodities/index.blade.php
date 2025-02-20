@@ -4,8 +4,9 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">My Transactions</h4>
-            <div id="loading">
-                <div class="circle-loader" style="margin-top: 200px; margin-bottom: 200px"></div>
+            <div id="loading" class="loader" style="padding-top: 10%; padding-bottom: 10%; padding-left: 40%">
+{{--                <div class="circle-loader" style="margin-top: 200px; margin-bottom: 200px"></div>--}}
+                <img src="{{ asset('images/load_anim.gif') }}">
             </div>
             <iframe hidden id="printIframe" src="">
 
@@ -90,7 +91,7 @@
                     }
                 ],
                 "language": {
-                    "processing": "<div class='flip-square-loader mx-auto'></div>",
+                    "processing": "<center><img  style='width: 70px' src='{{ asset('images/loader.gif') }}'></center>",
                 },
                 "initComplete": function (settings, json) {
                     console.log("#" + settings.sTableId + "_container");

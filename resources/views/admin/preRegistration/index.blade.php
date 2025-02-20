@@ -157,6 +157,27 @@
                 }
             })
         })
+
+        $("body").on("click",".delete_btn", function(){
+            btn = $(this);
+            slug = btn.attr('data');
+            uri = "{{route('admin.preRegistration.destroy','slug')}}";
+            uri = uri.replace('slug',slug);
+            swal({
+                    title: "Delete Transaction Type?",
+                    text: "Are you sure to DELETE this record?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, DELETE it!",
+                    closeOnConfirm: false
+                },
+                function () {
+                    delete_item(uri,btn,preRegistrationTbl);
+                });
+        })
+
+
     });
 </script>
 @endsection

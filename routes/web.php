@@ -88,8 +88,9 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
         Route::get('payments/pay/{id}', 'Admin\OrderOfPaymentsController@pay')->name('payments.pay');
         Route::post('/order_of_payments', 'Admin\OrderOfPaymentsController@paid')->name('payments.paid');
         Route::post('payments/approved/{id}','Admin\OrderOfPaymentsController@approved')->name('payments.approved');
-
         Route::resource('payments','Admin\OrderOfPaymentsController');
+        Route::resource('/application', 'Admin\ApplicationController');
+
     });
 
 	Route::get('printTransaction', 'PaymentController@printTransaction')->name('printTransaction');

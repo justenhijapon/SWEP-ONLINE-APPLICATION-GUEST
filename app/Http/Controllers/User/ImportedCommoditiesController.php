@@ -29,14 +29,9 @@ class ImportedCommoditiesController extends Controller
                     $destroy_route = "'".route("dashboard.ImportedCommodities.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
                     return '<div class="btn-group" role="group" aria-label="Basic example" style="height: 45%">
-                                        <button type="button" class="btn btn-primary btn-lg btn-outline view_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#view_modal">Print Preview</button>
-                                        <button type="button" class="btn btn-secondary btn-lg btn-outline edit_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#edit_modal" title="Attachment" data-placement="top">Attachment</button>
-                                        
-                                        
-
-                                </a> 
-                                </button>
-                                    </div>';
+                                <button type="button" class="btn btn-primary btn-lg btn-outline view_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#view_modal">Print Preview</button>
+                                <button type="button" class="btn btn-secondary btn-lg btn-outline edit_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#edit_modal" title="Attachment" data-placement="top">Attachment</button>
+                            </div>';
                 })
 //                <button type="button" class="btn btn-success btn-lg btn-outline print_btn" data="'.$data->slug.'" id="printBtn'.$data->slug.'"><i class="fa fa-print"></i> Print</button>
 

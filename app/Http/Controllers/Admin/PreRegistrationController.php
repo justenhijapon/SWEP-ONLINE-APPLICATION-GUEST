@@ -29,9 +29,9 @@ class PreRegistrationController extends Controller
             $data = request();
             return DataTables::of($this->preRegistrationRepo->fetchTable($data))
                 ->addColumn('action', function($data){
-                    $button = '<div class="btn-group">
-                                <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm view_btn" data-toggle="modal" data-target="#view_modal" title="Edit" data-placement="top">
-                                    <i class="fa fa-edit"></i>
+                    $button = '<div class="btn-group" role="group" aria-label="Basic example" style="height: 45%">
+                                <button type="button" data="'.$data->slug.'" class="btn btn-success btn-sm view_btn" data-toggle="modal" data-target="#view_modal">
+                                    APPROVAL
                                 </button>
                                 <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_btn" data-toggle="tooltip" title="Delete" data-placement="top">
                                     <i class="fa fa-trash"></i>
@@ -90,6 +90,7 @@ class PreRegistrationController extends Controller
         $preReg->business_street = $request->businessStreet;
         $preReg->business_barangay = $request->businessBarangay;
         $preReg->business_city = $request->businessCity;
+        $preReg->status = 'FOR APPROVAL';
         $preReg->is_verified = false;
         $preReg->created_at = Carbon::now();
         $preReg->updated_at = Carbon::now();
@@ -130,5 +131,10 @@ class PreRegistrationController extends Controller
         $user->updated_at = Carbon::now();
         $user->save();
         $preReg->save();
+    }
+
+    public function destroy($slug){
+        $preReg = PreRegistrationModel::where('slug', '=', $slug)->first();
+        $preReg->destroy();
     }
 }
