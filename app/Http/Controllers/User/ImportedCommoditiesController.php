@@ -264,7 +264,7 @@ class ImportedCommoditiesController extends Controller
         }
 
         // Assign values (either update existing or insert new)
-//        $data->date = $request->date;
+        $data->date = $request->date;
         $data->name = $request->name;
         $data->company = $request->company;
         $data->designation = $request->designation;
@@ -324,7 +324,8 @@ class ImportedCommoditiesController extends Controller
 
         $data->save();
 
-        return response()->json(['slug' => $data->slug]);
+        return redirect('/');
+//        return response()->json(['slug' => $data->slug]);
     }
 
     private function handleFileUpload(Request $request, $fileInputName, $slug)
