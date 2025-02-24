@@ -1,339 +1,663 @@
 @extends('layouts.admin-master')
 @section('content')
-	<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="row wrapper border-bottom white-bg page-heading" style="padding-bottom: 5px">
 		<div class="col-lg-10">
-			<h2>Imported Commodities</h2>
+			<h2 style="">Imported Commodities</h2>
+{{--			<div class="pull-right no-padding">--}}
+{{--				<code class="no-padding">Fields with asterisks(*) are required</code>--}}
+{{--			</div>--}}
 		</div>
 	</div>
 
 	<section class="content">
 		<div class="ibox">
-			<div class="box-header with-border ibox-content" style="padding: 5px">
-				<div class="col-md-12">
-					<div class="row">
-						<div class="col-md-8">
-							<div class="pull-right">
-								<code>Fields with asterisks(*) are required</code>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+{{--			<div class="box-header with-border ibox-content" style="padding: 5px">--}}
+{{--				<div class="col-md-12">--}}
+{{--					<div class="row">--}}
+{{--						<div class="col-md-8">--}}
+{{--							<div class="pull-right">--}}
+{{--								<code>Fields with asterisks(*) are required</code>--}}
+{{--							</div>--}}
+{{--						</div>--}}
+{{--					</div>--}}
+{{--				</div>--}}
+{{--			</div>--}}
 			@csrf
 			<form id="importedCommoditiesForm" method="POST" autocomplete="off" enctype="multipart/form-data">
 
 				<div class="col-md-12 ibox-content">
 					<div class="row">
 
-{{--						<div class="col-md-8">--}}
-{{--							<h4 style="color: darkslategray">Application For Clearance for the Release of Imported Commodities under Tariff Heading 1702 (Other Sugars) and 1704 (Sugar Confectionery)</h4>--}}
-{{--						</div><br>--}}
+						<div class="col-md-10">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h4>Application For Clearance for the Release of Imported Commodities under Tariff Heading 1702 (Other Sugars) and 1704 (Sugar Confectionery)</h4>
+								</div>
+								<div class="panel-body">
+									<div class="row">
 
-{{--						<div class="col-md-6">--}}
+										{!! \App\Core\Helpers\__form2::textbox('date', [
+												'label'=>'<span style="color: ' . (empty($data->date) ? 'red' : 'grey') . ';">Application Date:*</span>',
+												'type'=>'date',
+												'cols'=>'4',
+												'id'=>'date',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->date) !!}
+										<div class="col-md-8" style="padding-bottom: 10px">
+											<div class="pull-right no-padding">
+												<code class="no-padding">Fields with asterisks(*) are required</code>
+											</div>
+										</div>
+
+										{!! \App\Core\Helpers\__form2::textbox('name', [
+										'label'=>'<span style="color: ' . (empty($data->name) ? 'red' : 'grey') . ';">Name:*</span>',
+										'cols'=>'4',
+										'id'=>'name',
+										'placeholder' => '',
+										'required'=>'required',
+										],$data->name) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('designation', [
+											'label'=>'<span style="color: ' . (empty($data->designation) ? 'red' : 'grey') . ';">Applicant Designation:*</span>',
+											'cols'=>'4',
+											'id'=>'designation',
+											'placeholder' => '',
+											'required'=>'required',
+										], $data->designation) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('company', [
+												'label'=>'<span style="color: ' . (empty($data->company) ? 'red' : 'grey') . ';">Company Name:*</span>',
+												'cols'=>'4',
+												'id'=>'company',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->company) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('tin', [
+												'label'=>'<span style="color: ' . (empty($data->tin) ? 'red' : 'grey') . ';">Consignee TIN No.:*</span>',
+												'cols'=>'4',
+												'id'=>'tin',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->tin) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('contact_no', [
+												'label'=>'<span style="color: ' . (empty($data->contact_no) ? 'red' : 'grey') . ';">Contact No.:*</span>',
+												'cols'=>'4',
+												'id'=>'contact_no',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->contact_no) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('email', [
+												'label'=>'<span style="color: ' . (empty($data->email) ? 'red' : 'grey') . ';">Email:*</span>',
+												'cols'=>'4',
+												'type'=>'email',
+												'id'=>'email',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->email) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('address', [
+												'label'=>'<span style="color: ' . (empty($data->address) ? 'red' : 'grey') . ';">Address:*</span>',
+												'cols'=>'4',
+												'id'=>'adress',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->address) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('quantity_mt', [
+												'label'=>'<span style="color: ' . (empty($data->quantity_mt) ? 'red' : 'grey') . ';">Quantity in Mt:*</span>',
+												'cols'=>'4',
+												'id'=>'quantity_mt',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->quantity_mt) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('bill_landing_no', [
+												'label'=>'<span style="color: ' . (empty($data->bill_landing_no) ? 'red' : 'grey') . ';">Bill of Landing No.:*</span>',
+												'cols'=>'4',
+												'id'=>'bill_landing_no',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->bill_landing_no) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('country_origin', [
+												'label'=>'<span style="color: ' . (empty($data->country_origin) ? 'red' : 'grey') . ';">Country of Origin:*</span>',
+												'cols'=>'4',
+												'id'=>'country_origin',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->country_origin) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('prod_description', [
+												'label'=>'<span style="color: ' . (empty($data->prod_description) ? 'red' : 'grey') . ';">Product Description:*</span>',
+												'cols'=>'8',
+												'id'=>'prod_description',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->prod_description) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('port_discharge', [
+												'label'=>'<span style="color: ' . (empty($data->port_discharge) ? 'red' : 'grey') . ';">Port of Discharge:*</span>',
+												'cols'=>'4',
+												'id'=>'port_discharge',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->port_discharge) !!}
+
+										{!! \App\Core\Helpers\__form2::textbox('purpose_importation', [
+												'label'=>'<span style="color: ' . (empty($data->purpose_importation) ? 'red' : 'grey') . ';">Purpose of Importation:*</span>',
+												'cols'=>'8',
+												'id'=>'purpose_importation',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->purpose_importation) !!}
+
+
+
+{{--										<div class="col-sm-8" style="padding-bottom: 10px; margin-top: 20px">--}}
+
+{{--											<span class="pull-right" style="padding-right: 20px">--}}
+{{--												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal"><i class="fa fa-print"></i> Print Application Form</button>--}}
+{{--											</span>--}}
+{{--										</div>--}}
+
+										<div class="col-md-12">
+											@php
+												$attachmentFields = [
+															'bill_landing_path' => 'Bill of Landing',
+															'commercial_invoice_path' => 'Commercial Invoice',
+															'packing_list_path' => 'Packing List',
+															'cert_origin_path' => 'Certificate of Origin',
+															'cert_analysis_path' => 'Certificate of Analysis',
+															'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
+															'important_declaration_path' => 'Important Declaration',
+															'application_form_path' => 'Application Form',
+															'affidavit_path' => 'Affidavit'
+																		 ];
+
+                                                                     $attachmentsCount = 0;
+                                                                foreach ($attachmentFields as $field => $label) {
+                                                                    if (!empty($data->$field) && $data->$field !== null) {
+                                                                        $attachmentsCount++;
+                                                                    }
+                                                                }
+											@endphp
+
+											<div class="panel panel-primary">
+												<div class="panel-heading">
+													<h4>REQUIRED ATTACHED DOCUMENTS &nbsp;&nbsp;<span><code>{{$attachmentsCount}}/9</code></span></h4>
+												</div>
+												<div class="panel-body">
+													<div class="row">
+
+														@php
+
+															$files = [
+                                                                'application_form_path' => 'Application Form (Notarized)',
+                                                                'affidavit_path' => 'Affidavit',
+                                                                'bill_landing_path' => 'Bill of Landing',
+                                                                'commercial_invoice_path' => 'Commercial Invoice',
+                                                                'packing_list_path' => 'Packing List',
+                                                                'cert_origin_path' => 'Certificate of Origin',
+                                                                'cert_analysis_path' => 'Certificate of Analysis',
+                                                                'notarized_gmo_non_gmo_path' => 'Notarized Declaration of GMO and Non-GMO',
+                                                                'important_declaration_path' => 'Import Declaration (once available)',
+                                                            ];
+														@endphp
+
+														@foreach ($files as $columnName => $label)
+															@php
+																$fileExists = !empty($data->$columnName); // Check if the column has a value
+                                                                $fileUrl = route('show_file_custom', [
+                                                                    'tableName' => 'imported_commodities',
+                                                                    'slug' => $data->slug,
+                                                                    'columnName' => $columnName
+                                                                ]);
+															@endphp
+
+{{--																								{!! \App\Core\Helpers\__form2::file($columnName, [--}}
+{{--															                                        'label' => $label,--}}
+{{--															                                        'cols' => '4',--}}
+{{--															                                        'id' => 'img_url_' . $columnName, // Ensure a unique ID--}}
+{{--															                                        'class' => 'file-input',--}}
+{{--															                                        'data-file-url' => $fileUrl--}}
+{{--															                                    ]) !!}--}}
+
+															<div class="col-md-4">
+																<div class="form-group">
+																	<label style="color: {{ $fileExists ? 'dark-grey' : 'red' }};">
+																		{{ $label }}
+																	</label>
+																	<div class="input-group input-group-sm">
+																		<input type="file" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}">
+																		@if($fileExists)
+																			<button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#filePreviewModal" data-file-url="{{$fileUrl}}">
+																				File preview
+																			</button>
+																		@endif
+																	</div>
+																</div>
+															</div>
+													@endforeach
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12" align="right">
+											<div class="box-footer">
+												<button id="btnBioEnergySubmit" type="submit" class="btn btn-lg btn-outline btn-primary" style="margin-right: 20px;"><i class="fa fa-save"></i> Save as Draft</button>
+												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
+												<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>
+													<span class="pull-right" style="padding-right: 20px">
+														<button id="btnBioEnergySubmit" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;"><i class="fa fa-save"></i> Submit Application</button>
+													</span>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+{{--						<div class="col-md-4">--}}
 {{--							<div class="row">--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('name', [--}}
-{{--                                'label'=>'Name:*',--}}
-{{--                                'cols'=>'4',--}}
-{{--                                'id'=>'name',--}}
-{{--                                'placeholder' => '',--}}
-{{--                                'required'=>'required',--}}
-{{--                                ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('designation', [--}}
-{{--                                    'label'=>'Applicant Designation:*',--}}
-{{--                                    'cols'=>'4',--}}
-{{--                                    'id'=>'designation',--}}
-{{--                                    'placeholder' => '',--}}
-{{--                                    'required'=>'required',--}}
-{{--                                ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('company', [--}}
-{{--                                        'label'=>'Company Name:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'company',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('tin', [--}}
-{{--                                        'label'=>'Consignee TIN No.:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'tin',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('contact_no', [--}}
-{{--                                        'label'=>'Contact No.:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'contact_no',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('email', [--}}
-{{--                                        'label'=>'Email:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'type'=>'email',--}}
-{{--                                        'id'=>'email',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('adress', [--}}
-{{--                                        'label'=>'Address:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'adress',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('quantity_mt', [--}}
-{{--                                        'label'=>'Quantity in Mt:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'quantity_mt',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('bill_landing_no', [--}}
-{{--                                        'label'=>'Bill of Landing No.:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'bill_landing_no',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('country_origin', [--}}
-{{--                                        'label'=>'Country of Origin:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'country_origin',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('prod_description', [--}}
-{{--                                        'label'=>'Product Description:*',--}}
-{{--                                        'cols'=>'8',--}}
-{{--                                        'id'=>'prod_description',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('port_discharge', [--}}
-{{--                                        'label'=>'Port of Discharge:*',--}}
-{{--                                        'cols'=>'4',--}}
-{{--                                        'id'=>'port_discharge',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::textbox('purpose_importation', [--}}
-{{--                                        'label'=>'Purpose of Importation:*',--}}
-{{--                                        'cols'=>'8',--}}
-{{--                                        'id'=>'purpose_importation',--}}
-{{--                                        'placeholder' => '',--}}
-{{--                                        'required'=>'required',--}}
-{{--                                    ]) !!}--}}
+{{--								<div class="col-md-12">--}}
+{{--									<h4 style="color: darkslategray">REQUIRED ATTACHED DOCUMENTS</h4>--}}
+{{--									<ul>--}}
+{{--										<li><p class="text-bold">Application Form (Notarized)</p></li>--}}
+{{--										<li><p class="text-bold">Affidavit</p></li>--}}
+{{--										<li><p class="text-bold">Bill of Landing</p></li>--}}
+{{--										<li><p class="text-bold">Commercial Invoice</p></li>--}}
+{{--										<li><p class="text-bold">Packing List</p></li>--}}
+{{--										<li><p class="text-bold">Certificate of Origin</p></li>--}}
+{{--										<li><p class="text-bold">Certificate of Analysis</p></li>--}}
+{{--										<li><p class="text-bold">Notarized Declaration of GMO and Non-GMO</p></li>--}}
+{{--										<li><p class="text-bold">Import Declaration (once available)</p></li>--}}
+{{--									</ul>--}}
+{{--								</div><br>--}}
 {{--							</div>--}}
-
 {{--						</div>--}}
 
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Bill of Landing:</label>
-								<input class="form-control form-control-subject" id="bill_landing_path" name="bill_landing_path" value="{{$data->packing_list_path}}" disabled type="file">
-								<input type="text" class="form-control form-control-subject" id="bill_landing_path" name="bill_landing_path" value="{{$data->packing_list_path}}" >
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="row">
-								{!! \App\Core\Helpers\__form2::file('packing_list_path', [
-									 'label' => 'Application Form (Notarized)',
-									 'id' => 'packing_list_path',
-									 'cols' => '3	',
-									 'rows' => '2',
-									 'disabled'=>'true',
-								]) !!}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Affidavit',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Bill of Landing',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Commercial Invoice',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Packing List',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Certificate of Origin',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Certificate of Analysis',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Notarized Declaration of GMO and Non-GMO',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
-{{--								{!! \App\Core\Helpers\__form2::file('packing_list_path', [--}}
-{{--									 'label' => 'Import Declaration (once available)',--}}
-{{--									 'id'=>'img_url',--}}
-{{--									 'cols' => '2',--}}
-{{--									 'rows' => '2',--}}
-{{--								]) !!}--}}
+						<div class="col-md-2">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h4 align="center">APPLICATION STATUS</h4>
+								</div>
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-12" style="padding-bottom: 10px">
+
+											<div class="ibox-content inspinia-timeline" style="padding-right: 10px; padding-left: 10px">
+
+												<div class="timeline-item">
+													<div class="row">
+														<div class="col-5 date">
+															<i class="fa fa-plus-circle"></i>
+															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>
+															<small class="text-navy">
+																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->created_at)->diffForHumans()) }}
+															</small>
+														</div>
+														<div class="col-7 content no-top-border">
+															<p class="m-b-xs"><strong>Application created</strong></p>
+														</div>
+													</div>
+												</div>
+{{--												<div class="timeline-item">--}}
+{{--													<div class="row">--}}
+{{--														<div class="col-5 date">--}}
+{{--															<i class="fa fa-save"></i>--}}
+{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
+{{--															<small class="text-navy">--}}
+{{--																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->updated_at)->diffForHumans()) }}--}}
+{{--															</small>--}}
+{{--														</div>--}}
+{{--														<div class="col-7 content">--}}
+{{--															<p class="m-b-xs"><strong>Save as draft</strong></p>--}}
+{{--														</div>--}}
+{{--													</div>--}}
+{{--												</div>--}}
+
+{{--												<div class="timeline-item">--}}
+{{--													<div class="row">--}}
+{{--														<div class="col-5 date">--}}
+{{--															<i class="fa fa-save"></i>--}}
+{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
+{{--															<small class="text-navy">--}}
+{{--																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->updated_at)->diffForHumans()) }}--}}
+{{--															</small>--}}
+{{--														</div>--}}
+{{--														<div class="col-7 content">--}}
+{{--															<p class="m-b-xs"><strong>Application Submitted</strong></p>--}}
+{{--														</div>--}}
+{{--													</div>--}}
+{{--												</div>--}}
+
+{{--												<div class="timeline-item">--}}
+{{--													<div class="row">--}}
+{{--														<div class="col-5 date">--}}
+{{--															<i class="fa fa-save"></i>--}}
+{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
+{{--															<small class="text-navy">--}}
+{{--																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->updated_at)->diffForHumans()) }}--}}
+{{--															</small>--}}
+{{--														</div>--}}
+{{--														<div class="col-7 content">--}}
+{{--															<p class="m-b-xs"><strong>Application received</strong></p>--}}
+{{--														</div>--}}
+{{--													</div>--}}
+{{--												</div>--}}
+
+
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
-						<div class="col-md-8">
-							<div class="box-footer">
-								<button id="btnBioEnergySubmit" type="submit" class="btn btn-primary pull-right">Save</button>
-							</div>
-						</div>
 
 					</div>
-
 				</div>
-
 			</form>
 		</div>
 	</section>
 
+	<iframe hidden id="printIframe" src="">
 
+	</iframe>
+
+	{!! __html::modal_loader() !!}
 @endsection
+
 @section('modals')
+	<!-- File Preview Modal -->
+	<div class="modal fade" id="filePreviewModal" tabindex="-1" role="dialog" aria-labelledby="filePreviewLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content" style="height: 800px">
+				<div class="modal-header">
+					<h5 class="modal-title" id="filePreviewLabel">File Preview</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<iframe id="filePreviewIframe" src="" width="100%" height="700" frameborder="0"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="view_modal">
+		<div class="modal-dialog" role="document" style="max-width:45% !important;">
+			<div class="modal-content">
+
+			</div>
+		</div>
+	</div>
 @endsection
 @section('scripts')
 
-	<script type="text/javascript">
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			$('#filePreviewModal').on('show.bs.modal', function (event) {
+				var button = $(event.relatedTarget); // Button that triggered the modal
+				var fileUrl = button.data('file-url'); // Extract file URL from data attribute
+				$('#filePreviewIframe').attr('src', fileUrl);
+			});
 
-		$("#importedCommoditiesForm").submit(function (e) {
-			e.preventDefault();
-			var form = $(this);
-			var slug = "{{$data->slug}}";
-			var uri = "{{ route('dashboard.ImportedCommodities.update', 'slug') }}";
-			uri = uri.replace('slug', slug);
-
-			var formData = new FormData(this);
-			formData.append('_method', 'PATCH'); // Laravel requires PATCH for updates
-
-			$.ajax({
-				url: uri,
-				data: formData,
-				type: 'POST',
-				contentType: false,
-				processData: false,
-				headers: {
-					'X-CSRF-TOKEN': '{{ csrf_token() }}'
-				},
-				success: function (res) {
-					succeed(form, false, true);
-					active = res.slug;
-					temp_tbl.draw(false);
-					notify('Data updated successfully', 'success');
-				},
-				error: function (res) {
-					errored(form, res);
-				}
+			$('#filePreviewModal').on('hidden.bs.modal', function () {
+				$('#filePreviewIframe').attr('src', ''); // Reset iframe when modal is closed
 			});
 		});
+	</script>
 
-		var existingImgUrlITB = "/show_file_custom/imported_commodities/{{$data->slug}}/packing_list_path";
 
-		function initializeFileInput(elementId, existingFileUrl) {
-			$.ajax({
-				url: existingFileUrl,
-				type: 'GET',
-				success: function () {
-					// If the file exists, show the preview
-					$("#" + elementId).fileinput({
-						theme: "fa",
-						allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],
-						maxFileCount: 1,
-						showUpload: false,
-						showCaption: false,
-						overwriteInitial: true,
-						initialPreview: [existingFileUrl],
-						initialPreviewAsData: true,
-						initialPreviewFileType: 'image',
-						initialPreviewConfig: [
-							{ type: "pdf", size: 1000, caption: "PDF Document", key: 1 } // Customize as needed
-						],
-						fileType: "pdf",
-						browseClass: "btn btn-primary btn-md",
-					});
-				},
-				error: function () {
-					// If the file doesn't exist, initialize fileinput without preview
-					$("#" + elementId).fileinput({
-						theme: "fa",
-						allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],
-						maxFileCount: 1,
-						showUpload: false,
-						showCaption: false,
-						overwriteInitial: true,
-						initialPreview: [], // No preview
-						fileType: "pdf",
-						browseClass: "btn btn-primary btn-md",
-					});
-					console.log('File not found for ' + elementId);
-				}
+
+{{--	<script>--}}
+{{--		$(document).ready(function () {--}}
+{{--			let fileInputs = $(".file-input");--}}
+
+{{--			if (fileInputs.length === 0) {--}}
+{{--				console.error("❌ No file input elements found! Check your Blade template.");--}}
+{{--				return;--}}
+{{--			}--}}
+
+{{--			$(".file-input").each(function () {--}}
+{{--				var $this = $(this);--}}
+{{--				var existingFileUrl = $this.data("file-url");--}}
+
+{{--				if (!existingFileUrl) {--}}
+{{--					console.warn("⚠️ No file URL found for:", $this.attr("id"));--}}
+{{--					return;--}}
+{{--				}--}}
+
+{{--				console.log("✅ Initializing file input for:", $this.attr("id"), "with URL:", existingFileUrl);--}}
+
+{{--				var fileType = existingFileUrl.match(/\.pdf$/i) ? "pdf" : "image";--}}
+
+{{--				$this.fileinput({--}}
+{{--					theme: "fa",--}}
+{{--					allowedFileExtensions: ["pdf", "jpeg", "jpg", "png"],--}}
+{{--					maxFileCount: 1,--}}
+{{--					showUpload: false,--}}
+{{--					showCaption: false,--}}
+{{--					overwriteInitial: true,--}}
+{{--					initialPreview: existingFileUrl ? [existingFileUrl] : [],--}}
+{{--					initialPreviewAsData: true,--}}
+{{--					initialPreviewFileType: fileType,--}}
+{{--					browseClass: "btn btn-primary btn-md",--}}
+{{--					initialPreviewConfig: fileType === "pdf" ? [{ type: "pdf", caption: "PDF Preview", key: 1 }] : [],--}}
+{{--				});--}}
+{{--			});--}}
+
+
+{{--			// Fetch file paths via AJAX and update the inputs--}}
+{{--			$.ajax({--}}
+{{--				url: "/api/get-file-paths/{{$data->slug}}",--}}
+{{--				type: "GET",--}}
+{{--				success: function (data) {--}}
+{{--					console.log("✅ Received File Paths:", data); // Debugging--}}
+{{--					Object.keys(data).forEach(function (key) {--}}
+{{--						let fileInputId = "img_url_" + key;--}}
+{{--						let fileUrl = data[key];--}}
+
+{{--						if (!$("#" + fileInputId).length) {--}}
+{{--							console.error("❌ File input not found for:", fileInputId);--}}
+{{--							return;--}}
+{{--						}--}}
+
+{{--						console.log("📂 Updating file input:", fileInputId, "with URL:", fileUrl);--}}
+
+{{--						$("#" + fileInputId).fileinput('destroy').fileinput({--}}
+{{--							theme: "fa",--}}
+{{--							allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],--}}
+{{--							maxFileCount: 1,--}}
+{{--							showUpload: false,--}}
+{{--							showCaption: false,--}}
+{{--							overwriteInitial: true,--}}
+{{--							initialPreview: fileUrl ? [fileUrl] : [],--}}
+{{--							initialPreviewAsData: true,--}}
+{{--							initialPreviewFileType: fileUrl.endsWith(".pdf") ? "pdf" : "image",--}}
+{{--							browseClass: "btn btn-primary btn-md",--}}
+{{--							initialPreviewConfig: fileUrl.endsWith(".pdf") ? [{--}}
+{{--								type: "pdf",--}}
+{{--								caption: "PDF Preview",--}}
+{{--								downloadUrl: fileUrl,--}}
+{{--								key: 1--}}
+{{--							}] : [],--}}
+{{--							previewFileIconSettings: {--}}
+{{--								'pdf': '<i class="fa fa-file-pdf text-danger"></i>',--}}
+{{--								'jpg': '<i class="fa fa-file-image text-warning"></i>',--}}
+{{--								'png': '<i class="fa fa-file-image text-primary"></i>'--}}
+{{--							},--}}
+{{--							previewTemplates: {--}}
+{{--								pdf: '<div class="kv-preview-data file-preview-other-frame">' +--}}
+{{--										'<iframe src="{data}" class="kv-preview-data file-preview-pdf" style="width:100%; height:400px;"></iframe>' +--}}
+{{--										'</div>'--}}
+{{--							}--}}
+{{--						});--}}
+{{--					});--}}
+{{--				},--}}
+{{--				error: function () {--}}
+{{--					console.error("❌ Failed to fetch file paths.");--}}
+{{--				}--}}
+{{--			});--}}
+{{--		});--}}
+
+{{--	</script>--}}
+
+	<script type="text/javascript">
+		modal_loader = $(".loader_container").html();
+		$(document).ready(function() {
+
+			$("#importedCommoditiesForm").submit(function (e) {
+				e.preventDefault();
+				var form = $(this);
+				var slug = "{{$data->slug}}";
+				var uri = "{{ route('dashboard.ImportedCommodities.update', 'slug') }}";
+				uri = uri.replace('slug', slug);
+
+				var formData = new FormData(this);
+				formData.append('_method', 'PATCH'); // Laravel requires PATCH for updates
+
+				$.ajax({
+					url: uri,
+					data: formData,
+					type: 'POST',
+					contentType: false,
+					processData: false,
+					headers: {
+						'X-CSRF-TOKEN': '{{ csrf_token() }}'
+					},
+					success: function (res) {
+						succeed(form, false, true);
+						active = res.slug;
+						temp_tbl.draw(false);
+						notify('Data save successfully', 'success');
+					},
+					error: function (res) {
+						errored(form, res);
+					}
+				});
 			});
-		}
 
-		// Initialize file inputs for ITB and PBD
-		initializeFileInput("packing_list_path", existingImgUrlITB);
-		// initializeFileInput("img_url_pbd", existingImgUrlPBD);
+			{{--var existingImgUrl_application_form_path = "/show_file_custom_user/imported_commodities/{{$data->slug}}/application_form_path";--}}
+			{{--var existingImgUrl_affidavit_path = "/show_file_custom/imported_commodities/{{$data->slug}}/affidavit_path";--}}
+			{{--var existingImgUrl_bill_landing_path = "/show_file_custom/imported_commodities/{{$data->slug}}/bill_landing_path";--}}
+			{{--var existingImgUrl_commercial_invoice_path = "/show_file_custom/imported_commodities/{{$data->slug}}/commercial_invoice_path";--}}
+			{{--var existingImgUrl_packing_list_path = "/show_file_custom/imported_commodities/{{$data->slug}}/packing_list_path";--}}
+			{{--var existingImgUrl_cert_origin_path = "/show_file_custom/imported_commodities/{{$data->slug}}/cert_origin_path";--}}
+			{{--var existingImgUrl_cert_analysis_path = "/show_file_custom/imported_commodities/{{$data->slug}}/cert_analysis_path";--}}
+			{{--var existingImgUrl_notarized_gmo_non_gmo_path = "/show_file_custom/imported_commodities/{{$data->slug}}/notarized_gmo_non_gmo_path";--}}
+			{{--var existingImgUrl_important_declaration_path = "/show_file_custom/imported_commodities/{{$data->slug}}/important_declaration_path";--}}
 
-		// Hide file remove button
-		$(".kv-file-remove").hide();
+			{{--function initializeFileInput(elementId, existingFileUrl) {--}}
+			{{--	$.ajax({--}}
+			{{--		url: existingFileUrl,--}}
+			{{--		type: 'GET',--}}
+			{{--		success: function () {--}}
+			{{--			// If the file exists, show the preview--}}
+			{{--			$("#" + elementId).fileinput({--}}
+			{{--				theme: "fa",--}}
+			{{--				allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],--}}
+			{{--				maxFileCount: 1,--}}
+			{{--				showUpload: false,--}}
+			{{--				showCaption: false,--}}
+			{{--				overwriteInitial: true,--}}
+			{{--				initialPreview: [existingFileUrl],--}}
+			{{--				initialPreviewAsData: true,--}}
+			{{--				initialPreviewFileType: 'image',--}}
+			{{--				initialPreviewConfig: [--}}
+			{{--					{ type: "pdf", size: 1000, caption: "PDF Document", key: 1 } // Customize as needed--}}
+			{{--				],--}}
+			{{--				fileType: "pdf",--}}
+			{{--				browseClass: "btn btn-primary btn-md",--}}
+			{{--			});--}}
+			{{--		},--}}
+			{{--		error: function () {--}}
+			{{--			// If the file doesn't exist, initialize fileinput without preview--}}
+			{{--			$("#" + elementId).fileinput({--}}
+			{{--				theme: "fa",--}}
+			{{--				allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],--}}
+			{{--				maxFileCount: 1,--}}
+			{{--				showUpload: false,--}}
+			{{--				showCaption: false,--}}
+			{{--				overwriteInitial: true,--}}
+			{{--				initialPreview: [], // No preview--}}
+			{{--				fileType: "pdf",--}}
+			{{--				browseClass: "btn btn-primary btn-md",--}}
+			{{--			});--}}
+			{{--			console.log('File not found for ' + elementId);--}}
+			{{--		}--}}
+			{{--	});--}}
+			{{--}--}}
+
+			{{--// Initialize file inputs for ITB and PBD--}}
+			{{--initializeFileInput("img_url_application_form_path", existingImgUrl_application_form_path);--}}
+			{{--initializeFileInput("img_url_affidavit_path", existingImgUrl_affidavit_path);--}}
+			{{--initializeFileInput("img_url_bill_landing_path", existingImgUrl_bill_landing_path);--}}
+			{{--initializeFileInput("img_url_commercial_invoice_path", existingImgUrl_commercial_invoice_path);--}}
+			{{--initializeFileInput("img_url_packing_list_path", existingImgUrl_packing_list_path);--}}
+			{{--initializeFileInput("img_url_cert_origin_path", existingImgUrl_cert_origin_path);--}}
+			{{--initializeFileInput("img_url_cert_analysis_path", existingImgUrl_cert_analysis_path);--}}
+			{{--initializeFileInput("img_url_notarized_gmo_non_gmo_path", existingImgUrl_notarized_gmo_non_gmo_path);--}}
+			{{--initializeFileInput("img_url_important_declaration_path", existingImgUrl_important_declaration_path);--}}
 
 
 
-		{{--$(document).ready(function () {--}}
-		{{--	var existingFileUrl = "/show_file/imported_commodities/{{$data->slug}}";--}}
 
-		{{--	$.ajax({--}}
-		{{--		url: existingFileUrl,--}}
-		{{--		type: 'HEAD', // Check if the file exists--}}
-		{{--		success: function () {--}}
-		{{--			$("#packing_list_path").fileinput({--}}
-		{{--				theme: "fa",--}}
-		{{--				allowedFileExtensions: ["pdf"],--}}
-		{{--				maxFileCount: 1,--}}
-		{{--				showUpload: false,--}}
-		{{--				showCaption: true,--}}
-		{{--				overwriteInitial: true,--}}
-		{{--				initialPreview: [existingFileUrl],--}}
-		{{--				initialPreviewAsData: true,--}}
-		{{--				initialPreviewFileType: 'pdf',--}}
-		{{--				browseClass: "btn btn-primary btn-md",--}}
-		{{--			});--}}
-		{{--		},--}}
-		{{--		error: function () {--}}
-		{{--			$("#packing_list_path").fileinput({--}}
-		{{--				theme: "fa",--}}
-		{{--				allowedFileExtensions: ["pdf"],--}}
-		{{--				maxFileCount: 1,--}}
-		{{--				showUpload: false,--}}
-		{{--				showCaption: true,--}}
-		{{--				overwriteInitial: true,--}}
-		{{--				initialPreview: [],--}}
-		{{--				browseClass: "btn btn-primary btn-md",--}}
-		{{--			});--}}
-		{{--			console.log('No existing file found.');--}}
-		{{--		}--}}
-		{{--	});--}}
-		{{--});--}}
+
+			// Hide file remove button
+			$(".kv-file-remove").hide();
+
+
+			$("body").on("click", ".view_btn", function () {
+				target_modal = $(this).attr('data-target');
+
+				tr_id = $(this).attr('data');
+				uri = "{{route('dashboard.ImportedCommodities.show', 'slug')}}";
+				uri = uri.replace('slug', tr_id);
+				$(target_modal + " .modal-content").html('<div class="loader-demo-box">\n' +
+						'                    <div class="square-box-loader">\n' +
+						'                        <div class="square-box-loader-container">\n' +
+						'                            <div class="square-box-loader-corner-top"></div>\n' +
+						'                            <div class="square-box-loader-corner-bottom"></div>\n' +
+						'                        </div>\n' +
+						'                        <div class="square-box-loader-square"></div>\n' +
+						'                    </div>\n' +
+						'                </div>');
+				$.ajax({
+					url: uri,
+					type: 'GET',
+					success: function (res) {
+						$(target_modal).find('.modal-content').html(res);
+					},
+					error: function (res) {
+						console.log(res);
+					}
+				})
+			})
+
+
+
+			$("body").on('click', '.print_btn', function () {
+				tr_id = $(this).attr('data');
+				var printRoute = "{{route('printTransactionIc')}}";
+				var newPrintRoute = printRoute + "?transactionId=" + tr_id;
+				$("#printIframe").attr('src', newPrintRoute);
+				setTimeout(printIframe, 500);
+			})
+
+			function printIframe() {
+				$("#printIframe").get(0).contentWindow.print();
+			}
+
+
+		})
 
 
 

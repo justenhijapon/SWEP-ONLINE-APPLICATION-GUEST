@@ -30,7 +30,7 @@
                             <th>Product Description</th>
                             <th>Purpose of Importation</th>
                             <th>STATUS</th>
-                            <th style="width: 100px">Action</th>
+                            <th style="width: 160px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,12 +40,12 @@
 
             </div>
         </div>
-        </div>
     </section>
 @endsection
 
 @section('modals')
     {!! __html::blank_modal('edit_modal', '', 'style="width: 80%"') !!}
+    {!! __html::blank_modal('showApplicationFile_modal', '', 'style="width: 60%"') !!}
 
     <div id="add_modal" class="modal fade" role="dialog">
         <div class="modal-dialog" style="width: 80%";>
@@ -134,6 +134,24 @@
                         $("#applicationTable #"+active).addClass('success');
                     }
                 }
+            });
+
+            $("body").on("click",".showApplicationFile_btn", function(){
+                var btn = $(this);
+                var slug = btn.attr("data");
+                loading_modal(btn);
+                uri = "{{ route('admin.application.attachments.showApplicationFile','slug') }}";
+                uri = uri.replace('slug',slug);
+                $.ajax({
+                    url : uri,
+                    type: 'GET',
+                    success: function(response){
+                        populate_modal(btn, response);
+                    },
+                    error: function(response){
+
+                    }
+                });
             });
 
             {{--$("#add_form").submit(function(e){--}}

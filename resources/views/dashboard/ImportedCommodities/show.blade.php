@@ -48,7 +48,7 @@
     }
 </style>
 <div class="modal-body">
-    <p style="margin-bottom: 30px"><code>Instruction:</code> Before printing, ensure that the paper used is A4 size (8.27" x 11.69") <br> and pre-printed with the importer's letterhead.
+    <p style="margin-bottom: 30px"><code>Instruction:</code> Before printing, ensure that the paper used is A4 size (8.27" x 11.69") and pre-printed <br>  with the importer's letterhead.
 {{--    <p style="margin-bottom: 30px">Please print using A4 paper size (8.27" x 11.69") with letterhead of importer--}}
         <span class="pull-right" style="padding-right: 20px">
            <button type="button" class="btn btn-success btn-lg btn-outline print_btn" data="{{$data->slug}}" id="printBtn{{$data->slug}}"><i class="fa fa-print"></i> Print</button>

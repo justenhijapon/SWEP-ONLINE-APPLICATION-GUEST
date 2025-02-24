@@ -2,7 +2,10 @@
 
 //test commit
     /** Auth **/
-    Route::group(['as' => 'auth.'], function () {
+
+use App\Http\Controllers\Admin\ApplicationController;
+
+Route::group(['as' => 'auth.'], function () {
 
         Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLogin');
         Route::post('/', 'Auth\LoginController@login')->name('login');
@@ -89,6 +92,13 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
         Route::post('/order_of_payments', 'Admin\OrderOfPaymentsController@paid')->name('payments.paid');
         Route::post('payments/approved/{id}','Admin\OrderOfPaymentsController@approved')->name('payments.approved');
         Route::resource('payments','Admin\OrderOfPaymentsController');
+
+//        Route::get('/application/attachments/{slug}/showApplicationFile', 'showApplicationFile@ApplicationController')->name('application.attachments.showApplicationFile');
+
+        Route::get('/application/attachments/{slug}/showApplicationFile',
+            [ApplicationController::class, 'showApplicationFile']
+        )->middleware('auth')->name('application.attachments.showApplicationFile');
+
         Route::resource('/application', 'Admin\ApplicationController');
 
     });
@@ -104,15 +114,29 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
     Route::get('ImportedCommodities/attachment', 'User\ImportedCommoditiesController@attachment')->name('ImportedCommodities.attachment');
     Route::get('printTransactionIc', 'User\ImportedCommoditiesController@printTransactionIc')->name('printTransactionIc');
 
+//Route::post('/ImportedCommodities/applicationForm','User\ImportedCommoditiesController@applicationForm')->name('applicationForm');
+
+    Route::middleware(['auth:web'])->group(function () {
+        Route::post('/ImportedCommodities/applicationFormUpdate',
+            'User\ImportedCommoditiesController@applicationFormUpdate'
+        )->name('applicationFormUpdate');
+    });
+
+//    Route::get('/get-file-paths/{slug}', [\App\Models\User\ImportedCommodities::class, 'getFilePaths']);
+
+Route::get('/api/get-file-paths/{slug}', 'User\HomeController@getFilePaths');
 
 
-	Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 	Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 
-    Route::get('view_file/{tableName}/{slug}','User\HomeController@viewFile')->name('view_file');
-    Route::get('view_file_custom/{tableName}/{slug}/{columnName}','User\HomeController@viewFileCustom')->name('view_file_custom');
+    Route::get('view_file/{tableName}/{slug}','Admin\HomeController@viewFile')->name('view_file');
+    Route::get('view_file_custom/{tableName}/{slug}/{columnName}','Admin\HomeController@viewFileCustom')->name('view_file_custom');
 
+//    Route::get('show_file_custom/{tableName}/{slug}/{columnName}','Admin\HomeController@showFileCustom')->name('show_file_custom');
 
+    Route::get('show_file_custom/{tableName}/{slug}/{columnName}', 'Admin\HomeController@showFileCustom')->name('show_file_custom');
+    Route::get('show_file_custom_user/{tableName}/{slug}/{columnName}', 'User\HomeController@showFileCustom')->name('show_file_custom');
 
 // Route::group(['prefix' => 'shared', 'as' => 'shared.'], function(){
 		

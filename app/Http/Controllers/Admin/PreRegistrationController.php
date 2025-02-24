@@ -69,6 +69,7 @@ class PreRegistrationController extends Controller
 
     public function storePreRegistration(Request $request)
     {
+        $appData = new User\ImportedCommodities();
         $preReg = new PreRegistrationModel();
         $preReg->slug = $this->new_slug();
         $preReg->username = $request->username;
@@ -94,7 +95,16 @@ class PreRegistrationController extends Controller
         $preReg->is_verified = false;
         $preReg->created_at = Carbon::now();
         $preReg->updated_at = Carbon::now();
+        $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
+        $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
+        $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
+        $appData->user_created = $preReg ->slug;
+        $appData->name = $fullname; $appData->contact_no = $preReg->business_phone;  $appData->designation = $preReg->position; $appData->company = $preReg->business_name;
+        $appData->tin = $preReg->business_tin; $appData->address = $full_address; $appData->email = $preReg->email;
+
+        $appData->save();
         $preReg->save();
+
     }
 
     public function show($id){
@@ -104,6 +114,7 @@ class PreRegistrationController extends Controller
 
     public function approved($id){
         $preReg = PreRegistrationModel::where('slug',$id)->first();
+        $appData = new User\ImportedCommodities();
         $user = new User();
         $user->slug = $preReg->slug;
         $user->username = $preReg->username;
@@ -129,12 +140,27 @@ class PreRegistrationController extends Controller
         $preReg->status = 'APPROVED';
         $user->created_at = Carbon::now();
         $user->updated_at = Carbon::now();
+//        $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
+//        $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
+//        $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
+//        $appData->user_created = $preReg ->slug;
+//        $appData->name = $fullname; $appData->contact_no = $preReg->business_phone;  $appData->designation = $preReg->position; $appData->company = $preReg->business_name;
+//        $appData->tin = $preReg->business_tin; $appData->address = $full_address; $appData->email = $preReg->email;
+
+//        $appData->save();
         $user->save();
         $preReg->save();
+
+
     }
 
     public function destroy($slug){
         $preReg = PreRegistrationModel::where('slug', '=', $slug)->first();
         $preReg->destroy();
+    }
+
+    private function hyphenateApp(string $str)
+    {
+        return implode("-", str_split($str, 3));
     }
 }

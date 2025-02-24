@@ -4,12 +4,15 @@
 namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\ImportedCommodities\ImportedCommoditiesFormRequest;
+use App\Models\User;
 use App\Models\User\ImportedCommodities;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User\PreRegistrationModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use phpseclib3\System\SSH\Agent\Identity;
 use Yajra\DataTables\DataTables;
 
 
@@ -33,21 +36,7 @@ class ImportedCommoditiesController extends Controller
                                 <button type="button" class="btn btn-secondary btn-lg btn-outline edit_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#edit_modal" title="Attachment" data-placement="top">Attachment</button>
                             </div>';
                 })
-//                <button type="button" class="btn btn-success btn-lg btn-outline print_btn" data="'.$data->slug.'" id="printBtn'.$data->slug.'"><i class="fa fa-print"></i> Print</button>
 
-//                <a type="button" href="'. route('dashboard.ImportedCommodities.edit', $data->slug).'"  data="'.$data->slug.'" class="btn btn-default btn-sm edit_roadMap_btn"  data-toggle="tooltip" data-original-title="Edit" data-placement="top">
-//                                        <i class="fa fa-edit"></i>
-
-                /*print_modal
-                 * <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">*/
-
-//                <a  href="'. route('dashboard.ImportedCommodities.show', $data->slug).'"    data="'.$data->slug.'" class="btn btn-default btn-sm view_my_btn" data-toggle="modal" data-target="#view_my_modal" title="" data-placement="top" data-original-title="View">
-//                                    <i class="fa fa-eye"></i>
-//                                </a>
-//
-//                                <button class="btn btn-default btn-sm print_request_btn"  data="'.$data->slug.'" data-toggle="tooltip" title="" data-placement="top" data-original-title="Print">
-//                                    <i class="fa fa-print"></i>
-//                                </button>
                 ->editColumn('name',function($data){
                     return view('dashboard.ImportedCommodities.dtNameDetails')->with([
                         'data' => $data,
@@ -72,6 +61,9 @@ class ImportedCommoditiesController extends Controller
         }
         return view('dashboard.ImportedCommodities.index');
     }
+
+
+
 
 
 
@@ -109,6 +101,8 @@ class ImportedCommoditiesController extends Controller
         $ic->date = Carbon::now()->format('Y-m-d H:i:s');
         $ic->year = now()->format('Y');
         $ic->save();
+
+//        return redirect('dashboard/ImportedCommodities/index');
 
     }
 
@@ -163,22 +157,141 @@ class ImportedCommoditiesController extends Controller
 
     public function edit($slug)
     {
-        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
-        return view('dashboard.ImportedCommodities.attachment', compact('data'));
+//        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
+        $data = ImportedCommodities::where('user_created', Auth::guard('web')->user()->slug)->first();
+        return view('dashboard.ImportedCommodities.applicationForm', compact('data'));
     }
+
+
 //    public function edit($slug)
 //    {
 //        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
 //        return view('dashboard.ImportedCommodities.edit', compact('data'));
 //    }
 
+//    public function applicationForm($slug){
+//        $data = ImportedCommodities::where('user_created', $slug)->first();
+//        return view('dashboard.ImportedCommodities.applicationForm', compact('data'));
+//
+//    }
 
+    public function applicationFormUpdate(ImportedCommoditiesFormRequest $request, $slug){
+        $user = Auth::guard('web')->user();
 
+        // Check if user already has an application
+        $ic = ImportedCommodities::where('user_created', $user->slug)->first();
+
+        if (!$ic) {
+            $ic = new ImportedCommodities(); // Create a new application if none exists
+        }
+
+        // Construct full name from PreRegistration data
+        $fullname = $preReg->first_name . ' ' .
+            ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') .
+            $preReg->last_name;
+
+        // Assign values (either update existing or insert new)
+        $ic->name = $fullname;
+        $ic->company = $request->company;
+        $ic->designation = $request->designation;
+        $ic->tin = $request->tin;
+        $ic->contact = $request->contact;
+        $ic->quantity_mt = $request->quantity_mt;
+        $ic->bill_landing_no = $request->bill_landing_no;
+        $ic->prod_description = $request->prod_description;
+        $ic->country_origin = $request->country_origin;
+        $ic->port_discharge = $request->port_discharge;
+        $ic->purpose_importation = $request->purpose_importation;
+        $ic->contact_no = $request->contact_no;
+        $ic->email = $request->email;
+        $ic->address = $request->address;
+        $ic->application_type = 'Clearance for Imported Commodities';
+        $ic->user_created = $user->slug;
+        $ic->user_updated = $user->slug;
+        $ic->year = now()->format('Y');
+
+        // If it's a new entry, set the created_at date
+        if (!$ic->exists) {
+            $ic->created_at = now();
+        }
+
+        $ic->updated_at = now();
+        $ic->date = now()->format('Y-m-d H:i:s');
+        $ic->save();
+
+        return redirect()->back()->with('success', 'Application form saved successfully.');
+
+//        $ic = new ImportedCommodities();
+//        $fullname =$ic->first_name . ' ' . ($ic->middle_name ? strtoupper(substr($ic->middle_name, 0, 1)) . '. ' : '') . $ic->last_name;
+//        $ic->name = $fullname;
+//        $ic->company = $request->company;
+//        $ic->designation = $request->designation;
+//        $ic->tin = $request->tin;
+//        $ic->contact = $request->contact;
+//        $ic->quantity_mt = $request->quantity_mt;
+//        $ic->bill_landing_no = $request->bill_landing_no;
+//        $ic->prod_description = $request->prod_description;
+//        $ic->country_origin = $request->country_origin;
+//        $ic->port_discharge = $request->port_discharge;
+//        $ic->purpose_importation = $request->purpose_importation;
+//        $ic->contact_no = $request->contact_no;
+//        $ic->email = $request->email;
+//        $ic->address = $request->address;
+//        $ic->application_type = 'Clearance for Imported Commodities';
+//        $ic->user_created = Auth::guard('web')->user()->slug;
+//        $ic->user_updated = Auth::guard('web')->user()->slug;
+////        $ic->created_at = Carbon::now();
+//        $ic->updated_at = Carbon::now();
+//        $ic->date = Carbon::now()->format('Y-m-d H:i:s');
+//        $ic->year = now()->format('Y');
+//        $ic->save();
+    }
 
 
     public function update(ImportedCommoditiesFormRequest $request, $slug)
     {
+
+
         $data = ImportedCommodities::where('slug', $slug)->firstOrFail(); // Use firstOrFail() for safety
+
+        $user = Auth::guard('web')->user();
+
+        // Check if user already has an application
+//        $data = ImportedCommodities::where('user_created', $user->slug)->first();
+
+        if (!$data) {
+            $data = new ImportedCommodities(); // Create a new application if none exists
+        }
+
+        // Assign values (either update existing or insert new)
+//        $data->date = $request->date;
+        $data->name = $request->name;
+        $data->company = $request->company;
+        $data->designation = $request->designation;
+        $data->tin = $request->tin;
+        $data->contact = $request->contact;
+        $data->quantity_mt = $request->quantity_mt;
+        $data->bill_landing_no = $request->bill_landing_no;
+        $data->prod_description = $request->prod_description;
+        $data->country_origin = $request->country_origin;
+        $data->port_discharge = $request->port_discharge;
+        $data->purpose_importation = $request->purpose_importation;
+        $data->contact_no = $request->contact_no;
+        $data->email = $request->email;
+        $data->address = $request->address;
+        $data->application_type = 'Clearance for Imported Commodities';
+        $data->user_created = $user->slug;
+        $data->user_updated = $user->slug;
+        $data->year = now()->format('Y');
+
+        // If it's a new entry, set the created_at date
+        if (!$data->exists) {
+            $data->created_at = now();
+        }
+
+        $data->updated_at = now();
+//        $data->date = $request->date->format('Y-m-d H:i:s');
+
 
         // Only update if a new file is uploaded
         if ($billLanding = $this->handleFileUpload($request, 'bill_landing_path', $slug)) {
@@ -245,6 +358,22 @@ class ImportedCommoditiesController extends Controller
     {
         return implode("-", str_split($str, 3));
     }
+
+    public function getFilePaths($slug)
+    {
+        return response()->json([
+            'application_form_path' => "/show_file_custom_user/imported_commodities/$slug/application_form_path",
+            'affidavit_path' => "/show_file_custom/imported_commodities/$slug/affidavit_path",
+            'bill_landing_path' => "/show_file_custom/imported_commodities/$slug/bill_landing_path",
+            'commercial_invoice_path' => "/show_file_custom/imported_commodities/$slug/commercial_invoice_path",
+            'packing_list_path' => "/show_file_custom/imported_commodities/$slug/packing_list_path",
+            'cert_origin_path' => "/show_file_custom/imported_commodities/$slug/cert_origin_path",
+            'cert_analysis_path' => "/show_file_custom/imported_commodities/$slug/cert_analysis_path",
+            'notarized_gmo_non_gmo_path' => "/show_file_custom/imported_commodities/$slug/notarized_gmo_non_gmo_path",
+            'important_declaration_path' => "/show_file_custom/imported_commodities/$slug/important_declaration_path",
+        ]);
+    }
+
 
 
 }

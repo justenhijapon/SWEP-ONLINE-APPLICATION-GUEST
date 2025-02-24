@@ -7,6 +7,9 @@ use App\Models\User\OrderOfPayments;
 use App\Models\User\OrderOfPaymentsDetailsModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {	
@@ -35,5 +38,77 @@ class HomeController extends Controller
         }
 
         return view('admin.home.index')->with(['op' => $op, 'opPaid' => $opPaid, 'opUnpaid' => $opUnpaid, 'client' => $client]);
+    }
+
+
+    public function viewFile($tableName, $slug)
+    {
+        $data = DB::table($tableName)->where('slug', $slug)->first();
+
+        if (!$data) {
+            abort(502, 'File not found');
+        }
+        if (!Storage::disk('local')->exists($data->path)) {
+            abort(502, 'File not found');
+        }
+
+        return Storage::disk('local')->response($data->path);
+    }
+
+    public function viewFileCustom($tableName, $slug, $columnName = 'path')
+    {
+        $data = DB::table($tableName)->where('slug', '=', $slug)->first();
+
+        if (!$data) {
+            abort(502, 'File not found');
+        }
+
+        if (!Storage::disk('local')->exists($data->$columnName)) {
+            abort(502, 'File not found');
+        }
+    }
+
+
+
+
+
+    public function showFileCustom($tableName, $slug, $columnName = 'path') {
+        // Validate table name to prevent SQL injection risk
+        if (!Schema::hasTable($tableName)) {
+            abort(404, 'Invalid table name.');
+        }
+
+        // Fetch record
+        $data = DB::table($tableName)->where('slug', $slug)->first();
+
+        if (!$data) {
+            abort(404, 'Record not found.');
+        }
+
+        // Ensure the column exists
+        if (!isset($data->$columnName)) {
+            abort(404, 'Invalid column name.');
+        }
+
+        // Check if file exists
+        if (!Storage::exists($data->$columnName)) {
+            abort(404, 'File not found.');
+        }
+
+        // Return file response
+        return Storage::response($data->$columnName);
+    }
+
+
+    public function showFile($tableName, $slug)
+    {
+        $data = DB::table($tableName)->where('slug', '=', $slug)->first();
+
+        if(!$data || !Storage::disk('local')->exists($data->path)) {
+            abort('406', 'File not found');
+
+        }
+
+        return Storage::disk('local')->response($data->path);
     }
 }

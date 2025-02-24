@@ -9,7 +9,6 @@ use Illuminate\Support\Carbon;
 
 class __form2
 {
-
     public static function textbox($name,$options = [],$value = null,$input_only = false){
         $n = new __form2;
         $n->set($options);

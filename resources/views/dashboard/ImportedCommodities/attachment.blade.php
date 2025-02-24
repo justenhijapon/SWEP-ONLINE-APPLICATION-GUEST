@@ -14,85 +14,81 @@
 {{--        ]) !!}--}}
 
 
-                @if(empty($data->application_form_path))
-                    {!! \App\Core\Helpers\__form2::file('application_form_path', [
-                       'label'=>'Application Form (Notarized)',
-                       'cols'=>'4',
-                       'id'=>'img_url_application_form_path',
-                    ]) !!}
-                @endif
+{{--                @if(empty($data->application_form_path))--}}
 
-                @if(!isset($data->affidavit_path) || empty($data->affidavit_path))
+{{--                @endif--}}
+
+{{--                @if(!isset($data->affidavit_path) || empty($data->affidavit_path))--}}
                     {!! \App\Core\Helpers\__form2::file('affidavit_path', [
                         'label' => 'Affidavit',
                         'id' => 'img_url_affidavit_path',
                         'cols' => '4',
                         'rows' => '2',
                     ]) !!}
-                @endif
+{{--                @endif--}}
 
-                @if(empty($data->bill_landing_path))
+{{--                @if(empty($data->bill_landing_path))--}}
                     {!! \App\Core\Helpers\__form2::file('bill_landing_path', [
                          'label' => 'Bill of Landing',
                          'id'=>'img_url_bill_landing_path',
                          'cols' => '4',
                          'rows'=>'2',
                     ]) !!}
-                @endif
+{{--                @endif--}}
 
-                @if(empty($data->commercial_invoice_path))
+{{--                @if(empty($data->commercial_invoice_path))--}}
                     {!! \App\Core\Helpers\__form2::file('commercial_invoice_path', [
                          'label' => 'Commercial Invoice',
                          'id'=>'img_url_commercial_invoice_path',
                          'cols' => '4',
                          'rows'=>'2',
                     ]) !!}
-                @endif
+{{--                @endif--}}
 
-                @if(empty($data->packing_list_path))
-        {!! \App\Core\Helpers\__form2::file('packing_list_path', [
-             'label' => 'Packing List',
-             'id'=>'img_url_packing_list_path',
-             'cols' => '4',
-             'rows'=>'2',
-        ]) !!}
-                @endif
+{{--                @if(empty($data->packing_list_path))--}}
+                {!! \App\Core\Helpers\__form2::file('packing_list_path', [
+                     'label' => 'Packing List',
+                     'id'=>'img_url_packing_list_path',
+                     'cols' => '4',
+                     'rows'=>'2',
+                ]) !!}
+{{--                @endif--}}
 
-                @if(empty($data->cert_origin_path))
+{{--                @if(empty($data->cert_origin_path))--}}
                     {!! \App\Core\Helpers\__form2::file('cert_origin_path', [
                          'label' => 'Certificate of Origin',
                          'id'=>'img_url_cert_origin_path',
                          'cols' => '4',
                          'rows'=>'2',
                     ]) !!}
-                @endif
+{{--                @endif--}}
 
-                @if(empty($data->cert_analysis_path))
+{{--                @if(empty($data->cert_analysis_path))--}}
                     {!! \App\Core\Helpers\__form2::file('cert_analysis_path', [
                          'label' => 'Certificate of Analysis',
                          'id'=>'img_url_cert_analysis_path',
                          'cols' => '4',
                          'rows'=>'2',
                     ]) !!}
-                @endif
+{{--                @endif--}}
 
-                @if(empty($data->notarized_gmo_non_gmo_path))
+{{--                @if(empty($data->notarized_gmo_non_gmo_path))--}}
                     {!! \App\Core\Helpers\__form2::file('notarized_gmo_non_gmo_path', [
                          'label' => 'Notarized Declaration of GMO and Non-GMO',
                          'id'=>'img_url_notarized_gmo_non_gmo_path',
                          'cols' => '4',
                          'rows'=>'2',
                     ]) !!}
-                @endif
+{{--                @endif--}}
 
-                @if(empty($data->important_declaration_path))
+{{--                @if(empty($data->important_declaration_path))--}}
                     {!! \App\Core\Helpers\__form2::file('important_declaration_path', [
                          'label' => 'Import Declaration (once available)',
                          'id'=>'img_url_important_declaration_path',
                          'cols' => '4',
                          'rows'=>'2',
                     ]) !!}
-                @endif
+{{--                @endif--}}
 
 
     </div>
@@ -153,7 +149,7 @@
             });
         });
 
-        var existingImgUrl_application_form_path = "/show_file_custom/imported_commodities/{{$data->slug}}/application_form_path";
+        var existingImgUrl_application_form_path = "/show_file_custom_user/imported_commodities/{{$data->slug}}/application_form_path";
         var existingImgUrl_affidavit_path = "/show_file_custom/imported_commodities/{{$data->slug}}/affidavit_path";
         var existingImgUrl_bill_landing_path = "/show_file_custom/imported_commodities/{{$data->slug}}/bill_landing_path";
         var existingImgUrl_commercial_invoice_path = "/show_file_custom/imported_commodities/{{$data->slug}}/commercial_invoice_path";
@@ -218,3 +214,5 @@
         // Hide file remove button
         $(".kv-file-remove").hide();
     </script>
+
+@endsection

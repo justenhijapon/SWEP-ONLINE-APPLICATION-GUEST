@@ -329,18 +329,33 @@ class __form2
         return $years;
     }
 
-    public static function file($name, $options = [], $value = null){
+//    public static function file($name, $options = [], $value = null){
+//        $n = new __form2;
+//        $n->set($options);
+//        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
+//
+//        return '<div class="form-group col-md-'. $n->cols .'">
+//                <label for="'. $n->for .'">'. $n->label .'</label>
+//                <div class="file-loading">
+//                  <input class="file" name="'. $name .'" '.$id.' type="file" '. $n->extra_attr .' multiple >
+//                </div>
+//              </div>';
+//    }
+
+    public static function file($name, $options = [], $value = null) {
         $n = new __form2;
         $n->set($options);
-        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
+        $id = ($n->id != '') ? 'id="'.$n->id.'"' : '';
+        $fileUrl = isset($options['file_url']) ? 'data-file-url="'.$options['file_url'].'"' : '';
 
         return '<div class="form-group col-md-'. $n->cols .'">
                 <label for="'. $n->for .'">'. $n->label .'</label>
                 <div class="file-loading">
-                  <input class="file" name="'. $name .'" '.$id.' type="file" '. $n->extra_attr .' multiple >
+                  <input class="file" name="'. $name .'" '.$id.' type="file" '.$n->extra_attr.' multiple '.$fileUrl.'>
                 </div>
-              </div>';
+            </div>';
     }
+
 
     public function set($array){
 
