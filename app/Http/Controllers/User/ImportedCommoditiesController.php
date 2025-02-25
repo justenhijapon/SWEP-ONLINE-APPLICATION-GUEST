@@ -175,80 +175,9 @@ class ImportedCommoditiesController extends Controller
 //
 //    }
 
-    public function applicationFormUpdate(ImportedCommoditiesFormRequest $request, $slug){
-        $user = Auth::guard('web')->user();
-
-        // Check if user already has an application
-        $ic = ImportedCommodities::where('user_created', $user->slug)->first();
-
-        if (!$ic) {
-            $ic = new ImportedCommodities(); // Create a new application if none exists
-        }
-
-        // Construct full name from PreRegistration data
-        $fullname = $preReg->first_name . ' ' .
-            ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') .
-            $preReg->last_name;
-
-        // Assign values (either update existing or insert new)
-        $ic->name = $fullname;
-        $ic->company = $request->company;
-        $ic->designation = $request->designation;
-        $ic->tin = $request->tin;
-        $ic->contact = $request->contact;
-        $ic->quantity_mt = $request->quantity_mt;
-        $ic->bill_landing_no = $request->bill_landing_no;
-        $ic->prod_description = $request->prod_description;
-        $ic->country_origin = $request->country_origin;
-        $ic->port_discharge = $request->port_discharge;
-        $ic->purpose_importation = $request->purpose_importation;
-        $ic->contact_no = $request->contact_no;
-        $ic->email = $request->email;
-        $ic->address = $request->address;
-        $ic->application_type = 'Clearance for Imported Commodities';
-        $ic->user_created = $user->slug;
-        $ic->user_updated = $user->slug;
-        $ic->year = now()->format('Y');
-
-        // If it's a new entry, set the created_at date
-        if (!$ic->exists) {
-            $ic->created_at = now();
-        }
-
-        $ic->updated_at = now();
-        $ic->date = now()->format('Y-m-d H:i:s');
-        $ic->save();
-
-        return redirect()->back()->with('success', 'Application form saved successfully.');
-
-//        $ic = new ImportedCommodities();
-//        $fullname =$ic->first_name . ' ' . ($ic->middle_name ? strtoupper(substr($ic->middle_name, 0, 1)) . '. ' : '') . $ic->last_name;
-//        $ic->name = $fullname;
-//        $ic->company = $request->company;
-//        $ic->designation = $request->designation;
-//        $ic->tin = $request->tin;
-//        $ic->contact = $request->contact;
-//        $ic->quantity_mt = $request->quantity_mt;
-//        $ic->bill_landing_no = $request->bill_landing_no;
-//        $ic->prod_description = $request->prod_description;
-//        $ic->country_origin = $request->country_origin;
-//        $ic->port_discharge = $request->port_discharge;
-//        $ic->purpose_importation = $request->purpose_importation;
-//        $ic->contact_no = $request->contact_no;
-//        $ic->email = $request->email;
-//        $ic->address = $request->address;
-//        $ic->application_type = 'Clearance for Imported Commodities';
-//        $ic->user_created = Auth::guard('web')->user()->slug;
-//        $ic->user_updated = Auth::guard('web')->user()->slug;
-////        $ic->created_at = Carbon::now();
-//        $ic->updated_at = Carbon::now();
-//        $ic->date = Carbon::now()->format('Y-m-d H:i:s');
-//        $ic->year = now()->format('Y');
-//        $ic->save();
-    }
 
 
-    public function update(ImportedCommoditiesFormRequest $request, $slug)
+   public function update(ImportedCommoditiesFormRequest $request, $slug)
     {
 
 
@@ -374,7 +303,5 @@ class ImportedCommoditiesController extends Controller
             'important_declaration_path' => "/show_file_custom/imported_commodities/$slug/important_declaration_path",
         ]);
     }
-
-
 
 }

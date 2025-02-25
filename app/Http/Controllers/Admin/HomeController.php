@@ -46,10 +46,10 @@ class HomeController extends Controller
         $data = DB::table($tableName)->where('slug', $slug)->first();
 
         if (!$data) {
-            abort(502, 'File not found');
+            abort(406, 'File not found');
         }
         if (!Storage::disk('local')->exists($data->path)) {
-            abort(502, 'File not found');
+            abort(406, 'File not found');
         }
 
         return Storage::disk('local')->response($data->path);
@@ -60,11 +60,11 @@ class HomeController extends Controller
         $data = DB::table($tableName)->where('slug', '=', $slug)->first();
 
         if (!$data) {
-            abort(502, 'File not found');
+            abort(406, 'File not found');
         }
 
         if (!Storage::disk('local')->exists($data->$columnName)) {
-            abort(502, 'File not found');
+            abort(406, 'File not found');
         }
     }
 
@@ -75,24 +75,24 @@ class HomeController extends Controller
     public function showFileCustom($tableName, $slug, $columnName = 'path') {
         // Validate table name to prevent SQL injection risk
         if (!Schema::hasTable($tableName)) {
-            abort(404, 'Invalid table name.');
+            abort(406, 'Invalid table name.');
         }
 
         // Fetch record
         $data = DB::table($tableName)->where('slug', $slug)->first();
 
         if (!$data) {
-            abort(404, 'Record not found.');
+            abort(406, 'Record not found.');
         }
 
         // Ensure the column exists
         if (!isset($data->$columnName)) {
-            abort(404, 'Invalid column name.');
+            abort(406, 'Invalid column name.');
         }
 
         // Check if file exists
         if (!Storage::exists($data->$columnName)) {
-            abort(404, 'File not found.');
+            abort(406, 'File not found.');
         }
 
         // Return file response

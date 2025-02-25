@@ -44,7 +44,14 @@
 												'placeholder' => '',
 												'required'=>'required',
 											], $data->date) !!}
-										<div class="col-md-8" style="padding-bottom: 10px">
+
+										<div class="col-md-4" style="margin-top: 30px">
+											<div class=" no-padding">
+												<p>Application Reference No.:<span><code style="font-size: medium" class="no-padding"> {{$data->slug}}</code></span></p>
+											</div>
+										</div>
+
+										<div class="col-md-4" style="padding-bottom: 10px">
 											<div class="pull-right no-padding">
 												<code class="no-padding">Fields with asterisks(*) are required</code>
 											</div>
@@ -253,7 +260,7 @@
 												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
 												<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>
 													<span class="pull-right" style="padding-right: 20px">
-														<button id="btnBioEnergySubmit" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;"><i class="fa fa-save"></i> Submit Application</button>
+														<button id="btnBioEnergySubmit" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;">Submit Application <i class="fa fa-arrow-circle-right"></i></button>
 													</span>
 											</div>
 										</div>
@@ -286,10 +293,10 @@
 								<div class="panel-heading">
 									<h4 align="center">APPLICATION STATUS</h4>
 								</div>
-								<div class="panel-body">
+								<div class="panel-body" style="padding-top: 2px">
 									<div class="row">
 										<div class="col-sm-12" style="padding-bottom: 10px">
-
+											<p align="center" style="margin: 5px; font-weight: bold">Timeline</p>
 											<div class="ibox-content inspinia-timeline" style="padding-right: 10px; padding-left: 10px">
 
 												<div class="timeline-item">
@@ -306,6 +313,7 @@
 														</div>
 													</div>
 												</div>
+
 {{--												<div class="timeline-item">--}}
 {{--													<div class="row">--}}
 {{--														<div class="col-5 date">--}}
@@ -321,35 +329,48 @@
 {{--													</div>--}}
 {{--												</div>--}}
 
-{{--												<div class="timeline-item">--}}
-{{--													<div class="row">--}}
-{{--														<div class="col-5 date">--}}
-{{--															<i class="fa fa-save"></i>--}}
-{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
-{{--															<small class="text-navy">--}}
-{{--																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->updated_at)->diffForHumans()) }}--}}
-{{--															</small>--}}
-{{--														</div>--}}
-{{--														<div class="col-7 content">--}}
-{{--															<p class="m-b-xs"><strong>Application Submitted</strong></p>--}}
-{{--														</div>--}}
-{{--													</div>--}}
-{{--												</div>--}}
+											@if($data->submission != 0)
+												<div class="timeline-item">
+													<div class="row">
+														<div class="col-5 date">
+															<i class="fa fa-arrow-circle-right"></i>
+															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->submission_date)->format('M. j, Y') }}</p>
+															<small class="text-navy">
+																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->submission_date)->diffForHumans()) }}
+															</small>
+														</div>
+														<div class="col-7 content">
+															<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Application Submitted' : $data->submission }}</strong></p>
+														</div>
+													</div>
+												</div>
+											@endif
 
-{{--												<div class="timeline-item">--}}
-{{--													<div class="row">--}}
-{{--														<div class="col-5 date">--}}
-{{--															<i class="fa fa-save"></i>--}}
-{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
-{{--															<small class="text-navy">--}}
-{{--																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->updated_at)->diffForHumans()) }}--}}
-{{--															</small>--}}
-{{--														</div>--}}
-{{--														<div class="col-7 content">--}}
-{{--															<p class="m-b-xs"><strong>Application received</strong></p>--}}
-{{--														</div>--}}
-{{--													</div>--}}
-{{--												</div>--}}
+											@if($data->received != 0)
+												<div class="timeline-item">
+													<div class="row">
+														<div class="col-5 date">
+															<i class="fa fa-check-circle"></i>
+															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->received_date)->format('M. j, Y') }}</p>
+															<small class="text-navy">
+																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->received_date)->diffForHumans()) }}
+															</small>
+														</div>
+														<div class="col-7 content">
+															<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Received' : $data->received }}</strong></p>
+														</div>
+													</div>
+												</div>
+
+												<div class="timeline-item">
+													<div class="row">
+														<div class="col-6 date">
+															<i class="fa fa-circle"></i>
+{{--															<i class="fa fa-clock-o"></i>--}}
+														</div>
+													</div>
+												</div>
+											@endif
 
 
 											</div>

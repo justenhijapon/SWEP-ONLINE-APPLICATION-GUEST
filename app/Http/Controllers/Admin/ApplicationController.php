@@ -18,41 +18,35 @@ class ApplicationController extends Controller
         $this->application = $application;
     }
 
-    public function index(){
-        if(request()->ajax())
-        {
-            $data = request();
-            return DataTables::of($this->application->fetchTable($data))
-                ->editColumn('slug',function($data){
-                    return '<h4><code>'.$data->slug.'</code></h4><hr style="margin-bottom: 2px;margin-top: 2px;">
-                            <small class="text-muted">Date: '.date("M. d, Y|h:i A",strtotime($data->created_at)).'</small>';
-                })
+    public function index()
+    {
+        if (request()->ajax()) {
+            $query = $this->application->fetchTable(request()); // Fetch only submission = 1
 
-                ->editColumn('application_type',function($data){
-                    return '<p style="font-size: small" class="no-margin">'.$data->application_type.'</p>
-                            ';
+            return DataTables::of($query)
+                ->editColumn('slug', function($data) {
+                    return '<h4><code>' . $data->slug . '</code></h4><hr style="margin-bottom: 2px;margin-top: 2px;">
+                        <small class="text-muted">Date: ' . date("M. d, Y|h:i A", strtotime($data->created_at)) . '</small>';
                 })
-
-                ->editColumn('name',function($data){
-                    return view('admin.application.dt.NameDetails')->with([
-                        'data' => $data,
-                    ]);
+                ->editColumn('application_type', function($data) {
+                    return '<p style="font-size: small" class="no-margin">' . $data->application_type . '</p>';
                 })
-
-                ->editColumn('prod_description',function($data){
-                    return view('admin.application.dt.ProductDescription')->with([
-                        'data' => $data,
-                    ]);
+                ->editColumn('name', function($data) {
+                    return view('admin.application.dt.NameDetails')->with(['data' => $data]);
                 })
-                ->editColumn('purpose_importation',function($data){
-                    return view('admin.application.dt.PurposeImportation')->with([
-                        'data' => $data,
-                    ]);
+                ->editColumn('prod_description', function($data) {
+                    return view('admin.application.dt.ProductDescription')->with(['data' => $data]);
                 })
-
-
+                ->editColumn('purpose_importation', function($data) {
+                    return view('admin.application.dt.PurposeImportation')->with(['data' => $data]);
+                })
+                ->editColumn('status', function($data) {
+                    return view('admin.application.dt.status')->with(['data' => $data]);
+                })
                 ->addColumn('action', function($data) {
                     $attachmentFields = [
+                        'application_form_path' => 'Application Form',
+                        'affidavit_path' => 'Affidavit',
                         'bill_landing_path' => 'Bill of Landing',
                         'commercial_invoice_path' => 'Commercial Invoice',
                         'packing_list_path' => 'Packing List',
@@ -60,11 +54,8 @@ class ApplicationController extends Controller
                         'cert_analysis_path' => 'Certificate of Analysis',
                         'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
                         'important_declaration_path' => 'Important Declaration',
-                        'application_form_path' => 'Application Form',
-                        'affidavit_path' => 'Affidavit'
                     ];
 
-                    // Count non-empty attachments
                     $attachmentsCount = 0;
                     foreach ($attachmentFields as $field => $label) {
                         if (!empty($data->$field) && $data->$field !== null) {
@@ -72,54 +63,148 @@ class ApplicationController extends Controller
                         }
                     }
 
-                    // Generate dropdown for available files
+                    $btnClass = ($attachmentsCount === 9) ? 'btn-primary' : 'btn-danger';
+
                     $dropdownMenu = '<div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span> View Files (' . $attachmentsCount . '/9)
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right">';
+                                <button type="button" class="btn ' . $btnClass . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span> View Files (' . $attachmentsCount . '/9)
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">';
 
                     foreach ($attachmentFields as $field => $label) {
                         if (!empty($data->$field) && $data->$field !== null) {
                             $fileUrl = url("/show_file_custom/imported_commodities/{$data->slug}/{$field}");
-                            $dropdownMenu .= '<li><a href="' . $fileUrl . '" target="_blank"><small class="no-margin">' . $label . '</small></a></li>';
+                            $dropdownMenu .= '<li><a href="#" class="view-file-link" data-url="' . $fileUrl . '">
+                                            <small class="view-file no-margin">' . $label . '</small>
+                                         </a></li>';
                         }
                     }
 
                     $dropdownMenu .= '</ul></div>';
 
-                    // Action buttons (Edit & Delete)
                     $buttons = '<div class="btn-group">
                     <button type="button" data="' . $data->slug . '" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">
                         <i class="fa fa-edit"></i>
                     </button>
                 </div>';
 
-                    // Merge buttons with dropdown
                     return $buttons . ' ' . $dropdownMenu;
                 })
-                ->rawColumns(['action']) // Ensure raw HTML is rendered
-
-
-
-//                ->addColumn('action', function($data){
-//                    $button = '<div class="btn-group">
-//
-//                                <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">
-//                                    <i class="fa fa-edit"></i>
-//                                </button>
-//
-//
-//                            </div>';
-//                    return $button;
-//                })
+                ->rawColumns(['slug', 'application_type', 'action'])
                 ->escapeColumns([])
                 ->setRowId('slug')
-//                ->make(true)
-                ->toJson();
+                ->make(true);
         }
+
         return view('admin.application.index');
     }
+
+
+//    public function index(){
+//        if(request()->ajax())
+//        {
+////            $data = request();
+////            return DataTables::of($this->application->fetchTable($data))
+//
+//            $data = $this->application->fetchTable(request()); // Now only contains submission = 1
+//            return DataTables::of($data)->make(true)
+//
+//
+//                ->editColumn('slug',function($data){
+//                    return '<h4><code>'.$data->slug.'</code></h4><hr style="margin-bottom: 2px;margin-top: 2px;">
+//                            <small class="text-muted">Date: '.date("M. d, Y|h:i A",strtotime($data->created_at)).'</small>';
+//                })
+//
+//                ->editColumn('application_type',function($data){
+//                    return '<p style="font-size: small" class="no-margin">'.$data->application_type.'</p>
+//                            ';
+//                })
+//
+//                ->editColumn('name',function($data){
+//                    return view('admin.application.dt.NameDetails')->with([
+//                        'data' => $data,
+//                    ]);
+//                })
+//
+//                ->editColumn('prod_description',function($data){
+//                    return view('admin.application.dt.ProductDescription')->with([
+//                        'data' => $data,
+//                    ]);
+//                })
+//
+//                ->editColumn('purpose_importation',function($data){
+//                    return view('admin.application.dt.PurposeImportation')->with([
+//                        'data' => $data,
+//                    ]);
+//                })
+//
+//                ->editColumn('status',function($data){
+//                    return view('admin.application.dt.status')->with([
+//                        'data' => $data,
+//                    ]);
+//                })
+//
+//                ->addColumn('action', function($data) {
+//                    $attachmentFields = [
+//                        'bill_landing_path' => 'Bill of Landing',
+//                        'commercial_invoice_path' => 'Commercial Invoice',
+//                        'packing_list_path' => 'Packing List',
+//                        'cert_origin_path' => 'Certificate of Origin',
+//                        'cert_analysis_path' => 'Certificate of Analysis',
+//                        'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
+//                        'important_declaration_path' => 'Important Declaration',
+//                        'application_form_path' => 'Application Form',
+//                        'affidavit_path' => 'Affidavit'
+//                    ];
+//
+//                    // Count non-empty attachments
+//                    $attachmentsCount = 0;
+//                    foreach ($attachmentFields as $field => $label) {
+//                        if (!empty($data->$field) && $data->$field !== null) {
+//                            $attachmentsCount++;
+//                        }
+//                    }
+//                    // Determine button color based on attachment count
+//                    $btnClass = ($attachmentsCount === 9) ? 'btn-primary' : 'btn-danger';
+//
+//                    // Generate dropdown for available files
+//                    $dropdownMenu = '<div class="btn-group btn-group-sm">
+//                                    <button type="button" class="btn ' . $btnClass . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+//                                        <span class="caret"></span> View Files (' . $attachmentsCount . '/9)
+//                                    </button>
+//                                    <ul class="dropdown-menu dropdown-menu-right">';
+//
+//                    foreach ($attachmentFields as $field => $label) {
+//                        if (!empty($data->$field) && $data->$field !== null) {
+//                            $fileUrl = url("/show_file_custom/imported_commodities/{$data->slug}/{$field}");
+//                            $dropdownMenu .= '<li><a href="#" class="view-file-link" data-url="' . $fileUrl . '">
+//                                                <small class="view-file no-margin">' . $label . '</small>
+//                                             </a></li>';
+//                        }
+//                    }
+//
+//                    $dropdownMenu .= '</ul></div>';
+//
+//                    // Action buttons (Edit & Delete)
+//                    $buttons = '<div class="btn-group">
+//                    <button type="button" data="' . $data->slug . '" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">
+//                        <i class="fa fa-edit"></i>
+//                    </button>
+//                </div>';
+//
+//                    // Merge buttons with dropdown
+//                    return $buttons . ' ' . $dropdownMenu;
+//                })
+//
+//                ->rawColumns(['action']) // Ensure raw HTML is rendered
+//
+//                ->escapeColumns([])
+//                ->setRowId('slug')
+////                ->make(true)
+//                ->toJson();
+//        }
+//        return view('admin.application.index');
+//    }
 
 //<div class="btn-group btn-group-sm" role="group">
 //<button type="button" class="btn btn-default dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

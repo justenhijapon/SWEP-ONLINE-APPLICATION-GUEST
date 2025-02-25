@@ -16,9 +16,14 @@ class ApplicationRepository extends BaseRepository implements ApplicationInterfa
         parent::__construct();
     }
 
-    public function fetchTable($data){
-        $get = $this->application;
-        return $get->all();
+//    public function fetchTable($data){
+//        $get = $this->application;
+//        return $get->all();
+//    }
+
+    public function fetchTable($data)
+    {
+        return $this->application->where('submission', 1); // Return query instead of collection
     }
 
     public function fetch($request)

@@ -41,11 +41,28 @@
             </div>
         </div>
     </section>
+
 @endsection
 
 @section('modals')
     {!! __html::blank_modal('edit_modal', '', 'style="width: 80%"') !!}
     {!! __html::blank_modal('showApplicationFile_modal', '', 'style="width: 60%"') !!}
+
+    <div id="filePreviewModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">File Preview</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 800px;">
+                    <iframe id="filePreviewIframe" src="" style="width:100%; height:750px;" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="add_modal" class="modal fade" role="dialog">
         <div class="modal-dialog" style="width: 80%";>
@@ -89,6 +106,14 @@
 
 @section('scripts')
     <script type="text/javascript">
+        $(document).on('click', '.view-file-link', function (e) {
+            e.preventDefault();
+
+            var fileUrl = $(this).data('url'); // Get file URL
+            $('#filePreviewIframe').attr('src', fileUrl); // Set iframe src
+            $('#filePreviewModal').modal('show'); // Show modal
+        });
+
         $(document).ready(function(){
             active = '';
             applicationTbl =  $("#applicationTable").DataTable({
@@ -154,7 +179,14 @@
                 });
             });
 
-            {{--$("#add_form").submit(function(e){--}}
+            $("body").on("click", ".view-file", function() {
+                var fileUrl = $(this).data("url"); // Fetch the file URL from the clicked element
+                $("#fileViewer").attr("src", fileUrl); // Set the iframe source dynamically
+                $("#viewFileModal").modal("show"); // Show the modal
+            });
+
+
+        {{--$("#add_form").submit(function(e){--}}
             {{--    e.preventDefault();--}}
             {{--    form = $(this);--}}
             {{--    formdata = form.serialize();--}}

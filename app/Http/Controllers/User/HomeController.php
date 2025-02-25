@@ -73,19 +73,19 @@ class HomeController extends Controller
     public function showFileCustom($tableName, $slug, $columnName = 'path')
     {
         if (!Schema::hasTable($tableName)) {
-            abort(404, 'Invalid table name.');
+            abort(406, 'Invalid table name.');
         }
 
         $data = DB::table($tableName)->where('slug', $slug)->first();
 
         if (!$data || !isset($data->$columnName)) {
-            abort(404, 'File not found.');
+            abort(406, 'File not found.');
         }
 
         $filePath = $data->$columnName;
 
         if (!Storage::exists($filePath)) {
-            abort(404, 'File does not exist.');
+            abort(406, 'File does not exist.');
         }
 
         // Determine the file type
