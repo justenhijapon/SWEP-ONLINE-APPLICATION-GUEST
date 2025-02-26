@@ -71,6 +71,7 @@ class PreRegistrationController extends Controller
     {
         $appData = new User\ImportedCommodities();
         $preReg = new PreRegistrationModel();
+        $ipAddress = $request->ip();
         $preReg->slug = $this->new_slug();
         $preReg->username = $request->username;
         $preReg->password = $request->password;
@@ -100,7 +101,7 @@ class PreRegistrationController extends Controller
         $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
         $appData->user_created = $preReg ->slug;
         $appData->name = $fullname; $appData->contact_no = $preReg->business_phone;  $appData->designation = $preReg->position; $appData->company = $preReg->business_name;
-        $appData->tin = $preReg->business_tin; $appData->address = $full_address; $appData->email = $preReg->email;
+        $appData->tin = $preReg->business_tin; $appData->address = $full_address; $appData->email = $preReg->email; $appData-> ip_created = $ipAddress;
 
         $appData->save();
         $preReg->save();

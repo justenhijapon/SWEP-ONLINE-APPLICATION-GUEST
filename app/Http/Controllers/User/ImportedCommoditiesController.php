@@ -179,15 +179,8 @@ class ImportedCommoditiesController extends Controller
 
    public function update(ImportedCommoditiesFormRequest $request, $slug)
     {
-
-
         $data = ImportedCommodities::where('slug', $slug)->firstOrFail(); // Use firstOrFail() for safety
-
         $user = Auth::guard('web')->user();
-
-        // Check if user already has an application
-//        $data = ImportedCommodities::where('user_created', $user->slug)->first();
-
         if (!$data) {
             $data = new ImportedCommodities(); // Create a new application if none exists
         }
@@ -212,6 +205,16 @@ class ImportedCommoditiesController extends Controller
         $data->user_created = $user->slug;
         $data->user_updated = $user->slug;
         $data->year = now()->format('Y');
+
+        // Update submission_status only if present in the request
+        if ($request->has('submission')) {
+            $data->submission = $request->submission;
+        }
+
+        // Update submission_date only when submitting the application
+        if ($request->has('submission_date')) {
+            $data->submission_date = $request->submission_date;
+        }
 
         // If it's a new entry, set the created_at date
         if (!$data->exists) {
@@ -252,9 +255,9 @@ class ImportedCommoditiesController extends Controller
         }
 
         $data->save();
-
-        return redirect('/');
-//        return response()->json(['slug' => $data->slug]);
+//       return redirect()->back();
+//        return redirect()->to('/');
+        return response()->json(['slug' => $data->slug]);
     }
 
     private function handleFileUpload(Request $request, $fileInputName, $slug)

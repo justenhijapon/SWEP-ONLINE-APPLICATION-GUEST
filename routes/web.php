@@ -4,6 +4,7 @@
     /** Auth **/
 
 use App\Http\Controllers\Admin\ApplicationController;
+use App\Http\Controllers\User\ImportedCommoditiesController;
 
 Route::group(['as' => 'auth.'], function () {
 
@@ -137,6 +138,9 @@ Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admi
 
     Route::get('show_file_custom/{tableName}/{slug}/{columnName}', 'Admin\HomeController@showFileCustom')->name('show_file_custom');
     Route::get('show_file_custom_user/{tableName}/{slug}/{columnName}', 'User\HomeController@showFileCustom')->name('show_file_custom');
+
+Route::patch('/dashboard/ImportedCommodities/{slug}', [ImportedCommoditiesController::class, 'update'])
+    ->name('dashboard.ImportedCommodities.update');
 
 // Route::group(['prefix' => 'shared', 'as' => 'shared.'], function(){
 		

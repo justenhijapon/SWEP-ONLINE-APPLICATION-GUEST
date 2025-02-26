@@ -53,7 +53,7 @@
 
 										<div class="col-md-4" style="padding-bottom: 10px">
 											<div class="pull-right no-padding">
-												<code class="no-padding">Fields with asterisks(*) are required</code>
+												<code class="no-padding">Fields with asterisks(*) are mandatory</code>
 											</div>
 										</div>
 
@@ -92,6 +92,7 @@
 										{!! \App\Core\Helpers\__form2::textbox('contact_no', [
 												'label'=>'<span style="color: ' . (empty($data->contact_no) ? 'red' : 'grey') . ';">Contact No.:*</span>',
 												'cols'=>'4',
+                                                'class'=>'form-control-message',
 												'id'=>'contact_no',
 												'placeholder' => '',
 												'required'=>'required',
@@ -203,16 +204,20 @@
 														@php
 
 															$files = [
-                                                                'application_form_path' => 'Application Form (Notarized)',
-                                                                'affidavit_path' => 'Affidavit',
-                                                                'bill_landing_path' => 'Bill of Landing',
-                                                                'commercial_invoice_path' => 'Commercial Invoice',
-                                                                'packing_list_path' => 'Packing List',
-                                                                'cert_origin_path' => 'Certificate of Origin',
-                                                                'cert_analysis_path' => 'Certificate of Analysis',
-                                                                'notarized_gmo_non_gmo_path' => 'Notarized Declaration of GMO and Non-GMO',
+                                                                'application_form_path' => 'Application Form (Notarized)*',
+                                                                'affidavit_path' => 'Affidavit*',
+                                                                'bill_landing_path' => 'Bill of Landing*',
+                                                                'commercial_invoice_path' => 'Commercial Invoice*',
+                                                                'packing_list_path' => 'Packing List*',
+                                                                'cert_origin_path' => 'Certificate of Origin*',
+                                                                'cert_analysis_path' => 'Certificate of Analysis*',
+                                                                'notarized_gmo_non_gmo_path' => 'Notarized Declaration of GMO and Non-GMO*',
                                                                 'important_declaration_path' => 'Import Declaration (once available)',
                                                             ];
+
+														 	$requiredFiles = array_keys(array_filter($files, function ($key) {
+																return $key !== 'important_declaration_path'; // Exclude important_declaration_path
+															}, ARRAY_FILTER_USE_KEY));
 														@endphp
 
 														@foreach ($files as $columnName => $label)
@@ -223,6 +228,8 @@
                                                                     'slug' => $data->slug,
                                                                     'columnName' => $columnName
                                                                 ]);
+
+                                                                $fileName = $fileExists ? basename($data->$columnName) : ''; // Extract file name
 															@endphp
 
 {{--																								{!! \App\Core\Helpers\__form2::file($columnName, [--}}
@@ -241,6 +248,7 @@
 																	<div class="input-group input-group-sm">
 																		<input type="file" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}">
 																		@if($fileExists)
+																			<input type="text" style="width: 30%" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}" value="{{ $fileExists ? $fileName : '' }}" readonly>
 																			<button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#filePreviewModal" data-file-url="{{$fileUrl}}">
 																				File preview
 																			</button>
@@ -253,14 +261,28 @@
 												</div>
 											</div>
 										</div>
+										<style>
+											#btnSubmitApplication {
+												cursor: pointer !important;
+												opacity: 1 !important;
+											}
+
+											#btnSubmitApplication:disabled {
+												cursor: not-allowed !important;
+												opacity: 0.5 !important;
+											}
+										</style>
 
 										<div class="col-md-12" align="right">
 											<div class="box-footer">
-												<button id="btnBioEnergySubmit" type="submit" class="btn btn-lg btn-outline btn-primary" style="margin-right: 20px;"><i class="fa fa-save"></i> Save as Draft</button>
+												<button id="btnSaveDraft" type="submit" class="btn btn-lg btn-outline btn-primary" style="margin-right: 20px;"><i class="fa fa-save"></i> Save as Draft</button>
 												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
 												<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>
 													<span class="pull-right" style="padding-right: 20px">
-														<button id="btnBioEnergySubmit" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;">Submit Application <i class="fa fa-arrow-circle-right"></i></button>
+{{--														<button id="btnSubmitApplication" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;">Submit Application <i class="fa fa-arrow-circle-right"></i></button>--}}
+														<button id="btnSubmitApplication" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;" disabled>
+															Submit Application <i class="fa fa-arrow-circle-right"></i>
+														</button>
 													</span>
 											</div>
 										</div>
@@ -385,11 +407,12 @@
 				</div>
 			</form>
 		</div>
+
 	</section>
 
-	<iframe hidden id="printIframe" src="">
 
-	</iframe>
+
+	<iframe hidden id="printIframe" src=""></iframe>
 
 	{!! __html::modal_loader() !!}
 @endsection
@@ -420,10 +443,12 @@
 		</div>
 	</div>
 @endsection
-@section('scripts')
 
+
+@section('scripts')
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
+
 			$('#filePreviewModal').on('show.bs.modal', function (event) {
 				var button = $(event.relatedTarget); // Button that triggered the modal
 				var fileUrl = button.data('file-url'); // Extract file URL from data attribute
@@ -434,6 +459,39 @@
 				$('#filePreviewIframe').attr('src', ''); // Reset iframe when modal is closed
 			});
 		});
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			function toggleSubmitButton() {
+				let requiredFiles = @json($requiredFiles);
+				let allFilesUploaded = requiredFiles.every(function (name) {
+					let fileInput = $("input[name='" + name + "']");
+					let existingFile = fileInput.siblings("input[type='text']").val(); // Check preloaded file
+
+					return (fileInput.length > 0 && fileInput[0].files.length > 0) || existingFile;
+				});
+
+				let submitButton = $("#btnSubmitApplication");
+
+				if (allFilesUploaded) {
+					submitButton.prop("disabled", false);
+					submitButton.css("pointer-events", "auto"); // Ensure clickable
+				} else {
+					submitButton.prop("disabled", true);
+					submitButton.css("pointer-events", "none"); // Prevent clicking
+				}
+			}
+
+			// Run check on page load (to check preloaded files)
+			toggleSubmitButton();
+
+			// Run check when any file input changes
+			$(".file-input").on("change", function () {
+				toggleSubmitButton();
+			});
+		});
+
 	</script>
 
 
@@ -535,100 +593,97 @@
 		modal_loader = $(".loader_container").html();
 		$(document).ready(function() {
 
-			$("#importedCommoditiesForm").submit(function (e) {
-				e.preventDefault();
-				var form = $(this);
-				var slug = "{{$data->slug}}";
-				var uri = "{{ route('dashboard.ImportedCommodities.update', 'slug') }}";
-				uri = uri.replace('slug', slug);
+			@if(\Illuminate\Support\Facades\Request::has('success_message'))
+				notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');
+				window.history.pushState({},document.title,'/dashboard/home')
+			@endif
 
-				var formData = new FormData(this);
-				formData.append('_method', 'PATCH'); // Laravel requires PATCH for updates
+			$("#btnSaveDraft").click(function (e) {
+				e.preventDefault();
+				submitForm(false); // Pass false to indicate it's a draft
+			});
+
+			$("#btnSubmitApplication").click(function (e) {
+				e.preventDefault();
+				submitForm(true); // Pass true to update submission_status
+			});
+
+			function submitForm(isFinalSubmission) {
+				var form = $("#importedCommoditiesForm")[0];
+				var formData = new FormData(form);
+				var slug = "{{$data->slug}}";
+				var uri = "{{ route('dashboard.ImportedCommodities.update', 'slug') }}".replace('slug', slug);
+
+				formData.append('_method', 'PATCH');
+
+				// Only update submission_status when clicking "Submit Application"
+				if (isFinalSubmission) {
+					formData.append("submission", "1");
+
+					// Get the correct local time in YYYY-MM-DD HH:MM:SS format
+					var now = new Date();
+					var year = now.getFullYear();
+					var month = String(now.getMonth() + 1).padStart(2, '0');
+					var day = String(now.getDate()).padStart(2, '0');
+					var hours = String(now.getHours()).padStart(2, '0');
+					var minutes = String(now.getMinutes()).padStart(2, '0');
+					var seconds = String(now.getSeconds()).padStart(2, '0');
+
+					var localDatetime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+					formData.append("submission_date", localDatetime);
+				}
 
 				$.ajax({
 					url: uri,
+					type: "POST",
 					data: formData,
-					type: 'POST',
 					contentType: false,
 					processData: false,
 					headers: {
-						'X-CSRF-TOKEN': '{{ csrf_token() }}'
+						"X-CSRF-TOKEN": "{{ csrf_token() }}"
 					},
 					success: function (res) {
-						succeed(form, false, true);
-						active = res.slug;
-						temp_tbl.draw(false);
-						notify('Data save successfully', 'success');
+						setTimeout(function () {
+							window.location.href = "/dashboard/home?success_message=Data successfully saved!";
+						});
 					},
 					error: function (res) {
-						errored(form, res);
+						console.log(res);
+						errored($("#importedCommoditiesForm"), res);
 					}
 				});
-			});
+			}
 
-			{{--var existingImgUrl_application_form_path = "/show_file_custom_user/imported_commodities/{{$data->slug}}/application_form_path";--}}
-			{{--var existingImgUrl_affidavit_path = "/show_file_custom/imported_commodities/{{$data->slug}}/affidavit_path";--}}
-			{{--var existingImgUrl_bill_landing_path = "/show_file_custom/imported_commodities/{{$data->slug}}/bill_landing_path";--}}
-			{{--var existingImgUrl_commercial_invoice_path = "/show_file_custom/imported_commodities/{{$data->slug}}/commercial_invoice_path";--}}
-			{{--var existingImgUrl_packing_list_path = "/show_file_custom/imported_commodities/{{$data->slug}}/packing_list_path";--}}
-			{{--var existingImgUrl_cert_origin_path = "/show_file_custom/imported_commodities/{{$data->slug}}/cert_origin_path";--}}
-			{{--var existingImgUrl_cert_analysis_path = "/show_file_custom/imported_commodities/{{$data->slug}}/cert_analysis_path";--}}
-			{{--var existingImgUrl_notarized_gmo_non_gmo_path = "/show_file_custom/imported_commodities/{{$data->slug}}/notarized_gmo_non_gmo_path";--}}
-			{{--var existingImgUrl_important_declaration_path = "/show_file_custom/imported_commodities/{{$data->slug}}/important_declaration_path";--}}
 
-			{{--function initializeFileInput(elementId, existingFileUrl) {--}}
+			{{--$("#importedCommoditiesForm").submit(function (e) {--}}
+			{{--	e.preventDefault();--}}
+			{{--	var form = $(this);--}}
+			{{--	var slug = "{{$data->slug}}"; // Get the correct slug--}}
+			{{--	var uri = "{{ route('dashboard.ImportedCommodities.update', 'slug') }}".replace('slug', slug);--}}
+			{{--	var formData = new FormData(this);--}}
+			{{--	formData.append('_method', 'PATCH');--}}
+
 			{{--	$.ajax({--}}
-			{{--		url: existingFileUrl,--}}
-			{{--		type: 'GET',--}}
-			{{--		success: function () {--}}
-			{{--			// If the file exists, show the preview--}}
-			{{--			$("#" + elementId).fileinput({--}}
-			{{--				theme: "fa",--}}
-			{{--				allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],--}}
-			{{--				maxFileCount: 1,--}}
-			{{--				showUpload: false,--}}
-			{{--				showCaption: false,--}}
-			{{--				overwriteInitial: true,--}}
-			{{--				initialPreview: [existingFileUrl],--}}
-			{{--				initialPreviewAsData: true,--}}
-			{{--				initialPreviewFileType: 'image',--}}
-			{{--				initialPreviewConfig: [--}}
-			{{--					{ type: "pdf", size: 1000, caption: "PDF Document", key: 1 } // Customize as needed--}}
-			{{--				],--}}
-			{{--				fileType: "pdf",--}}
-			{{--				browseClass: "btn btn-primary btn-md",--}}
+			{{--		url: uri,--}}
+			{{--		type: 'POST',--}}
+			{{--		data: formData,--}}
+			{{--		contentType: false,--}}
+			{{--		processData: false,--}}
+			{{--		headers: {--}}
+			{{--			'X-CSRF-TOKEN': '{{ csrf_token() }}'--}}
+			{{--		},--}}
+			{{--		success: function (res) {--}}
+
+			{{--			setTimeout(function() {--}}
+			{{--				window.location.href = '/dashboard/home?success_message=Data successfully saved!';--}}
 			{{--			});--}}
 			{{--		},--}}
-			{{--		error: function () {--}}
-			{{--			// If the file doesn't exist, initialize fileinput without preview--}}
-			{{--			$("#" + elementId).fileinput({--}}
-			{{--				theme: "fa",--}}
-			{{--				allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],--}}
-			{{--				maxFileCount: 1,--}}
-			{{--				showUpload: false,--}}
-			{{--				showCaption: false,--}}
-			{{--				overwriteInitial: true,--}}
-			{{--				initialPreview: [], // No preview--}}
-			{{--				fileType: "pdf",--}}
-			{{--				browseClass: "btn btn-primary btn-md",--}}
-			{{--			});--}}
-			{{--			console.log('File not found for ' + elementId);--}}
+			{{--		error: function (res) {--}}
+			{{--			console.log(res);--}}
+			{{--			errored(form, res);--}}
 			{{--		}--}}
 			{{--	});--}}
-			{{--}--}}
-
-			{{--// Initialize file inputs for ITB and PBD--}}
-			{{--initializeFileInput("img_url_application_form_path", existingImgUrl_application_form_path);--}}
-			{{--initializeFileInput("img_url_affidavit_path", existingImgUrl_affidavit_path);--}}
-			{{--initializeFileInput("img_url_bill_landing_path", existingImgUrl_bill_landing_path);--}}
-			{{--initializeFileInput("img_url_commercial_invoice_path", existingImgUrl_commercial_invoice_path);--}}
-			{{--initializeFileInput("img_url_packing_list_path", existingImgUrl_packing_list_path);--}}
-			{{--initializeFileInput("img_url_cert_origin_path", existingImgUrl_cert_origin_path);--}}
-			{{--initializeFileInput("img_url_cert_analysis_path", existingImgUrl_cert_analysis_path);--}}
-			{{--initializeFileInput("img_url_notarized_gmo_non_gmo_path", existingImgUrl_notarized_gmo_non_gmo_path);--}}
-			{{--initializeFileInput("img_url_important_declaration_path", existingImgUrl_important_declaration_path);--}}
-
-
+			{{--});--}}
 
 
 
@@ -662,7 +717,6 @@
 					}
 				})
 			})
-
 
 
 			$("body").on('click', '.print_btn', function () {
