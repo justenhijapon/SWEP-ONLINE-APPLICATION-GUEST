@@ -22,11 +22,10 @@ class ImportedCommoditiesController extends Controller
         if(request()->ajax()){
             $ic = ImportedCommodities::where('user_created', Auth::guard('web')->user()->slug);
             return DataTables::of($ic)
-            ->editColumn('slug',function($data){
+                ->editColumn('slug',function($data){
                     return '<h4><code>'.$data->slug.'</code></h4><hr style="margin-bottom: 2px;margin-top: 2px;">
                             <small class="text-muted">Date: '.date("M. d, Y|h:i A",strtotime($data->created_at)).'</small>';
                 })
-
 
                 ->addColumn('action',function ($data){
                     $destroy_route = "'".route("dashboard.ImportedCommodities.destroy","slug")."'";
@@ -52,19 +51,12 @@ class ImportedCommoditiesController extends Controller
                         'data' => $data,
                     ]);
                 })
-//                ->editColumn('message',function ($data){
-//                    return Str::limit($data->message,100,'...');
-//                })
                 ->setRowId('slug')
                 ->escapeColumns([])
                 ->toJson();
         }
         return view('dashboard.ImportedCommodities.index');
     }
-
-
-
-
 
 
     public function create(){
@@ -75,7 +67,6 @@ class ImportedCommoditiesController extends Controller
 
     public function store(ImportedCommoditiesFormRequest $request)
     {
-
         $ic = new ImportedCommodities();
 //        $ic->slug = Str::random(15);
         $ic->slug = strtoupper($this->hyphenate(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
@@ -101,12 +92,7 @@ class ImportedCommoditiesController extends Controller
         $ic->date = Carbon::now()->format('Y-m-d H:i:s');
         $ic->year = now()->format('Y');
         $ic->save();
-
-//        return redirect('dashboard/ImportedCommodities/index');
-
     }
-
-
 
     public function attachmentStore(ImportedCommoditiesFormRequest $request){
         $ic = new ImportedCommodities();
@@ -123,16 +109,6 @@ class ImportedCommoditiesController extends Controller
        $ic->affidavit_path = $this->handleFileUpload($request, 'affidavit_path');
     }
 
-
-
-
-//    public function show(Request $request){
-//        $data = ImportedCommodities::query()->where('slug',$request->transactionId)->first();
-//
-//        return view('dashboard.ImportedCommodities.printIC')->with([
-//            'data'=>$data
-//        ]);
-//    }
 
     public function show($id){
         if(Auth::guard('web')->check()) {
@@ -157,24 +133,9 @@ class ImportedCommoditiesController extends Controller
 
     public function edit($slug)
     {
-//        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
         $data = ImportedCommodities::where('user_created', Auth::guard('web')->user()->slug)->first();
         return view('dashboard.ImportedCommodities.applicationForm', compact('data'));
     }
-
-
-//    public function edit($slug)
-//    {
-//        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
-//        return view('dashboard.ImportedCommodities.edit', compact('data'));
-//    }
-
-//    public function applicationForm($slug){
-//        $data = ImportedCommodities::where('user_created', $slug)->first();
-//        return view('dashboard.ImportedCommodities.applicationForm', compact('data'));
-//
-//    }
-
 
 
    public function update(ImportedCommoditiesFormRequest $request, $slug)

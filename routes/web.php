@@ -100,6 +100,12 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
             [ApplicationController::class, 'showApplicationFile']
         )->middleware('auth')->name('application.attachments.showApplicationFile');
 
+
+//        Route::post('/update-received/{slug}', 'Admin\ApplicationController@revokedReceived')->name('revokedReceived');
+//        Route::match(['post'], 'admin/update-received/{slug}', [ApplicationController::class, 'revokeReceived']);
+        Route::post('application/{slug}/revokedUpdate','Admin\ApplicationController@revokedUpdate')->name('application.revokedUpdate');
+        Route::post('/update-status', [ApplicationController::class, 'updateStatus'])->name('update.status');
+
         Route::resource('/application', 'Admin\ApplicationController');
 
     });

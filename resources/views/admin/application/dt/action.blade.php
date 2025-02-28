@@ -1,59 +1,67 @@
 @php
     $attachmentFields = [
-    'bill_landing_path' => 'Bill of Landing',
-    'commercial_invoice_path' => 'Commercial Invoice',
-    'packing_list_path' => 'Packing List',
-    'cert_origin_path' => 'Certificate of Origin',
-    'cert_analysis_path' => 'Certificate of Analysis',
-    'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
-    'important_declaration_path' => 'Important Declaration',
-    'application_form_path' => 'Application Form',
-    'affidavit_path' => 'Affidavit'
+        'application_form_path' => 'Application Form',
+        'affidavit_path' => 'Affidavit',
+        'bill_landing_path' => 'Bill of Landing',
+        'commercial_invoice_path' => 'Commercial Invoice',
+        'packing_list_path' => 'Packing List',
+        'cert_origin_path' => 'Certificate of Origin',
+        'cert_analysis_path' => 'Certificate of Analysis',
+        'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
+        'important_declaration_path' => 'Important Declaration',
     ];
 
-    // Count non-empty attachments
     $attachmentsCount = 0;
     foreach ($attachmentFields as $field => $label) {
         if (!empty($data->$field) && $data->$field !== null) {
-    $attachmentsCount++;
+            $attachmentsCount++;
         }
     }
-    // Determine button color based on attachment count
+
     $btnClass = ($attachmentsCount === 9) ? 'btn-primary' : 'btn-danger';
 
-
-
-
-
-
-
-// Generate dropdown for available files
-$dropdownMenu = '<div class="btn-group btn-group-sm">
-    <button type="button" class="btn ' . $btnClass . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="caret"></span> View Files (' . $attachmentsCount . '/9)
-    </button>
-    <ul class="dropdown-menu dropdown-menu-right">';
-
-        foreach ($attachmentFields as $field => $label) {
-        if (!empty($data->$field) && $data->$field !== null) {
-        $fileUrl = url("/show_file_custom/imported_commodities/{$data->slug}/{$field}");
-        $dropdownMenu .= '<li><a href="#" class="view-file-link" data-url="' . $fileUrl . '">
-                <small class="view-file no-margin">' . $label . '</small>
-            </a></li>';
-        }
-        }
-
-        $dropdownMenu .= '</ul></div>';
-
-// Action buttons (Edit & Delete)
-    $buttons = '<div class="btn-group">
-        <button type="button" data="' . $data->slug . '" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">
-            <i class="fa fa-edit"></i>
-        </button>
-    </div>';
-
-    // Merge buttons with dropdown
-    return $buttons . ' ' . $dropdownMenu;
-    })
-
 @endphp
+
+<style>
+    .btn-group button {
+        white-space: nowrap; /* Prevents text wrapping */
+        min-width: 55px; /* Adjust based on button size */
+    }
+</style>
+
+<div class="btn-group d-flex flex-wrap w-auto">
+    <button type="button" data="{{ $data->slug }}" class="btn btn-default btn-sm edit_btn mr-1 w-auto"
+            data-toggle="modal" data-target="#edit_modal" title="Receive">
+        Receive
+    </button>
+    @if($data->received != 0)
+
+    <button data="{{ $data->slug }}" id="revokedButton_{{ $data->slug }}"
+            class="RevokeButton btn btn-sm btn-warning {{ $data->revoked == 1 ? 'btn-danger' : 'btn-success' }} mr-1 w-auto">
+        {{ $data->revoked == 1 ? 'Revoked' : 'Revoke' }}
+    </button>
+
+    @endif
+
+</div>
+    <div class="btn-group btn-group-sm">
+        <button type="button" class="btn {{ $btnClass }} dropdown-toggle w-auto" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" title="Attachment">
+            <span class="caret"></span> View Files ({{ $attachmentsCount }}/9)
+        </button>
+        <ul class="dropdown-menu">
+            @foreach ($attachmentFields as $field => $label)
+                @if (!empty($data->$field))
+                    <li>
+                        <a href="#" class="view-file-link" data-url="{{ url("/show_file_custom/imported_commodities/{$data->slug}/{$field}") }}">
+                            <small class="view-file no-margin">{{ $label }}</small>
+                        </a>
+                    </li>
+                @endif
+            @endforeach
+        </ul>
+    </div>
+
+
+
+

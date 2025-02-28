@@ -12,11 +12,24 @@
 
 @if($data->received != 0)
     <hr style="margin: 0; padding: 0;">
-    <p style="font-size: small" class="no-margin">
-        {{ $data->received == 1 ? 'Received' : $data->received }}
-    </p>
+
+        <p style="font-size: small" class="no-margin badge label-success"> <i class="fa fa-check-circle"></i>
+            {{ $data->received == 1 ? 'Received' : $data->received }}
+        </p><br>
+        <small class="no-margin text-muted">
+            {{ date('M. d, Y | g:i A', strtotime($data->received_date)) }}
+        </small>
+
+@endif
+
+@if($data->revoked != 0)
+    <hr style="margin: 0; padding: 0;">
+
+    <p style="font-size: small" class="no-margin badge label-danger"> <i class="fa fa-undo"></i>
+        {{ $data->revoked == 1 ? 'Revoked' : $data->revoked }}
+    </p><br>
     <small class="no-margin text-muted">
-        {{ date('M. d, Y | g:i A', strtotime($data->received_date)) }}
+        {{ date('M. d, Y | g:i A', strtotime($data->revoked_date)) }}
     </small>
 
 @endif

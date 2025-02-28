@@ -20,17 +20,17 @@
                 </div>
 
 
-                <div id="applicationTableContainer" hidden="">
+                <div id="applicationTableContainer" hidden="" class="d-flex flex-wrap">
                     <table class="table table-bordered table-condensed table-striped" id="applicationTable" style="width: 100%">
                         <thead>
                         <tr>
-                            <th>REFERENCE NO.</th>
+                            <th>Reference No.</th>
                             <th>Application Type</th>
                             <th>Name|Details</th>
                             <th>Product Description</th>
                             <th>Purpose of Importation</th>
-                            <th>STATUS</th>
-                            <th style="width: 160px">Action</th>
+                            <th>Application Status</th>
+                            <th style="width: 200px">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,7 +45,7 @@
 @endsection
 
 @section('modals')
-    {!! __html::blank_modal('edit_modal', '', 'style="width: 80%"') !!}
+    {!! __html::blank_modal('edit_modal', '', 'style="width: 45%"') !!}
     {!! __html::blank_modal('showApplicationFile_modal', '', 'style="width: 60%"') !!}
 
     <div id="filePreviewModal" class="modal fade" tabindex="-1" role="dialog">
@@ -105,6 +105,48 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).on('click', '.prevent-close', function(event) {
+            event.stopPropagation(); // Prevent dropdown from closing
+        });
+    </script>
+    <script>
+        $(document).on("click", ".revoked_btn", function () {
+            var slug = $(this).attr("data"); // Get the slug from the button
+
+            if (confirm("Are you sure you want to revoke this record?")) {
+                $.ajax({
+                    url: "/update-status", // Update with your route
+                    type: "POST",
+                    data: {
+                        slug: slug,
+                        status: 0, // Update received value to 0
+                        _token: "{{ csrf_token() }}" // Laravel CSRF token
+                    },
+                    success: function (response) {
+                        succeed(form, true, true); // Call the success function
+
+                        // Refresh DataTables without reloading the page
+                        $('#yourDataTableID').DataTable().ajax.reload();
+                    },
+                    error: function () {
+                        alert("Something went wrong.");
+                    }
+                });
+            }
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Assume receivedValue is retrieved from your backend
+            var receivedValue = 1; // Replace this with the actual value from your database
+
+            if (receivedValue === 1) {
+                $("#receivedBtn").removeClass("btn-info").addClass("btn-success").prop("disabled", true);
+            }
+        });
+    </script>
     <script type="text/javascript">
         $(document).on('click', '.view-file-link', function (e) {
             e.preventDefault();
@@ -186,99 +228,86 @@
             });
 
 
-        {{--$("#add_form").submit(function(e){--}}
-            {{--    e.preventDefault();--}}
-            {{--    form = $(this);--}}
-            {{--    formdata = form.serialize();--}}
-            {{--    loading_btn(form);--}}
-            {{--    $.ajax({--}}
-            {{--        url : "{{route('admin.application.store')}}",--}}
-            {{--        data: formdata,--}}
-            {{--        type: 'POST',--}}
-            {{--        success: function(response){--}}
-            {{--            applicationTbl.draw();--}}
-            {{--            $('#add_modal').modal('hide');--}}
-            {{--            swal({--}}
-            {{--                title: "Success!",--}}
-            {{--                text: "Successfully Added.",--}}
-            {{--                type: "success"--}}
-            {{--            });--}}
-            {{--            succeed(form, true, false);--}}
-            {{--            active = response.slug;--}}
-            {{--        },--}}
-            {{--        error: function(response){--}}
-            {{--            errored(form,response);--}}
 
-            {{--        }--}}
-            {{--    })--}}
-            {{--});--}}
 
-            {{--$("body").on("click",".edit_btn", function(){--}}
-            {{--    btn = $(this);--}}
-            {{--    slug = btn.attr('data');--}}
-            {{--    uri = "{{route('admin.application.edit','slugg')}}";--}}
-            {{--    uri = uri.replace('slugg',slug);--}}
-            {{--    loading_modal(btn);--}}
-            {{--    $.ajax({--}}
-            {{--        url : uri,--}}
-            {{--        type: 'GET',--}}
-            {{--        success:function(response){--}}
-            {{--            populate_modal(btn,response);--}}
-            {{--        },--}}
-            {{--        error: function(response){--}}
-            {{--            errored_modal(btn,response);--}}
-            {{--        }--}}
-            {{--    })--}}
-            {{--})--}}
+            $("body").on("click",".edit_btn", function(){
+                btn = $(this);
+                slug = btn.attr('data');
+                uri = "{{route('admin.application.edit','slug')}}";
+                uri = uri.replace('slug',slug);
+                loading_modal(btn);
+                $.ajax({
+                    url : uri,
+                    type: 'GET',
+                    success:function(response){
+                        populate_modal(btn,response);
+                    },
+                    error: function(response){
+                        errored_modal(btn,response);
+                    }
+                })
+            })
 
-            {{--$("body").on("click",".delete_btn", function(){--}}
-            {{--    btn = $(this);--}}
-            {{--    slug = btn.attr('data');--}}
-            {{--    uri = "{{route('admin.application.destroy','slugg')}}";--}}
-            {{--    uri = uri.replace('slugg',slug);--}}
-            {{--    swal({--}}
-            {{--            title: "Delete Transaction Type?",--}}
-            {{--            text: "Are you sure to DELETE this record?",--}}
-            {{--            type: "warning",--}}
-            {{--            showCancelButton: true,--}}
-            {{--            confirmButtonColor: "#DD6B55",--}}
-            {{--            confirmButtonText: "Yes, DELETE it!",--}}
-            {{--            closeOnConfirm: false--}}
-            {{--        },--}}
-            {{--        function () {--}}
-            {{--            delete_item(uri,btn,applicationTbl);--}}
-            {{--        });--}}
-            {{--})--}}
+            @if(\Illuminate\Support\Facades\Request::has('success_message'))
+                notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');
+                window.history.pushState({},document.title,'/admin/application')
+            @endif
 
-            {{--$("body").on('submit',"#edit_form", function(e){--}}
-            {{--    e.preventDefault();--}}
-            {{--    form = $(this);--}}
-            {{--    formdata = form.serialize();--}}
-            {{--    slug = form.attr('data');--}}
-            {{--    uri = "{{route('admin.application.update','slugg')}}";--}}
-            {{--    uri = uri.replace('slugg',slug);--}}
-            {{--    loading_btn(form);--}}
-            {{--    $.ajax({--}}
-            {{--        url: uri,--}}
-            {{--        data: formdata,--}}
-            {{--        type: 'PATCH',--}}
-            {{--        success:function(response){--}}
-            {{--            applicationTbl.draw();--}}
-            {{--            $('#edit_modal').modal('hide');--}}
-            {{--            swal({--}}
-            {{--                title: "Success!",--}}
-            {{--                text: "Successfully Updated.",--}}
-            {{--                type: "success"--}}
-            {{--            });--}}
-            {{--            succeed(form,true,true);--}}
-            {{--            active = response.slug;--}}
-            {{--        },--}}
-            {{--        error:function(response){--}}
-            {{--            errored(form,response);--}}
-            {{--            console.log(response);--}}
-            {{--        }--}}
-            {{--    })--}}
-            {{--})--}}
+        $("body").on('submit',"#edit_form", function(e){
+                e.preventDefault();
+                form = $(this);
+                formdata = form.serialize();
+                slug = form.attr('data');
+                uri = "{{route('admin.application.update','slug')}}";
+                uri = uri.replace('slug',slug);
+                loading_btn(form);
+                $.ajax({
+                    url: uri,
+                    data: formdata,
+                    type: 'PATCH',
+                        success: function (res) {
+                            setTimeout(function () {
+                                window.location.href = "/admin/application?success_message=Application Received!";
+                            });
+                        },
+                    error:function(response){
+                        errored(form,response);
+                        console.log(response);
+                    }
+                })
+            })
+
+            $('body').on('click', '.RevokeButton', function () {
+                let button = $(this);
+                let slug = button.attr('data');
+                let url = '{{ route('admin.application.revokedUpdate', 'slug') }}'.replace('slug', slug);
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        revoked: 'true', // Always set revoked to true
+                    },
+                    type: 'POST',
+                    headers: {
+                        {!! __html::token_header() !!}
+                    },
+                    success: function (response) {
+                        applicationTbl.draw();
+                        console.log(response);
+
+                        // Update button class and text
+                        button.removeClass('btn-success').addClass('btn-danger').text('Revoked');
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $('#edit_modal').on('hidden.bs.modal', function () {
+            $('.btn-group .btn').css('width', 'auto'); // Reset width when modal closes
         });
     </script>
 @endsection

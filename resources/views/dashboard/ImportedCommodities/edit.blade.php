@@ -331,7 +331,7 @@
 															</small>
 														</div>
 														<div class="col-7 content no-top-border">
-															<p class="m-b-xs"><strong>Application created</strong></p>
+															<p class="m-b-xs"><strong>Create</strong></p>
 														</div>
 													</div>
 												</div>
@@ -362,11 +362,28 @@
 															</small>
 														</div>
 														<div class="col-7 content">
-															<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Application Submitted' : $data->submission }}</strong></p>
+															<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Submitted' : $data->submission }}</strong></p>
 														</div>
 													</div>
 												</div>
 											@endif
+
+												@if($data->revoked != 0)
+													<div class="timeline-item">
+														<div class="row">
+															<div class="col-5 date">
+																<i class="fa fa-undo"></i>
+																<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->revoked_date)->format('M. j, Y') }}</p>
+																<small class="text-navy">
+																	{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->revoked_date)->diffForHumans()) }}
+																</small>
+															</div>
+															<div class="col-7 content">
+																<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Revoked' : $data->revoked }}</strong></p>
+															</div>
+														</div>
+													</div>
+												@endif
 
 											@if($data->received != 0)
 												<div class="timeline-item">
@@ -393,6 +410,8 @@
 													</div>
 												</div>
 											@endif
+
+
 
 
 											</div>
@@ -653,39 +672,6 @@
 					}
 				});
 			}
-
-
-			{{--$("#importedCommoditiesForm").submit(function (e) {--}}
-			{{--	e.preventDefault();--}}
-			{{--	var form = $(this);--}}
-			{{--	var slug = "{{$data->slug}}"; // Get the correct slug--}}
-			{{--	var uri = "{{ route('dashboard.ImportedCommodities.update', 'slug') }}".replace('slug', slug);--}}
-			{{--	var formData = new FormData(this);--}}
-			{{--	formData.append('_method', 'PATCH');--}}
-
-			{{--	$.ajax({--}}
-			{{--		url: uri,--}}
-			{{--		type: 'POST',--}}
-			{{--		data: formData,--}}
-			{{--		contentType: false,--}}
-			{{--		processData: false,--}}
-			{{--		headers: {--}}
-			{{--			'X-CSRF-TOKEN': '{{ csrf_token() }}'--}}
-			{{--		},--}}
-			{{--		success: function (res) {--}}
-
-			{{--			setTimeout(function() {--}}
-			{{--				window.location.href = '/dashboard/home?success_message=Data successfully saved!';--}}
-			{{--			});--}}
-			{{--		},--}}
-			{{--		error: function (res) {--}}
-			{{--			console.log(res);--}}
-			{{--			errored(form, res);--}}
-			{{--		}--}}
-			{{--	});--}}
-			{{--});--}}
-
-
 
 			// Hide file remove button
 			$(".kv-file-remove").hide();

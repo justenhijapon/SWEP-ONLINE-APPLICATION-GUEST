@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\ApplicationFormRequest;
 use App\Http\Requests\Admin\TransactionTypeRequest;
 use App\Models\User\ImportedCommodities;
 use App\Models\User\TransactionType;
@@ -28,68 +29,31 @@ class ApplicationController extends Controller
                     return '<h4><code>' . $data->slug . '</code></h4><hr style="margin-bottom: 2px;margin-top: 2px;">
                         <small class="text-muted">Date: ' . date("M. d, Y|h:i A", strtotime($data->created_at)) . '</small>';
                 })
+
                 ->editColumn('application_type', function($data) {
                     return '<p style="font-size: small" class="no-margin">' . $data->application_type . '</p>';
                 })
+
                 ->editColumn('name', function($data) {
                     return view('admin.application.dt.NameDetails')->with(['data' => $data]);
                 })
+
                 ->editColumn('prod_description', function($data) {
                     return view('admin.application.dt.ProductDescription')->with(['data' => $data]);
                 })
+
                 ->editColumn('purpose_importation', function($data) {
                     return view('admin.application.dt.PurposeImportation')->with(['data' => $data]);
                 })
+
                 ->editColumn('status', function($data) {
                     return view('admin.application.dt.status')->with(['data' => $data]);
                 })
+
                 ->addColumn('action', function($data) {
-                    $attachmentFields = [
-                        'application_form_path' => 'Application Form',
-                        'affidavit_path' => 'Affidavit',
-                        'bill_landing_path' => 'Bill of Landing',
-                        'commercial_invoice_path' => 'Commercial Invoice',
-                        'packing_list_path' => 'Packing List',
-                        'cert_origin_path' => 'Certificate of Origin',
-                        'cert_analysis_path' => 'Certificate of Analysis',
-                        'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
-                        'important_declaration_path' => 'Important Declaration',
-                    ];
-
-                    $attachmentsCount = 0;
-                    foreach ($attachmentFields as $field => $label) {
-                        if (!empty($data->$field) && $data->$field !== null) {
-                            $attachmentsCount++;
-                        }
-                    }
-
-                    $btnClass = ($attachmentsCount === 9) ? 'btn-primary' : 'btn-danger';
-
-                    $dropdownMenu = '<div class="btn-group btn-group-sm">
-                                <button type="button" class="btn ' . $btnClass . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="caret"></span> View Files (' . $attachmentsCount . '/9)
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">';
-
-                    foreach ($attachmentFields as $field => $label) {
-                        if (!empty($data->$field) && $data->$field !== null) {
-                            $fileUrl = url("/show_file_custom/imported_commodities/{$data->slug}/{$field}");
-                            $dropdownMenu .= '<li><a href="#" class="view-file-link" data-url="' . $fileUrl . '">
-                                            <small class="view-file no-margin">' . $label . '</small>
-                                         </a></li>';
-                        }
-                    }
-
-                    $dropdownMenu .= '</ul></div>';
-
-                    $buttons = '<div class="btn-group">
-                    <button type="button" data="' . $data->slug . '" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                </div>';
-
-                    return $buttons . ' ' . $dropdownMenu;
+                    return view('admin.application.dt.action')->with(['data' => $data]);
                 })
+
                 ->rawColumns(['slug', 'application_type', 'action'])
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -99,196 +63,63 @@ class ApplicationController extends Controller
         return view('admin.application.index');
     }
 
-
-//    public function index(){
-//        if(request()->ajax())
-//        {
-////            $data = request();
-////            return DataTables::of($this->application->fetchTable($data))
-//
-//            $data = $this->application->fetchTable(request()); // Now only contains submission = 1
-//            return DataTables::of($data)->make(true)
-//
-//
-//                ->editColumn('slug',function($data){
-//                    return '<h4><code>'.$data->slug.'</code></h4><hr style="margin-bottom: 2px;margin-top: 2px;">
-//                            <small class="text-muted">Date: '.date("M. d, Y|h:i A",strtotime($data->created_at)).'</small>';
-//                })
-//
-//                ->editColumn('application_type',function($data){
-//                    return '<p style="font-size: small" class="no-margin">'.$data->application_type.'</p>
-//                            ';
-//                })
-//
-//                ->editColumn('name',function($data){
-//                    return view('admin.application.dt.NameDetails')->with([
-//                        'data' => $data,
-//                    ]);
-//                })
-//
-//                ->editColumn('prod_description',function($data){
-//                    return view('admin.application.dt.ProductDescription')->with([
-//                        'data' => $data,
-//                    ]);
-//                })
-//
-//                ->editColumn('purpose_importation',function($data){
-//                    return view('admin.application.dt.PurposeImportation')->with([
-//                        'data' => $data,
-//                    ]);
-//                })
-//
-//                ->editColumn('status',function($data){
-//                    return view('admin.application.dt.status')->with([
-//                        'data' => $data,
-//                    ]);
-//                })
-//
-//                ->addColumn('action', function($data) {
-//                    $attachmentFields = [
-//                        'bill_landing_path' => 'Bill of Landing',
-//                        'commercial_invoice_path' => 'Commercial Invoice',
-//                        'packing_list_path' => 'Packing List',
-//                        'cert_origin_path' => 'Certificate of Origin',
-//                        'cert_analysis_path' => 'Certificate of Analysis',
-//                        'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
-//                        'important_declaration_path' => 'Important Declaration',
-//                        'application_form_path' => 'Application Form',
-//                        'affidavit_path' => 'Affidavit'
-//                    ];
-//
-//                    // Count non-empty attachments
-//                    $attachmentsCount = 0;
-//                    foreach ($attachmentFields as $field => $label) {
-//                        if (!empty($data->$field) && $data->$field !== null) {
-//                            $attachmentsCount++;
-//                        }
-//                    }
-//                    // Determine button color based on attachment count
-//                    $btnClass = ($attachmentsCount === 9) ? 'btn-primary' : 'btn-danger';
-//
-//                    // Generate dropdown for available files
-//                    $dropdownMenu = '<div class="btn-group btn-group-sm">
-//                                    <button type="button" class="btn ' . $btnClass . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-//                                        <span class="caret"></span> View Files (' . $attachmentsCount . '/9)
-//                                    </button>
-//                                    <ul class="dropdown-menu dropdown-menu-right">';
-//
-//                    foreach ($attachmentFields as $field => $label) {
-//                        if (!empty($data->$field) && $data->$field !== null) {
-//                            $fileUrl = url("/show_file_custom/imported_commodities/{$data->slug}/{$field}");
-//                            $dropdownMenu .= '<li><a href="#" class="view-file-link" data-url="' . $fileUrl . '">
-//                                                <small class="view-file no-margin">' . $label . '</small>
-//                                             </a></li>';
-//                        }
-//                    }
-//
-//                    $dropdownMenu .= '</ul></div>';
-//
-//                    // Action buttons (Edit & Delete)
-//                    $buttons = '<div class="btn-group">
-//                    <button type="button" data="' . $data->slug . '" class="btn btn-default btn-sm edit_btn" data-toggle="modal" data-target="#edit_modal" title="Edit" data-placement="top">
-//                        <i class="fa fa-edit"></i>
-//                    </button>
-//                </div>';
-//
-//                    // Merge buttons with dropdown
-//                    return $buttons . ' ' . $dropdownMenu;
-//                })
-//
-//                ->rawColumns(['action']) // Ensure raw HTML is rendered
-//
-//                ->escapeColumns([])
-//                ->setRowId('slug')
-////                ->make(true)
-//                ->toJson();
-//        }
-//        return view('admin.application.index');
-//    }
-
-//<div class="btn-group btn-group-sm" role="group">
-//<button type="button" class="btn btn-default dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-//Attachments<span class="caret"></span>
-//</button>
-//<ul class="dropdown-menu dropdown-menu-right">
-//<li><a href="/show_file_custom/imported_commodities/'.$data->slug.'/application_form_path" target="_blank" ><small class="no-margin">Application Form</small></a></li>
-//</ul>
-//</div>
-//<button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_btn" data-toggle="tooltip" title="Delete" data-placement="top">
-//<i class="fa fa-trash"></i>
-//</button>
-
-//    public function showApplicationFile($slug){
-//        $data = ImportedCommodities::query()->where('slug', $slug)->first();
-//        return view('admin.application.attachments.showApplicationFile')->with([
-//            'data' => $data,
-//        ]);
-//    }
-
-    public function getAttachmentsCount($data) {
-        $attachmentFields = [
-            'bill_landing_path',
-            'commercial_invoice_path',
-            'packing_list_path',
-            'cert_origin_path',
-            'cert_analysis_path',
-            'notarized_gmo_non_gmo_path',
-            'important_declaration_path',
-            'application_form_path',
-            'affidavit_path'
-        ];
-
-        // Count how many attachments are not null or empty
-        $attachmentsCount = collect($attachmentFields)->filter(function ($field) use ($data) {
-            return !empty($data->$field);
-        })->count();
-
-        return "{$attachmentsCount}/" . count($attachmentFields);
-    }
-    public function showApplicationFile($slug) {
-        $data = ImportedCommodities::where('slug', $slug)->first();
-
-        if (!$data) {
-            abort(404, 'Application file not found.');
-        }
-
-        return view('admin.application.attachments.showApplicationFile', compact('data'));
-    }
-
-
-
-
     public function edit($slug)
     {
-        $transaction_type_db = TransactionType::where('slug', '=', $slug)->first();
-        return view('admin.transactionType.edit')->with(['transactionType' => $transaction_type_db]);
+        $data = ImportedCommodities::where('slug', '=', $slug)->first();
+        return view('admin.application.edit', compact('data'));
     }
 
-    public function update(TransactionTypeRequest $request, $slug) {
-        $transaction_type_db = TransactionType::where('slug', '=', $slug)->first();
-        $transaction_type_db->name = $request->name;
-        $transaction_type_db->transaction_types_group_slug = $request->group;
-        $transaction_type_db->unit = $request->unit;
-        $transaction_type_db->fee_per_unit = $request->feePerUnit;
-        $transaction_type_db->regular_fee = $request->regularFee;
-        $transaction_type_db->expedite_fee = $request->expediteFee;
-        $transaction_type_db->save();
+    public function update(Request $request, $slug) {
+        $app_data = ImportedCommodities::where('slug', $slug)->firstOrFail();
+        $app_data->received = $request->received;
+        $app_data->received_date = now();
+        $app_data->revoked = 0;
+        $app_data->save();
+        return response()->json(['slug' => $app_data->slug]);
     }
 
-    public function destroy($slug) {
-        $transaction_type_db = TransactionType::where('slug', '=', $slug)->first();
-        $transaction_type_db->destroy();
+    public function revokedUpdate($slug, Request $request)
+    {
+        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
+
+        // Always set revoked to 1 and received to 0
+        $data->revoked = 1;
+        $data->received = 0;
+        $data->revoked_date = now(); // Always update revoked_date
+
+        $data->update();
+
+        return response()->json([
+            'slug' => $data->slug,
+            'revoked' => $data->revoked,
+            'revoked_date' => $data->revoked_date,
+            'received' => $data->received
+        ]);
     }
 
-    public function store(Request $request) {
-        $transaction_type = new TransactionType();
-        $transaction_type->slug = $request->slug;
-        $transaction_type->name = $request->name;
-        $transaction_type->transaction_types_group_slug = $request->group;
-        $transaction_type->unit = $request->unit;
-        $transaction_type->fee_per_unit = $request->feePerUnit;
-        $transaction_type->regular_fee = $request->regularFee;
-        $transaction_type->expedite_fee = $request->expediteFee;
-        $transaction_type->save();
+
+
+
+    public function show($slug)
+    {
+        $data = ImportedCommodities::where('slug', '=', $slug)->first();
+        return view('admin.application.show', compact('data'));
     }
+
+//    public function destroy($slug) {
+//        $transaction_type_db = TransactionType::where('slug', '=', $slug)->first();
+//        $transaction_type_db->destroy();
+//    }
+
+//    public function store(Request $request) {
+//        $transaction_type = new TransactionType();
+//        $transaction_type->slug = $request->slug;
+//        $transaction_type->name = $request->name;
+//        $transaction_type->transaction_types_group_slug = $request->group;
+//        $transaction_type->unit = $request->unit;
+//        $transaction_type->fee_per_unit = $request->feePerUnit;
+//        $transaction_type->regular_fee = $request->regularFee;
+//        $transaction_type->expedite_fee = $request->expediteFee;
+//        $transaction_type->save();
+//    }
 }
