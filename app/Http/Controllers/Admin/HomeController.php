@@ -19,6 +19,10 @@ class HomeController extends Controller
 
     public function index()
     {
+        $draftApplicant = User\ImportedCommodities::where('received', '0')->where('revoked', '0');
+        $receivedApplication = User\ImportedCommodities::where('received', '1');
+        $revokedApplication = User\ImportedCommodities::where('revoked', '1');
+        $totalApplication = User\ImportedCommodities::get();
         $op = OrderOfPayments::get();
         $opPaid = OrderOfPayments::where('status', 'PAID')->get();
         $opUnpaid = OrderOfPayments::where('status', '<>', 'PAID')->get();
@@ -37,7 +41,16 @@ class HomeController extends Controller
             }
         }
 
-        return view('admin.home.index')->with(['op' => $op, 'opPaid' => $opPaid, 'opUnpaid' => $opUnpaid, 'client' => $client]);
+        return view('admin.home.index')->with([
+                'op' => $op,
+                'opPaid' => $opPaid,
+                'opUnpaid' => $opUnpaid,
+                'client' => $client,
+                'draftApplicant' => $draftApplicant,
+                'receivedApplication' => $receivedApplication,
+                'revokedApplication' => $revokedApplication,
+                'totalApplication' => $totalApplication,
+                ]);
     }
 
 
@@ -67,8 +80,6 @@ class HomeController extends Controller
             abort(406, 'File not found');
         }
     }
-
-
 
 
 

@@ -10,9 +10,7 @@ class __static{
     // Profile
     public static function user_colors()
     {
-
         return [
-
             'Blue/Dark' => 'sidebar-mini skin-blue',
             'White/Dark' => 'sidebar-mini skin-black',
             'Purple/Dark' => 'sidebar-mini skin-purple',
@@ -28,7 +26,5 @@ class __static{
 
         ];
     }
-
-
 
 }
