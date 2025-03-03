@@ -282,27 +282,73 @@
                 let slug = button.attr('data');
                 let url = '{{ route('admin.application.revokedUpdate', 'slug') }}'.replace('slug', slug);
 
-                $.ajax({
-                    url: url,
-                    data: {
-                        revoked: 'true', // Always set revoked to true
-                    },
-                    type: 'POST',
-                    headers: {
-                        {!! __html::token_header() !!}
-                    },
-                    success: function (response) {
-                        applicationTbl.draw();
-                        console.log(response);
+                // SweetAlert Confirmation
+                swal({
+                    title: "Are you sure?",
+                    text: "Are you sure you want to revoke this application?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, revoke it!",
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: false
+                }, function () {
+                    // Proceed with revocation if confirmed
+                    $.ajax({
+                        url: url,
+                        data: {
+                            revoked: 'true', // Always set revoked to true
+                        },
+                        type: 'POST',
+                        headers: {
+                            {!! __html::token_header() !!}
+                        },
+                        success: function (response) {
+                            applicationTbl.draw();
+                            console.log(response);
 
-                        // Update button class and text
-                        button.removeClass('btn-success').addClass('btn-danger').text('Revoked');
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
+                            // Update button class and text
+                            button.removeClass('btn-success').addClass('btn-danger').text('Revoked');
+
+                            // Show success message
+                            swal("Revoked!", "The application has been successfully revoked.", "success");
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        }
+                    });
                 });
             });
+
+
+
+        {{--    $('body').on('click', '.RevokeButton', function () {--}}
+        {{--        let button = $(this);--}}
+        {{--        let slug = button.attr('data');--}}
+        {{--        let url = '{{ route('admin.application.revokedUpdate', 'slug') }}'.replace('slug', slug);--}}
+
+        {{--        $.ajax({--}}
+        {{--            url: url,--}}
+        {{--            data: {--}}
+        {{--                revoked: 'true', // Always set revoked to true--}}
+        {{--            },--}}
+        {{--            type: 'POST',--}}
+        {{--            headers: {--}}
+        {{--                {!! __html::token_header() !!}--}}
+        {{--            },--}}
+        {{--            success: function (response) {--}}
+        {{--                applicationTbl.draw();--}}
+        {{--                console.log(response);--}}
+
+        {{--                // Update button class and text--}}
+        {{--                button.removeClass('btn-success').addClass('btn-danger').text('Revoked');--}}
+        {{--            },--}}
+        {{--            error: function (response) {--}}
+        {{--                console.log(response);--}}
+        {{--            }--}}
+        {{--        });--}}
+        {{--    });--}}
         });
     </script>
     <script>

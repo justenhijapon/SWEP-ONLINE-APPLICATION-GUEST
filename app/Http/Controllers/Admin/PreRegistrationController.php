@@ -96,15 +96,23 @@ class PreRegistrationController extends Controller
         $preReg->is_verified = false;
         $preReg->created_at = Carbon::now();
         $preReg->updated_at = Carbon::now();
+        $preReg->save();
+
         $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
         $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
         $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
         $appData->user_created = $preReg ->slug;
-        $appData->name = $fullname; $appData->contact_no = $preReg->business_phone;  $appData->designation = $preReg->position; $appData->company = $preReg->business_name;
-        $appData->tin = $preReg->business_tin; $appData->address = $full_address; $appData->email = $preReg->email; $appData-> ip_created = $ipAddress;
+        $appData->name = $fullname;
+        $appData->contact_no = $request->businessPhone;
+        $appData->designation = $request->position;
+        $appData->company = $request->businessName;
+        $appData->tin = $request->businessTin;
+        $appData->address = $full_address;
+        $appData->email = $request->email;
+        $appData-> ip_created = $ipAddress;
 
         $appData->save();
-        $preReg->save();
+
 
     }
 

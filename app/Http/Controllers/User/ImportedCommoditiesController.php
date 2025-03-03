@@ -172,6 +172,10 @@ class ImportedCommoditiesController extends Controller
             $data->submission = $request->submission;
         }
 
+        if ($request->has('submission')) {
+            $data->revoked = $request->revoked;
+        }
+
         // Update submission_date only when submitting the application
         if ($request->has('submission_date')) {
             $data->submission_date = $request->submission_date;

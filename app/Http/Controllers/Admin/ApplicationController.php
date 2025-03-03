@@ -85,6 +85,7 @@ class ApplicationController extends Controller
         // Always set revoked to 1 and received to 0
         $data->revoked = 1;
         $data->received = 0;
+        $data->submission = 0;
         $data->revoked_date = now(); // Always update revoked_date
 
         $data->update();

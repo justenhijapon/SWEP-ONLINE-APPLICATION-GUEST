@@ -71,6 +71,7 @@
 
 <!-- Switchery -->
 <script src="{{ asset('template/inspinia/js/plugins/switchery/switchery.js') }}"></script>
+<script src="{{ asset('template/inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
 {{--
 <script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>

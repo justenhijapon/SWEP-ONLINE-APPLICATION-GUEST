@@ -28,7 +28,7 @@
 				<div class="col-md-12 ibox-content">
 					<div class="row">
 
-						<div class="col-md-10">
+						<div class="col-md-9">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h4>Application For Clearance for the Release of Imported Commodities under Tariff Heading 1702 (Other Sugars) and 1704 (Sugar Confectionery)</h4>
@@ -248,7 +248,7 @@
 																	<div class="input-group input-group-sm">
 																		<input type="file" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}">
 																		@if($fileExists)
-																			<input type="text" style="width: 30%" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}" value="{{ $fileExists ? $fileName : '' }}" readonly>
+																			<input type="text" style="width: 20%" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}" value="{{ $fileExists ? $fileName : '' }}" readonly>
 																			<button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#filePreviewModal" data-file-url="{{$fileUrl}}">
 																				File preview
 																			</button>
@@ -310,7 +310,7 @@
 {{--							</div>--}}
 {{--						</div>--}}
 
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h4 align="center">APPLICATION STATUS</h4>
@@ -331,25 +331,12 @@
 															</small>
 														</div>
 														<div class="col-7 content no-top-border">
-															<p class="m-b-xs"><strong>Create</strong></p>
+															<p class="m-b-xs"><strong class="badge label-success">Created</strong></p>
+															<small>Application started</small>
 														</div>
 													</div>
 												</div>
 
-{{--												<div class="timeline-item">--}}
-{{--													<div class="row">--}}
-{{--														<div class="col-5 date">--}}
-{{--															<i class="fa fa-save"></i>--}}
-{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
-{{--															<small class="text-navy">--}}
-{{--																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->updated_at)->diffForHumans()) }}--}}
-{{--															</small>--}}
-{{--														</div>--}}
-{{--														<div class="col-7 content">--}}
-{{--															<p class="m-b-xs"><strong>Save as draft</strong></p>--}}
-{{--														</div>--}}
-{{--													</div>--}}
-{{--												</div>--}}
 
 											@if($data->submission != 0)
 												<div class="timeline-item">
@@ -362,13 +349,47 @@
 															</small>
 														</div>
 														<div class="col-7 content">
-															<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Submitted' : $data->submission }}</strong></p>
+															<p class="m-b-xs"><strong class="badge label-success">{{ $data->submission == 1 ? 'Submitted' : $data->submission }}</strong></p>
+															<small>Application submitted successfully</small>
 														</div>
 													</div>
 												</div>
+
+													@if($data->received != 1)
+													<div class="timeline-item">
+														<div class="row">
+															<div class="col-5 date">
+																<i class="fa fa-search"></i>
+{{--																<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->submission_date)->format('M. j, Y') }}</p>--}}
+																<small class="text-navy">
+{{--																	{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->submission_date)->diffForHumans()) }}--}}
+																</small>
+															</div>
+															<div class="col-7 content">
+																<p class="m-b-xs"><strong class="badge label-info">In Review/Processing</strong></p>
+																<small>Your application is being reviewed. Expect a response within 3 working days.</small>
+															</div>
+														</div>
+													</div>
+													@endif
 											@endif
 
 												@if($data->revoked != 0)
+													<div class="timeline-item">
+														<div class="row">
+															<div class="col-5 date">
+																<i class="fa fa-arrow-circle-right"></i>
+																<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->submission_date)->format('M. j, Y') }}</p>
+																<small class="text-navy">
+																	{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->submission_date)->diffForHumans()) }}
+																</small>
+															</div>
+															<div class="col-7 content">
+																<p class="m-b-xs"><strong class="badge label-success">{{ $data->submission == 0 ? 'Submitted' : $data->submission }}</strong></p>
+																<small>Application submitted successfully</small>
+															</div>
+														</div>
+													</div>
 													<div class="timeline-item">
 														<div class="row">
 															<div class="col-5 date">
@@ -379,7 +400,9 @@
 																</small>
 															</div>
 															<div class="col-7 content">
-																<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Revoked' : $data->revoked }}</strong></p>
+																<p class="m-b-xs"><strong class="badge label-danger">{{ $data->revoked == 1 ? 'Revoked' : $data->revoked }}</strong></p>
+																<small>Your application has been revoked due to missing documents or incorrect information.</small>
+																<small>Please review the requirements, make the necessary updates, and resubmit if applicable.</small>
 															</div>
 														</div>
 													</div>
@@ -396,23 +419,21 @@
 															</small>
 														</div>
 														<div class="col-7 content">
-															<p class="m-b-xs"><strong>{{ $data->submission == 1 ? 'Received' : $data->received }}</strong></p>
+															<p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Received' : $data->received }}</strong></p>
+															<small>Your application has been received. To proceed, please visit our office and settle the payment at your earliest convenience.</small>
 														</div>
 													</div>
 												</div>
 
 												<div class="timeline-item">
 													<div class="row">
-														<div class="col-6 date">
-															<i class="fa fa-circle"></i>
-{{--															<i class="fa fa-clock-o"></i>--}}
+														<div class="col-6 date" style="padding-left: 20px">
+{{--															<i class="fa fa-circle"></i>--}}
+															<i class="fa fa-clock-o"></i>
 														</div>
 													</div>
 												</div>
 											@endif
-
-
-
 
 											</div>
 										</div>
@@ -495,10 +516,18 @@
 
 				if (allFilesUploaded) {
 					submitButton.prop("disabled", false);
-					submitButton.css("pointer-events", "auto"); // Ensure clickable
+					submitButton.css({
+						// "pointer-events": "auto", // Ensure clickable
+						"cursor": "pointer" // Restore cursor
+					});
+					submitButton.removeAttr("title"); // Remove tooltip
 				} else {
 					submitButton.prop("disabled", true);
-					submitButton.css("pointer-events", "none"); // Prevent clicking
+					submitButton.css({
+						// "pointer-events": "none", // Prevent clicking
+						"cursor": "not-allowed" // Show disabled cursor
+					});
+					submitButton.attr("title", "To enable Submit, upload the required attachment(s)");
 				}
 			}
 
@@ -509,6 +538,8 @@
 			$(".file-input").on("change", function () {
 				toggleSubmitButton();
 			});
+			// Initialize Bootstrap tooltip (if Bootstrap is used)
+			$("#btnSubmitApplication").tooltip();
 		});
 
 	</script>
@@ -612,9 +643,10 @@
 		modal_loader = $(".loader_container").html();
 		$(document).ready(function() {
 
+
 			@if(\Illuminate\Support\Facades\Request::has('success_message'))
-				notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');
-				window.history.pushState({},document.title,'/dashboard/home')
+			notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');
+			window.history.pushState({}, document.title, '/dashboard/home');
 			@endif
 
 			$("#btnSaveDraft").click(function (e) {
@@ -638,6 +670,7 @@
 				// Only update submission_status when clicking "Submit Application"
 				if (isFinalSubmission) {
 					formData.append("submission", "1");
+					formData.append("revoked", "0"); // Ensure revoked is set to 0
 
 					// Get the correct local time in YYYY-MM-DD HH:MM:SS format
 					var now = new Date();
@@ -662,9 +695,19 @@
 						"X-CSRF-TOKEN": "{{ csrf_token() }}"
 					},
 					success: function (res) {
-						setTimeout(function () {
+						if (isFinalSubmission) {
+							swal({
+								title: "Application successfully submitted!",
+								text: "Thank you for your submission! We will review your application, and you can expect a response within 3 working days.",
+								type: "success",
+								button: "OK"
+							},function() {
+								// Redirect immediately after clicking OK
+								window.location.href = "/dashboard/home";
+							});
+						} else {
 							window.location.href = "/dashboard/home?success_message=Data successfully saved!";
-						});
+						}
 					},
 					error: function (res) {
 						console.log(res);
@@ -672,6 +715,7 @@
 					}
 				});
 			}
+
 
 			// Hide file remove button
 			$(".kv-file-remove").hide();
