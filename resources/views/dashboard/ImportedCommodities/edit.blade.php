@@ -428,8 +428,8 @@
 												<div class="timeline-item">
 													<div class="row">
 														<div class="col-6 date" style="padding-left: 20px">
-{{--															<i class="fa fa-circle"></i>--}}
-															<i class="fa fa-clock-o"></i>
+															<i class="fa fa-circle"></i>
+{{--															<i class="fa fa-clock-o"></i>--}}
 														</div>
 													</div>
 												</div>

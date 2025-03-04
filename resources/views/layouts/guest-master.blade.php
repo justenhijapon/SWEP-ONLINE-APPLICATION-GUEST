@@ -6,7 +6,7 @@
     <title>Laravel AdminLTE</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('favicon.PNG') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     
     @include('layouts.css-plugins')
 

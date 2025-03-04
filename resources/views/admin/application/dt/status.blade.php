@@ -1,12 +1,23 @@
 
+
 @if($data->submission != 0)
+
     <p style="font-size: small" class="no-margin">
-        {{ $data->submission == 1 ? 'Submitted' : $data->submission }}
+        {{ $data->submission == 1 ? 'Submitted' : $data->submission }} |
+
+    @if ($data->received == 0)
+        <span class="text-success badge label-info">
+            <i class="fa fa-circle-o-notch fa-spin"></i> New
+        </span>
+    @else
+        <span class="text-secondary">Processed</span>
+    @endif
     </p>
 
     <small class="no-margin text-muted">
         {{ date('M. d, Y | g:i A', strtotime($data->submission_date)) }}
     </small>
+
 @endif
 
 

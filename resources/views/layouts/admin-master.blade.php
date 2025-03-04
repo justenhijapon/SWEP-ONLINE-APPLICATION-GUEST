@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="shortcut icon" href="{{ asset('favicon.PNG') }}">
+  <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 
-  <title>SWEP | Online Application</title>
+  <title>SRA | Online Application</title>
   @include('layouts.css-plugins')
 </head>
 <body>
@@ -24,7 +24,8 @@
 {{--          MIS - <strong>VISAYAS</strong>--}}
         </div>
         <div>
-          <strong>Copyright</strong> Sugar Regulatory Administration &copy; 2025
+          <strong>Copyright</strong> &copy; <script>document.write(new Date().getFullYear())</script>
+          <a href="https://www.sra.gov.ph/" style="font-weight: bold">SRA</a> All rights reserved.
         </div>
       </div>
     </div>

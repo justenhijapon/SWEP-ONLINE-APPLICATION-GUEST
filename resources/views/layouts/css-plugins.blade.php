@@ -18,7 +18,7 @@
 
 <link href="{{asset('template/inspinia/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
-<link rel="icon" href="{{asset('images/sra_logo_sm.png')}}">
+{{--<link rel="icon" href="{{asset('images/sra_logo_sm.png')}}">--}}
 {{-- Datatables--}}
 <link rel="stylesheet" href="{{asset('template/plugins/DataTables-Bootstrap4/datatables.min.css')}}">
 {{-- JQUERY CONFIRM--}}

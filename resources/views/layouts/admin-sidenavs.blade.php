@@ -3,21 +3,25 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <img alt="image" class="rounded-circle" src="{{asset('images/sra_logo_sm.png')}}"/>
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">{{Auth::guard('web')->user()->first_name}} {{Auth::guard('web')->user()->last_name}}</span>
-                        <span class="text-muted text-xs block">{{Auth::guard('web')->user()->business_name}}<b class="caret"></b></span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                        <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-                        <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="login.html">Logout</a></li>
-                    </ul>
+                    <img alt="image" style="margin-left: 25%;" class="rounded-circle" width="80" src="{{asset('images/avatar.jpeg')}}"/><br>
+
+{{--                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">--}}
+                        <span class="text-muted m-t-sm font-bold" style="font-size: medium; margin-left: 15%" >{{Auth::guard('web')->user()->first_name}} {{Auth::guard('web')->user()->last_name}}</span>
+
+                        <span class="text-muted text-xs block" style="word-break: normal; font-size: smaller">{{Auth::guard('web')->user()->business_name}}
+{{--                            <b class="caret"></b>--}}
+                        </span>
+{{--                    </a>--}}
+{{--                    <ul class="dropdown-menu animated fadeInRight m-t-xs">--}}
+{{--                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>--}}
+{{--                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>--}}
+{{--                        <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>--}}
+{{--                        <li class="dropdown-divider"></li>--}}
+{{--                        <li><a class="dropdown-item" href="login.html">Logout</a></li>--}}
+{{--                    </ul>--}}
                 </div>
                 <div class="logo-element">
-                    IN+
+                    SRA
                 </div>
             </li>
             <li>

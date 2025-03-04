@@ -2,10 +2,14 @@
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/font-awesome/css/font-awesome.min.css')}}">
+{{--<link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/font-awesome/css/font-awesome2.min.css')}}">--}}
+{{--<link type="text/css" rel="stylesheet" href="{{asset('template/inspinia/font-awesome/css/fontawesome-all.css')}}">--}}
+{{--<link type="text/css" rel="stylesheet" href="{{asset('template/inspinia/font-awesome/css/fontawesome-all.min.css')}}">--}}
+
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/Ionicons/css/ionicons.min.css')}}">
 
-<link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/select2/dist/css/select2.min.css')}}">
+{{--<link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/select2/dist/css/select2.min.css')}}">--}}
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 

@@ -18,7 +18,6 @@
         }
     }
 
-    $btnClass = ($attachmentsCount === 9) ? 'btn-primary' : 'btn-danger';
 
 @endphp
 
@@ -44,24 +43,24 @@
 {{--    @endif--}}
 
 </div>
-    <div class="btn-group btn-group-sm">
-        <button type="button" class="btn {{ $btnClass }} dropdown-toggle w-auto" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" title="Attachment">
-            <span class="caret"></span> View Files ({{ $attachmentsCount }}/9)
-        </button>
-        <ul class="dropdown-menu">
-            @foreach ($attachmentFields as $field => $label)
-                @if (!empty($data->$field))
-                    <li>
-                        <a href="#" class="view-file-link" data-url="{{ url("/show_file_custom/imported_commodities/{$data->slug}/{$field}") }}">
-                            <small class="view-file no-margin">{{ $label }}</small>
-                        </a>
-                    </li>
-                @endif
-            @endforeach
-        </ul>
-    </div>
 
+<div class="btn-group btn-group-sm">
+    <button type="button" class="btn btn-primary dropdown-toggle w-auto" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" title="Attachment">
+        <span class="caret"></span> View Files ({{ $attachmentsCount }}/9)
+    </button>
+    <ul class="dropdown-menu">
+        @foreach ($attachmentFields as $field => $label)
+            @if (!empty($data->$field))
+                <li>
+                    <a href="#" class="view-file-link" data-url="{{ url("/show_file_custom/imported_commodities/{$data->slug}/{$field}") }}">
+                        <small class="view-file no-margin">{{ $label }}</small>
+                    </a>
+                </li>
+            @endif
+        @endforeach
+    </ul>
+</div>
 
 
 
