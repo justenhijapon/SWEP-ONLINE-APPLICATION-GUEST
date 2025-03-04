@@ -25,7 +25,7 @@
                         <thead>
                         <tr>
                             <th width="10%">Reference No.</th>
-                            <th width="10%">Application Type</th>
+{{--                            <th width="10%">Application Type</th>--}}
                             <th width="10%">Name|Details</th>
                             <th width="20%">Product Description</th>
                             <th width="20%">Purpose of Importation</th>
@@ -164,7 +164,7 @@
                 "ajax" : '{{ route("admin.application.index") }}',
                 "columns": [
                     { "data": "slug"},
-                    { "data": "application_type"},
+                    // { "data": "application_type"},
                     { "data": "name"},
                     { "data": "prod_description"},
                     { "data": "purpose_importation"},
@@ -257,29 +257,44 @@
                 window.history.pushState({},document.title,'/admin/application')
             @endif
 
-        $("body").on('submit',"#edit_form", function(e){
-                e.preventDefault();
-                form = $(this);
-                formdata = form.serialize();
-                slug = form.attr('data');
-                uri = "{{route('admin.application.update','slug')}}";
-                uri = uri.replace('slug',slug);
-                loading_btn(form);
-                $.ajax({
-                    url: uri,
-                    data: formdata,
-                    type: 'PATCH',
-                        success: function (res) {
-                            setTimeout(function () {
-                                window.location.href = "/admin/application?success_message=Application Received!";
-                            });
-                        },
-                    error:function(response){
-                        errored(form,response);
-                        console.log(response);
+            $("body").on('submit', "#edit_form", function (e) {
+                e.preventDefault(); // Prevent default form submission
+                var form = $(this);
+                var formdata = form.serialize();
+                var slug = form.attr('data');
+                var uri = "{{ route('admin.application.update', 'slug') }}";
+                uri = uri.replace('slug', slug);
+                swal({
+                        title: "Are you sure?",
+                        text: "Make sure all details in the application are accurate and all required attachments are valid before proceeding.",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, receive it!",
+                        cancelButtonText: "Cancel",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                    if (isConfirm) {
+                        // Proceed with the AJAX request
+                        loading_btn(form);
+                        $.ajax({
+                            url: uri,
+                            data: formdata,
+                            type: 'PATCH',
+                            success: function (res) {
+                                setTimeout(function () {
+                                    window.location.href = "/admin/application?success_message=Application Received!";
+                                });
+                            },
+                            error: function (response) {
+                                errored(form, response);
+                                console.log(response);
+                            }
+                        });
                     }
-                })
-            })
+                });
+            });
 
             $('body').on('click', '.RevokeButton', function () {
                 let button = $(this);

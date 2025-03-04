@@ -275,19 +275,14 @@
 
 										<div class="col-md-12" align="right">
 											<div class="box-footer">
-{{--												<button id="btnSaveDraft" type="submit" class="btn btn-lg btn-outline btn-primary" style="margin-right: 20px;"><i class="fa fa-save"></i> Save as Draft</button>--}}
-												<button type="submit" id="btnSaveDraft" class="btn btn-lg btn-outline btn-primary"
-														@if($data->submission == 1) disabled style="cursor: not-allowed;" @endif>
-													Save as Draft
-												</button>
 												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
 												<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>
-{{--													<span class="pull-right" style="padding-right: 20px">--}}
-{{--														<button id="btnSubmitApplication" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;" disabled>--}}
-{{--															Submit Application <i class="fa fa-arrow-circle-right"></i>--}}
-{{--														</button>--}}
-{{--													</span>--}}
-
+												<span style="margin-right: 20px">
+													<button type="submit" id="btnSaveDraft" class="btn btn-lg btn-outline btn-primary"
+															@if($data->submission == 1) disabled style="cursor: not-allowed;" @endif>
+													Save as Draft
+												</button>
+												</span>
 												<span class="pull-right" style="padding-right: 20px">
 													<button id="btnSubmitApplication" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;"
 															@if($data->submission == 1) disabled @endif>
@@ -555,45 +550,6 @@
 			$("#btnSubmitApplication").tooltip();
 		});
 
-		{{--$(document).ready(function () {--}}
-		{{--	function toggleSubmitButton() {--}}
-		{{--		let requiredFiles = @json($requiredFiles);--}}
-		{{--		let allFilesUploaded = requiredFiles.every(function (name) {--}}
-		{{--			let fileInput = $("input[name='" + name + "']");--}}
-		{{--			let existingFile = fileInput.siblings("input[type='text']").val(); // Check preloaded file--}}
-
-		{{--			return (fileInput.length > 0 && fileInput[0].files.length > 0) || existingFile;--}}
-		{{--		});--}}
-
-		{{--		let submitButton = $("#btnSubmitApplication");--}}
-
-		{{--		if (allFilesUploaded) {--}}
-		{{--			submitButton.prop("disabled", false);--}}
-		{{--			submitButton.css({--}}
-		{{--				// "pointer-events": "auto", // Ensure clickable--}}
-		{{--				"cursor": "pointer" // Restore cursor--}}
-		{{--			});--}}
-		{{--			submitButton.removeAttr("title"); // Remove tooltip--}}
-		{{--		} else {--}}
-		{{--			submitButton.prop("disabled", true);--}}
-		{{--			submitButton.css({--}}
-		{{--				// "pointer-events": "none", // Prevent clicking--}}
-		{{--				"cursor": "not-allowed" // Show disabled cursor--}}
-		{{--			});--}}
-		{{--			submitButton.attr("title", "To enable Submit, upload the required attachment(s)");--}}
-		{{--		}--}}
-		{{--	}--}}
-
-		{{--	// Run check on page load (to check preloaded files)--}}
-		{{--	toggleSubmitButton();--}}
-
-		{{--	// Run check when any file input changes--}}
-		{{--	$(".file-input").on("change", function () {--}}
-		{{--		toggleSubmitButton();--}}
-		{{--	});--}}
-		{{--	// Initialize Bootstrap tooltip (if Bootstrap is used)--}}
-		{{--	$("#btnSubmitApplication").tooltip();--}}
-		{{--});--}}
 
 	</script>
 

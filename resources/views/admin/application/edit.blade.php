@@ -11,6 +11,7 @@
                        {{ $data->received == 1 ? 'Received' : 'Mark as Received' }}
               </button>
           </div>
+
      </span>
 
 @endsection
@@ -38,8 +39,6 @@
           .no-break {
                break-inside: avoid; /* Prevents breaking inside this element */
           }
-
-
 
 
           table{
