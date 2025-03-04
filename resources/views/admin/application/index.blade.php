@@ -24,13 +24,13 @@
                     <table class="table table-bordered table-condensed table-striped" id="applicationTable" style="width: 100%">
                         <thead>
                         <tr>
-                            <th>Reference No.</th>
-                            <th>Application Type</th>
-                            <th>Name|Details</th>
-                            <th>Product Description</th>
-                            <th>Purpose of Importation</th>
-                            <th>Application Status</th>
-                            <th style="width: 200px">Action</th>
+                            <th width="10%">Reference No.</th>
+                            <th width="10%">Application Type</th>
+                            <th width="10%">Name|Details</th>
+                            <th width="20%">Product Description</th>
+                            <th width="20%">Purpose of Importation</th>
+                            <th width="10%">Application Status</th>
+                            <th width="20%" class="action">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -171,18 +171,22 @@
                     { "data": "status"},
                     { "data": "action" }
                 ],
+                "buttons": [
+                    {!! __js::dt_buttons() !!}
+                ],
                 "columnDefs":[
                     {
-                        "targets" : 5,
+                        "targets" : 0,
                         "orderable" : false,
                         "class" : 'action'
                     },
+
                     {
-                        "targets": 3,
+                        "targets": 1,
                         // "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
                     }
                 ],
-                "order" : [[2, 'desc']],
+                // "order" : [[2, 'desc']],
                 "responsive": false,
                 "initComplete": function( settings, json ) {
                     $('#tbl_loader').fadeOut(function(){

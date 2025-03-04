@@ -40,6 +40,14 @@ class __js{
 	          });';
 
     }
+
+    public static function dt_buttons(){
+        $a = '"';
+        return "{extend : 'excel' , text: '<i class=".$a."fa icon-excel2 fa-fw".$a."></i>Excel'},
+        {extend : 'copy' , text: '<i class=".$a."fa icon-copy2 fa-fw".$a."></i>Copy'},
+        {extend : 'pdf' , text: '<i class=".$a."fa icon-pdf2 fa-fw".$a."></i>PDF'}
+    ";
+    }
     
 
 
