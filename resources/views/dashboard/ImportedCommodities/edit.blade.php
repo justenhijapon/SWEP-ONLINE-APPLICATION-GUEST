@@ -331,7 +331,8 @@
 													<div class="row">
 														<div class="col-5 date">
 															<i class="fa fa-plus-circle"></i>
-															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>
+															<p class="no-margin" style="margin: 0; font-size: 10px"> {{ date('M. d, Y | g:i A', strtotime($data->created_at)) }}</p>
+{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
 															<small class="text-navy">
 																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->created_at)->diffForHumans()) }}
 															</small>
@@ -349,7 +350,8 @@
 													<div class="row">
 														<div class="col-5 date">
 															<i class="fa fa-arrow-circle-right"></i>
-															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->submission_date)->format('M. j, Y') }}</p>
+															<p class="no-margin" style="margin: 0; font-size: 10px">{{ date('M. d, Y | g:i A', strtotime($data->submission_date)) }}</p>
+{{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->submission_date)->format('M. j, Y') }}</p>--}}
 															<small class="text-navy">
 																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->submission_date)->diffForHumans()) }}
 															</small>
@@ -385,7 +387,7 @@
 														<div class="row">
 															<div class="col-5 date">
 																<i class="fa fa-arrow-circle-right"></i>
-																<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->submission_date)->format('M. j, Y') }}</p>
+																<p class="no-margin" style="margin: 0; font-size: 10px">{{ date('M. d, Y | g:i A', strtotime($data->submission_date)) }}</p>
 																<small class="text-navy">
 																	{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->submission_date)->diffForHumans()) }}
 																</small>
@@ -400,7 +402,7 @@
 														<div class="row">
 															<div class="col-5 date">
 																<i class="fa fa-undo"></i>
-																<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->revoked_date)->format('M. j, Y') }}</p>
+																<p class="no-margin" style="margin: 0; font-size: 10px">{{ date('M. d, Y | g:i A', strtotime($data->revoked_date)) }}</p>
 																<small class="text-navy">
 																	{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->revoked_date)->diffForHumans()) }}
 																</small>
@@ -419,7 +421,7 @@
 													<div class="row">
 														<div class="col-5 date">
 															<i class="fa fa-check-circle"></i>
-															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->received_date)->format('M. j, Y') }}</p>
+															<p class="no-margin" style="margin: 0; font-size: 10px">{{ date('M. d, Y | g:i A', strtotime($data->received_date)) }}</p>
 															<small class="text-navy">
 																{{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->received_date)->diffForHumans()) }}
 															</small>
