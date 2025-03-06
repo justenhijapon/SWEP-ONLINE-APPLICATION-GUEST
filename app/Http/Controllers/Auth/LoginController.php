@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Core\Interfaces\UserInterface;
 
+use App\Models\User;
+use App\Models\User\PreRegistrationModel;
 use Auth;
 use Session;
 use Illuminate\Http\Request;
@@ -44,42 +46,71 @@ class LoginController extends Controller{
 
     }
 
-    protected function login(Request $request){
-        $this->validateLogin($request);
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-        if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-            return $this->sendLockoutResponse($request);
+        // Check if user exists in the main users table
+        if (!User::where('email', $request->email)->exists()) {
+            // Check if user exists in the pre-registration table and is pending approval
+            $preReg = PreRegistrationModel::where('email', $request->email)->first();
+            if ($preReg) {
+                return back()->withErrors(['email' => 'Your pre-registration is for approval of the admin.']);
+            }
         }
 
-
-        if($this->auth->guard('web')->attempt($this->credentials($request))){
-
-            if($this->auth->user()->is_active == false){
-
+        // Attempt login
+        if ($this->auth->guard('web')->attempt($this->credentials($request))) {
+            if ($this->auth->user()->is_active == false) {
                 $this->session->flush();
-                $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personnel to activate your account.');
+                $this->session->flash('AUTH_UNACTIVATED', 'Your account is currently UNACTIVATED! Please contact the designated IT Personnel to activate your account.');
                 $this->auth->logout();
-
-            }else{
-
-                //$user = $this->user_repo->login($this->auth->user()->slug);
-
-                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
-
+            } else {
                 $this->clearLoginAttempts($request);
-                return redirect()->intended('dashboard/home');
-
+                return redirect()->intended('dashboard/home'); // Ensure this route exists
             }
-
         }
 
         $this->incrementLoginAttempts($request);
         return $this->sendFailedLoginResponse($request);
-
     }
+
+//    protected function login(Request $request){
+//        $this->validateLogin($request);
+//
+//        if ($this->hasTooManyLoginAttempts($request)) {
+//            $this->fireLockoutEvent($request);
+//            return $this->sendLockoutResponse($request);
+//        }
+//
+//
+//        if($this->auth->guard('web')->attempt($this->credentials($request))){
+//
+//            if($this->auth->user()->is_active == false){
+//
+//                $this->session->flush();
+//                $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personnel to activate your account.');
+//                $this->auth->logout();
+//
+//            }else{
+//
+//                //$user = $this->user_repo->login($this->auth->user()->slug);
+//
+//                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
+//                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
+//                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+//
+//                $this->clearLoginAttempts($request);
+//                return redirect()->intended('dashboard/home');
+//
+//            }
+//
+//        }
+//
+//        $this->incrementLoginAttempts($request);
+//        return $this->sendFailedLoginResponse($request);
+//
+//    }
 
     public function logout(Request $request){
         

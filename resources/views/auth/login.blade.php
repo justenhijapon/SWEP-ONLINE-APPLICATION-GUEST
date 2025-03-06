@@ -64,6 +64,7 @@
 			<div class="modal-content">
 				@csrf
 				<div class="modal-header">
+					<h3 class="m-t-none m-b">Sign Up</h3>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -133,7 +134,7 @@
 <!--LOGIN MODAL-->
 <div id="modal-form-login" class="modal fade" aria-hidden="true">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content" style="width: 650px">
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-sm-6 b-r">
@@ -164,7 +165,7 @@
 					</div>
 					<div class="col-sm-6">
 						<h4>Not a member?</h4>
-						<p><a class="navy-link" href="#" role="button">Create an account</a></p>
+						<p><a class="navy-link" href="#" id="openRegisterModal" role="button">Create an account</a></p>
 						<div class="col-sm-12" align="center" style="padding:20px 10px 20px 25px">
 							<img style="width:100%" src="{{asset('images/SRA_DA_logo.png')}}" />
 						</div>
@@ -259,51 +260,53 @@
 			</div>
 		</div>
 		<div class="row m-b-lg justify-content-center">
-			<div class="col-lg-3 ">
-				<address>
-					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
-					Sugar Center Building, North Avenue Diliman, Quezon City, Philippines, 1101
+			<div class="col-lg-12 ">
+				<address style="text-align: center">
+					<strong><span class="navy">Sugar Regulatory Administration</span></strong>
+					<p style="margin: 0">Sugar Center Building, North Avenue Diliman, Quezon City, Philippines, 1101</p>
+					<p style="margin: 0">Email: srahead@sra.gov.ph / mis@sra.gov.ph</p>
+					<p style="margin: 0">(632)8926-2928 / (632)8929-3633</p>
 				</address>
 			</div>
-			<div class="col-lg-3">
-				<address>
-					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
-					Araneta St., Singcang, Bacolod City, <br/>
-					Negros Occidental, Philippines, 6100
-				</address>
-			</div>
-			<div class="col-lg-3">
-				<address>
-					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
-					(SRA-LA GRANJA) La Granja, La Carlota City,
-					Negros Occidental, Philippines, 6130
-				</address>
-			</div>
-			<div class="col-lg-3">
-				<address>
-					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>
-					(SRA-LAREC) Floridablanca, Pampanga, Philippines, 2006
-				</address>
-			</div>
+{{--			<div class="col-lg-3">--}}
+{{--				<address>--}}
+{{--					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>--}}
+{{--					Araneta St., Singcang, Bacolod City, <br/>--}}
+{{--					Negros Occidental, Philippines, 6100--}}
+{{--				</address>--}}
+{{--			</div>--}}
+{{--			<div class="col-lg-3">--}}
+{{--				<address>--}}
+{{--					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>--}}
+{{--					(SRA-LA GRANJA) La Granja, La Carlota City,--}}
+{{--					Negros Occidental, Philippines, 6130--}}
+{{--				</address>--}}
+{{--			</div>--}}
+{{--			<div class="col-lg-3">--}}
+{{--				<address>--}}
+{{--					<strong><span class="navy">Sugar Regulatory Administration</span></strong><br/>--}}
+{{--					(SRA-LAREC) Floridablanca, Pampanga, Philippines, 2006--}}
+{{--				</address>--}}
+{{--			</div>--}}
 
 		</div>
-		<div class="row">
-			<div class="col-lg-12 text-center">
-				<a href="https://www.sra.gov.ph/contactUs/index" target="_blank" class="btn btn-primary">Send us mail</a>
+{{--		<div class="row">--}}
+{{--			<div class="col-lg-12 text-center">--}}
+{{--				<a href="https://www.sra.gov.ph/contactUs/index" target="_blank" class="btn btn-primary">Send us mail</a>--}}
 {{--				<a href="mailto:srahead@gov.ph" class="btn btn-primary">Send us mail</a>--}}
-				<p class="m-t-sm">
-					Or follow us on social platform
-				</p>
-				<ul class="list-inline social-icon">
-					<li class="list-inline-item"><a href=""><i class="fa fa-twitter"></i></a>
-					</li>
-					<li class="list-inline-item"><a href="https://www.facebook.com/sugarregulatoryadmin" target="_blank"><i class="fa fa-facebook"></i></a>
-					</li>
-					<li class="list-inline-item"><a href=""><i class="fa fa-linkedin"></i></a>
-					</li>
-				</ul>
-			</div>
-		</div>
+{{--				<p class="m-t-sm">--}}
+{{--					Or follow us on social platform--}}
+{{--				</p>--}}
+{{--				<ul class="list-inline social-icon">--}}
+{{--					<li class="list-inline-item"><a href=""><i class="fa fa-twitter"></i></a>--}}
+{{--					</li>--}}
+{{--					<li class="list-inline-item"><a href="https://www.facebook.com/sugarregulatoryadmin" target="_blank"><i class="fa fa-facebook"></i></a>--}}
+{{--					</li>--}}
+{{--					<li class="list-inline-item"><a href=""><i class="fa fa-linkedin"></i></a>--}}
+{{--					</li>--}}
+{{--				</ul>--}}
+{{--			</div>--}}
+{{--		</div>--}}
 		<div class="row">
 			<div class="col-lg-12 text-center m-t-lg m-b-lg">
 				<p><strong>&copy; 2025 Sugar Regulatory Administration</strong></div>
@@ -349,6 +352,26 @@
 <script src="{{asset('template/inspinia/js/plugins/pace/pace.min.js')}}"></script>
 <script src="{{asset('template/inspinia/js/plugins/wow/wow.min.js')}}"></script>
 <script src="{{ asset('template/inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+<script>
+	document.getElementById("openRegisterModal").addEventListener("click", function(event) {
+		event.preventDefault(); // Prevent the default anchor behavior
+
+		// Hide the login modal
+		$("#modal-form-login").modal("hide");
+
+		// Wait for the login modal to close, then show the register modal
+		setTimeout(function() {
+			$("#modal-form-pre").modal("show");
+		}, 500); // Adjust delay for smooth transition
+	});
+</script>
+<script>
+	$(document).ready(function(){
+		@if ($errors->any())
+		$('#modal-form-login').modal('show');
+		@endif
+	});
+</script>
 <script>
 	$(document).ready(function () {
 		$('body').scrollspy({

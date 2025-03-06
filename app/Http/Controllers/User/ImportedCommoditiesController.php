@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\ImportedCommodities\ImportedCommoditiesFormRequest;
 use App\Models\User;
+use App\Models\User\ICSubmitted;
 use App\Models\User\ImportedCommodities;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -131,11 +132,13 @@ class ImportedCommoditiesController extends Controller
 
 
 
-    public function edit($slug)
-    {
-        $data = ImportedCommodities::where('user_created', Auth::guard('web')->user()->slug)->first();
-        return view('dashboard.ImportedCommodities.applicationForm', compact('data'));
-    }
+//    public function edit($slug)
+//    {
+//        $submittedAttemp = User\ICSubmitted::where('user_created', Auth::guard('web')->user()->slug)->first();
+//        $data = ImportedCommodities::where('user_created', Auth::guard('web')->user()->slug)->first();
+
+//        return view('dashboard.ImportedCommodities.applicationForm', compact('data', 'submittedAttemp'));
+//    }
 
 
    public function update(ImportedCommoditiesFormRequest $request, $slug)
@@ -166,6 +169,13 @@ class ImportedCommoditiesController extends Controller
         $data->user_created = $user->slug;
         $data->user_updated = $user->slug;
         $data->year = now()->format('Y');
+        $ipAddress = $request->ip();
+
+        $ic_submited = new User\ICSubmitted();
+//        $ic_submited->slug = $data->slug;
+//        $ic_submited->user_created = $data->user_created;
+//        $ic_submited->submission_date = now();
+//        $ic_submited->ip_created = $ipAddress;
 
         // Update submission_status only if present in the request
         if ($request->has('submission')) {
@@ -178,6 +188,19 @@ class ImportedCommoditiesController extends Controller
 
         // Update submission_date only when submitting the application
         if ($request->has('submission_date')) {
+            $ic_submited->slug = $data->slug;
+        }
+        if ($request->has('submission_date')) {
+            $ic_submited->user_created = $data->user_created;
+        }
+        if ($request->has('submission_date')) {
+            $ic_submited->submission_date = now();
+        }
+        if ($request->has('submission_date')) {
+            $ic_submited->ip_created = $ipAddress;
+        }
+
+        if ($request->has('submission_date')) {
             $data->submission_date = $request->submission_date;
         }
 
@@ -186,8 +209,11 @@ class ImportedCommoditiesController extends Controller
             $data->created_at = now();
         }
 
+
+
         $data->updated_at = now();
 //        $data->date = $request->date->format('Y-m-d H:i:s');
+
 
 
         // Only update if a new file is uploaded
@@ -220,6 +246,7 @@ class ImportedCommoditiesController extends Controller
         }
 
         $data->save();
+        $ic_submited->save();
 //       return redirect()->back();
 //        return redirect()->to('/');
         return response()->json(['slug' => $data->slug]);

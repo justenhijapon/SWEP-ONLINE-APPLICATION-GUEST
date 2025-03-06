@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\User\ICRevoked;
+use App\Models\User\ICSubmitted;
 use App\Models\User\ImportedCommodities;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,58 +17,50 @@ use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
+
 //        return view('user.home.index');
 //        $data = ImportedCommodities::all();
-        $data = ImportedCommodities::where('user_created', Auth::guard('web')->user()->slug)->first();
-//        dd($data);
-        return view('dashboard.ImportedCommodities.edit', compact('data'));
+    public function index()
+    {
+        $userSlug = Auth::guard('web')->user()->slug;
 
+        $data = ImportedCommodities::where('user_created', $userSlug)->first();
+
+        // Fetch submission attempts
+        $submittedAttempts = ICSubmitted::where('user_created', $userSlug)
+            ->orderBy('submission_date')
+            ->get();
+
+        // Fetch revoked attempts
+        $revokedAttempts = ICRevoked::where('user_created', $userSlug)
+            ->orderBy('submission_date')
+            ->get();
+
+        // Merge submissions and revocations into a single timeline
+        $timeline = collect();
+
+        // Ensure we start with a "Submitted" status
+        while ($submittedAttempts->isNotEmpty() || $revokedAttempts->isNotEmpty()) {
+            if ($submittedAttempts->isNotEmpty()) {
+                $timeline->push([
+                    'type' => $timeline->isEmpty() ? 'Submitted' : 'Resubmitted',
+                    'data' => $submittedAttempts->shift(),
+                ]);
+            }
+
+            if ($revokedAttempts->isNotEmpty()) {
+                $timeline->push([
+                    'type' => 'Revoked',
+                    'data' => $revokedAttempts->shift(),
+                ]);
+            }
+        }
+
+        return view('dashboard.ImportedCommodities.edit', compact(
+            'data',
+            'timeline'
+        ));
     }
-
-//    public function showFileCustom($tableName, $slug, $columnName = 'path') {
-//        if (!Schema::hasTable($tableName)) {
-//            abort(404, 'Invalid table name.');
-//        }
-//
-//        $data = DB::table($tableName)->where('slug', $slug)->first();
-//
-//        if (!$data || !isset($data->$columnName)) {
-//            abort(404, 'File not found.');
-//        }
-//
-//        $filePath = $data->$columnName;
-//        if (!Storage::exists($filePath)) {
-//            abort(404, 'File does not exist.');
-//        }
-//
-//        $mimeType = Storage::mimeType($filePath);
-//        return response()->file(storage_path('app/' . $filePath), ['Content-Type' => $mimeType]);
-//    }
-
-//    public function showFileCustom($tableName, $slug, $columnName = 'path') {
-//        if (!Schema::hasTable($tableName)) {
-//            return response()->json(['error' => 'Invalid table name'], 404);
-//        }
-//
-//        $data = DB::table($tableName)->where('slug', $slug)->first();
-//        if (!$data) {
-//            return response()->json(['error' => 'Record not found'], 404);
-//        }
-//
-//        if (!isset($data->$columnName)) {
-//            return response()->json(['error' => 'Invalid column name'], 404);
-//        }
-//
-//        $filePath = $data->$columnName;
-//
-//        if (!Storage::exists($filePath)) {
-//            return response()->json(['error' => 'File not found'], 404);
-//        }
-//
-//        return response()->json(['file_url' => Storage::url($filePath)]); // Debugging
-//    }
 
 
 

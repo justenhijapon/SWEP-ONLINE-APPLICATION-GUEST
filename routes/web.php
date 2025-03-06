@@ -94,19 +94,24 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
         Route::post('payments/approved/{id}','Admin\OrderOfPaymentsController@approved')->name('payments.approved');
         Route::resource('payments','Admin\OrderOfPaymentsController');
 
-//        Route::get('/application/attachments/{slug}/showApplicationFile', 'showApplicationFile@ApplicationController')->name('application.attachments.showApplicationFile');
 
         Route::get('/application/attachments/{slug}/showApplicationFile',
             [ApplicationController::class, 'showApplicationFile']
         )->middleware('auth')->name('application.attachments.showApplicationFile');
-
-
-//        Route::post('/update-received/{slug}', 'Admin\ApplicationController@revokedReceived')->name('revokedReceived');
-//        Route::match(['post'], 'admin/update-received/{slug}', [ApplicationController::class, 'revokeReceived']);
         Route::post('application/{slug}/revokedUpdate','Admin\ApplicationController@revokedUpdate')->name('application.revokedUpdate');
         Route::post('/update-status', [ApplicationController::class, 'updateStatus'])->name('update.status');
-
         Route::resource('/application', 'Admin\ApplicationController');
+
+
+        Route::get('/importedCommodities/attachments/{slug}/showApplicationFile', 'Admin\ImportedCommoditiesController@showApplicationFile')->name('importedCommodities.attachments.showApplicationFile');
+        Route::post('importedCommodities/{slug}/revokedUpdate','Admin\ImportedCommoditiesController@revokedUpdate')->name('importedCommodities.revokedUpdate');
+        Route::post('/update-status','Admin\ImportedCommoditiesController@updateStatus')->name('update.status');
+//        Route::post('/update-status', [ApplicationController::class, 'updateStatus'])->name('update.status');
+        Route::get('/admin/importedCommodities/revoked', 'Admin\ImportedCommoditiesController@revoked')->name('importedCommodities.revoked');
+        Route::get('/admin/importedCommodities/approved', 'Admin\ImportedCommoditiesController@approved')->name('importedCommodities.approved');
+
+
+        Route::resource('/importedCommodities', 'Admin\ImportedCommoditiesController');
 
     });
 
