@@ -15,6 +15,7 @@
 <link href="{{asset('template/inspinia/css/plugins/codemirror/codemirror.css')}}" rel="stylesheet">
 
 <link href="{{asset('template/inspinia/css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
+<link href="{{asset('template/inspinia/css/plugins/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet">
 
 <link href="{{asset('template/inspinia/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 

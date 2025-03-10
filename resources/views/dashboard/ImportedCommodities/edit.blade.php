@@ -438,101 +438,6 @@
 
 	</script>
 
-
-
-{{--	<script>--}}
-{{--		$(document).ready(function () {--}}
-{{--			let fileInputs = $(".file-input");--}}
-
-{{--			if (fileInputs.length === 0) {--}}
-{{--				console.error("❌ No file input elements found! Check your Blade template.");--}}
-{{--				return;--}}
-{{--			}--}}
-
-{{--			$(".file-input").each(function () {--}}
-{{--				var $this = $(this);--}}
-{{--				var existingFileUrl = $this.data("file-url");--}}
-
-{{--				if (!existingFileUrl) {--}}
-{{--					console.warn("⚠️ No file URL found for:", $this.attr("id"));--}}
-{{--					return;--}}
-{{--				}--}}
-
-{{--				console.log("✅ Initializing file input for:", $this.attr("id"), "with URL:", existingFileUrl);--}}
-
-{{--				var fileType = existingFileUrl.match(/\.pdf$/i) ? "pdf" : "image";--}}
-
-{{--				$this.fileinput({--}}
-{{--					theme: "fa",--}}
-{{--					allowedFileExtensions: ["pdf", "jpeg", "jpg", "png"],--}}
-{{--					maxFileCount: 1,--}}
-{{--					showUpload: false,--}}
-{{--					showCaption: false,--}}
-{{--					overwriteInitial: true,--}}
-{{--					initialPreview: existingFileUrl ? [existingFileUrl] : [],--}}
-{{--					initialPreviewAsData: true,--}}
-{{--					initialPreviewFileType: fileType,--}}
-{{--					browseClass: "btn btn-primary btn-md",--}}
-{{--					initialPreviewConfig: fileType === "pdf" ? [{ type: "pdf", caption: "PDF Preview", key: 1 }] : [],--}}
-{{--				});--}}
-{{--			});--}}
-
-
-{{--			// Fetch file paths via AJAX and update the inputs--}}
-{{--			$.ajax({--}}
-{{--				url: "/api/get-file-paths/{{$data->slug}}",--}}
-{{--				type: "GET",--}}
-{{--				success: function (data) {--}}
-{{--					console.log("✅ Received File Paths:", data); // Debugging--}}
-{{--					Object.keys(data).forEach(function (key) {--}}
-{{--						let fileInputId = "img_url_" + key;--}}
-{{--						let fileUrl = data[key];--}}
-
-{{--						if (!$("#" + fileInputId).length) {--}}
-{{--							console.error("❌ File input not found for:", fileInputId);--}}
-{{--							return;--}}
-{{--						}--}}
-
-{{--						console.log("📂 Updating file input:", fileInputId, "with URL:", fileUrl);--}}
-
-{{--						$("#" + fileInputId).fileinput('destroy').fileinput({--}}
-{{--							theme: "fa",--}}
-{{--							allowedFileExtensions: ["pdf", "jpeg", "jpg", "png", "txt"],--}}
-{{--							maxFileCount: 1,--}}
-{{--							showUpload: false,--}}
-{{--							showCaption: false,--}}
-{{--							overwriteInitial: true,--}}
-{{--							initialPreview: fileUrl ? [fileUrl] : [],--}}
-{{--							initialPreviewAsData: true,--}}
-{{--							initialPreviewFileType: fileUrl.endsWith(".pdf") ? "pdf" : "image",--}}
-{{--							browseClass: "btn btn-primary btn-md",--}}
-{{--							initialPreviewConfig: fileUrl.endsWith(".pdf") ? [{--}}
-{{--								type: "pdf",--}}
-{{--								caption: "PDF Preview",--}}
-{{--								downloadUrl: fileUrl,--}}
-{{--								key: 1--}}
-{{--							}] : [],--}}
-{{--							previewFileIconSettings: {--}}
-{{--								'pdf': '<i class="fa fa-file-pdf text-danger"></i>',--}}
-{{--								'jpg': '<i class="fa fa-file-image text-warning"></i>',--}}
-{{--								'png': '<i class="fa fa-file-image text-primary"></i>'--}}
-{{--							},--}}
-{{--							previewTemplates: {--}}
-{{--								pdf: '<div class="kv-preview-data file-preview-other-frame">' +--}}
-{{--										'<iframe src="{data}" class="kv-preview-data file-preview-pdf" style="width:100%; height:400px;"></iframe>' +--}}
-{{--										'</div>'--}}
-{{--							}--}}
-{{--						});--}}
-{{--					});--}}
-{{--				},--}}
-{{--				error: function () {--}}
-{{--					console.error("❌ Failed to fetch file paths.");--}}
-{{--				}--}}
-{{--			});--}}
-{{--		});--}}
-
-{{--	</script>--}}
-
 	<script type="text/javascript">
 		modal_loader = $(".loader_container").html();
 		$(document).ready(function() {
@@ -548,9 +453,30 @@
 				submitForm(false); // Pass false to indicate it's a draft
 			});
 
+			// $("#btnSubmitApplication").click(function (e) {
+			// 	e.preventDefault();
+			// 	submitForm(true); // Pass true to update submission_status
+			// });
+
 			$("#btnSubmitApplication").click(function (e) {
 				e.preventDefault();
-				submitForm(true); // Pass true to update submission_status
+
+				Swal.fire({
+					title: "Warning",
+					text: "Before you proceed, please note that once you submit your application, you will no longer be able to edit it. The 'Save as Draft' and 'Submit Application' buttons will be disabled. Do you want to continue?",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Submit",
+					cancelButtonText: "Cancel",
+					confirmButtonColor: "#d33",
+					cancelButtonColor: "#6c757d",
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// Disable buttons after confirmation
+						$("#btnSubmitApplication, #btnSaveDraft").prop("disabled", true);
+						submitForm(true); // Pass true to update submission_status
+					}
+				});
 			});
 
 			function submitForm(isFinalSubmission) {
@@ -606,6 +532,8 @@
 					error: function (res) {
 						console.log(res);
 						errored($("#importedCommoditiesForm"), res);
+						// Re-enable buttons in case of an error
+						$("#btnSubmitApplication, #btnSaveDraft").prop("disabled", false);
 					}
 				});
 			}

@@ -26,40 +26,32 @@ class HomeController extends Controller
 
         $data = ImportedCommodities::where('user_created', $userSlug)->first();
 
-        // Fetch submission attempts
-        $submittedAttempts = ICSubmitted::where('user_created', $userSlug)
-            ->orderBy('submission_date')
-            ->get();
+        $submittedAttempts = ICSubmitted::where('user_created', $userSlug)->get();
+        $revokedAttempts = ICRevoked::where('user_created', $userSlug)->get();
 
-        // Fetch revoked attempts
-        $revokedAttempts = ICRevoked::where('user_created', $userSlug)
-            ->orderBy('submission_date')
-            ->get();
+        $timeline = [];
 
-        // Merge submissions and revocations into a single timeline
-        $timeline = collect();
-
-        // Ensure we start with a "Submitted" status
-        while ($submittedAttempts->isNotEmpty() || $revokedAttempts->isNotEmpty()) {
-            if ($submittedAttempts->isNotEmpty()) {
-                $timeline->push([
-                    'type' => $timeline->isEmpty() ? 'Submitted' : 'Resubmitted',
-                    'data' => $submittedAttempts->shift(),
-                ]);
-            }
-
-            if ($revokedAttempts->isNotEmpty()) {
-                $timeline->push([
-                    'type' => 'Revoked',
-                    'data' => $revokedAttempts->shift(),
-                ]);
-            }
+        // Merge submitted and revoked attempts into one timeline array
+        foreach ($submittedAttempts as $submitted) {
+            $timeline[] = [
+                'type' => $timeline ? 'Resubmitted' : 'Submitted',
+                'data' => $submitted
+            ];
         }
 
-        return view('dashboard.ImportedCommodities.edit', compact(
-            'data',
-            'timeline'
-        ));
+        foreach ($revokedAttempts as $revoked) {
+            $timeline[] = [
+                'type' => 'Revoked',
+                'data' => $revoked
+            ];
+        }
+
+        // Sort timeline by submission_date in DESCENDING order (latest first)
+        usort($timeline, function ($a, $b) {
+            return strtotime($b['data']->submission_date) - strtotime($a['data']->submission_date);
+        });
+
+        return view('dashboard.ImportedCommodities.edit', compact('timeline', 'data'));
     }
 
 

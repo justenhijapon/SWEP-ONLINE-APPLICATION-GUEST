@@ -50,6 +50,7 @@
 <script src="{{ asset('template/inspinia/js/plugins/codemirror/mode/xml/xml.js') }}"></script>
 
 <script src="{{ asset('template/inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('template/inspinia/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
 <script src="{{asset('template/plugins/autonum/main.js')}}" type="text/javascript"></script>
 

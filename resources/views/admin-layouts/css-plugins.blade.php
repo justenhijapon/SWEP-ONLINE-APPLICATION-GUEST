@@ -40,4 +40,6 @@
 <link rel="stylesheet" href="{{asset('template/plugins/jquery-confirm/jquery-confirm.min.css')}}">
 
 <link href="{{asset('template/inspinia/css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
+<link href="{{asset('template/inspinia/css/plugins/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet">
+
 

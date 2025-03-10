@@ -42,6 +42,7 @@
         </div>
     </section>
 
+
 @endsection
 
 @section('modals')
@@ -105,38 +106,14 @@
 @endsection
 
 @section('scripts')
+
+    @include('admin.importedCommodities.script.scrpt_revoked')
     <script>
         $(document).on('click', '.prevent-close', function(event) {
             event.stopPropagation(); // Prevent dropdown from closing
         });
     </script>
-    <script>
-        $(document).on("click", ".revoked_btn", function () {
-            var slug = $(this).attr("data"); // Get the slug from the button
 
-            if (confirm("Are you sure you want to revoke this record?")) {
-                $.ajax({
-                    url: "/update-status", // Update with your route
-                    type: "POST",
-                    data: {
-                        slug: slug,
-                        status: 0, // Update received value to 0
-                        _token: "{{ csrf_token() }}" // Laravel CSRF token
-                    },
-                    success: function (response) {
-                        succeed(form, true, true); // Call the success function
-
-                        // Refresh DataTables without reloading the page
-                        $('#yourDataTableID').DataTable().ajax.reload();
-                    },
-                    error: function () {
-                        alert("Something went wrong.");
-                    }
-                });
-            }
-        });
-
-    </script>
     <script>
         $(document).ready(function () {
             // Assume receivedValue is retrieved from your backend
@@ -295,100 +272,6 @@
                     }
                 });
             });
-
-
-            $('body').on('click', '.RevokeButton', function () {
-                let button = $(this);
-                let slug = button.attr('data');
-                let url = '{{ route('admin.importedCommodities.revokedUpdate', 'slug') }}'.replace('slug', slug);
-
-                // Prompt for remarks before confirmation
-                swal({
-                    title: "Are you sure?",
-                    text: "Please enter a reason for revoking this application:",
-                    type: "input",  // Use input type
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    inputPlaceholder: "Enter remarks here...",
-                }, function (remarks) {
-                    if (remarks === false) return false;  // If cancelled, do nothing
-                    if (remarks.trim() === "") {
-                        swal.showInputError("Remarks are required!");
-                        return false;
-                    }
-
-                    // Proceed with revocation if confirmed
-                    $.ajax({
-                        url: url,
-                        data: {
-                            revoked: 'true', // Always set revoked to true
-                            remarks: remarks, // Send remarks
-                        },
-                        type: 'POST',
-                        headers: {
-                            {!! __html::token_header() !!}
-                        },
-                        success: function (response) {
-                            applicationTbl.draw();
-                            console.log(response);
-
-                            // Update button class and text
-                            button.removeClass('btn-success').addClass('btn-danger').text('Revoked');
-
-                            // Show success message
-                            swal("Revoked!", "The application has been successfully revoked.", "success");
-                        },
-                        error: function (response) {
-                            console.log(response);
-                        }
-                    });
-                });
-            });
-
-
-        {{--$('body').on('click', '.RevokeButton', function () {--}}
-            {{--    let button = $(this);--}}
-            {{--    let slug = button.attr('data');--}}
-            {{--    let url = '{{ route('admin.importedCommodities.revokedUpdate', 'slug') }}'.replace('slug', slug);--}}
-
-            {{--    // SweetAlert Confirmation--}}
-            {{--    swal({--}}
-            {{--        title: "Are you sure?",--}}
-            {{--        text: "Are you sure you want to revoke this application?",--}}
-            {{--        type: "warning",--}}
-            {{--        showCancelButton: true,--}}
-            {{--        confirmButtonColor: "#3085d6",--}}
-            {{--        cancelButtonColor: "#d33",--}}
-            {{--        confirmButtonText: "Yes, revoke it!",--}}
-            {{--        cancelButtonText: "Cancel",--}}
-            {{--        closeOnConfirm: false--}}
-            {{--    }, function () {--}}
-            {{--        // Proceed with revocation if confirmed--}}
-            {{--        $.ajax({--}}
-            {{--            url: url,--}}
-            {{--            data: {--}}
-            {{--                revoked: 'true', // Always set revoked to true--}}
-            {{--            },--}}
-            {{--            type: 'POST',--}}
-            {{--            headers: {--}}
-            {{--                {!! __html::token_header() !!}--}}
-            {{--            },--}}
-            {{--            success: function (response) {--}}
-            {{--                applicationTbl.draw();--}}
-            {{--                console.log(response);--}}
-
-            {{--                // Update button class and text--}}
-            {{--                button.removeClass('btn-success').addClass('btn-danger').text('Revoked');--}}
-
-            {{--                // Show success message--}}
-            {{--                swal("Revoked!", "The application has been successfully revoked.", "success");--}}
-            {{--            },--}}
-            {{--            error: function (response) {--}}
-            {{--                console.log(response);--}}
-            {{--            }--}}
-            {{--        });--}}
-            {{--    });--}}
-            {{--});--}}
 
 
 

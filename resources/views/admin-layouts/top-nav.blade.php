@@ -1,10 +1,10 @@
 <header class="main-header">
       <!-- Logo -->
-      <a href="../../index2.html" class="logo">
+      <a href="/admin/home" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>SRA</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>SWEP</b> OA</span>
+        <span class="logo-lg"><b>SRA</b></span>
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
@@ -18,6 +18,10 @@
 
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
+              <li style="width: 870px; padding-top: 12px;">
+                  <b style="color: white; font-size: 20px; font-weight: bolder; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; margin-left: 45px;">ONLINE APPLICATION</b>
+              </li>
+
             <!-- Messages: style can be found in dropdown.less-->
 {{--            <li class="dropdown messages-menu">--}}
 {{--              <a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}

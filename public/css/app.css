@@ -140,3 +140,19 @@ div[data-notify="container"] > [data-notify="title"]{
     background: inherit;
     left: 20px;
 }
+
+
+.swal2-large-popup {
+    font-size: 18px !important; /* Increase font size */
+    padding: 30px !important; /* Increase padding */
+}
+
+.swal2-large-title {
+    font-size: 24px !important; /* Larger title */
+}
+
+.swal2-large-content {
+    font-size: 18px !important; /* Larger text */
+}
+
+
