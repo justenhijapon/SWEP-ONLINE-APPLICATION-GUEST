@@ -17,9 +17,17 @@ class PreRegistrationRepository extends BaseRepository implements PreRegistratio
         parent::__construct();
     }
 
-    public function fetchTable($data){
-        $get = $this->preRegistration;
-        return $get->all();
+//    public function fetchTable($data){
+//        $get = $this->preRegistration;
+//        return $get->all();
+//    }
+
+    public function fetchTable($data)
+    {
+        return $this->preRegistration
+            ->orderByRaw("CASE WHEN status = 'FOR APPROVAL' THEN 1 ELSE 2 END")
+            ->orderBy('created_at', 'desc');
+//            ->get();
     }
 
     public function fetch($request)

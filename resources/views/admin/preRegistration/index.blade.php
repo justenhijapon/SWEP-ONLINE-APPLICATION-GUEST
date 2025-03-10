@@ -73,7 +73,13 @@
                 { "data": "first_name"},
                 { "data": "middle_name"},
                 { "data": "phone"},
-                { "data": "status"},
+                {
+                    "data": "status",
+                    "render": function(data, type, row) {
+                        let badgeClass = data === "FOR APPROVAL" ? "badge label-info" : "badge label-success";
+                        return `<span class="${badgeClass}">${data}</span>`;
+                    }
+                },
                 { "data": "action" }
             ],
             "columnDefs":[
@@ -135,28 +141,61 @@
 
         })
 
-        $("body").on("click",".approved", function () {
+        {{--$("body").on("click",".approved", function () {--}}
+        {{--    tr_id = $(this).attr('data');--}}
+        {{--    uri  = "{{route('admin.preRegistration.approved', 'id')}}";--}}
+        {{--    uri = uri.replace('id',tr_id);--}}
+        {{--    $.ajax({--}}
+        {{--        url : uri,--}}
+        {{--        type: 'POST',--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        },--}}
+        {{--        success: function(response){--}}
+        {{--            swal({--}}
+        {{--                title: "Success!",--}}
+        {{--                text: "Successfully Approved.",--}}
+        {{--                type: "success"--}}
+        {{--            });--}}
+        {{--            preRegistrationTbl.draw(false);--}}
+        {{--        },--}}
+        {{--        error: function(response){--}}
+        {{--            console.log(res);--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--})--}}
+
+        $("body").on("click", ".approved", function () {
             tr_id = $(this).attr('data');
-            uri  = "{{route('admin.preRegistration.approved', 'id')}}";
-            uri = uri.replace('id',tr_id);
+            uri = "{{route('admin.preRegistration.approved', 'id')}}";
+            uri = uri.replace('id', tr_id);
+
             $.ajax({
-                url : uri,
+                url: uri,
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response){
+                success: function (response) {
                     swal({
                         title: "Success!",
                         text: "Successfully Approved.",
                         type: "success"
+                    }, function () {
+                        // Hide the modal
+                        $(".modal").modal("hide");
+
+                        // Reload the page
+                        location.reload();
                     });
                 },
-                error: function(response){
-                    console.log(res);
+                error: function (response) {
+                    console.log(response);
                 }
-            })
-        })
+            });
+        });
+
+
 
         $("body").on("click",".delete_btn", function(){
             btn = $(this);
