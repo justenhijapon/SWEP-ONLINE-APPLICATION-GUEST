@@ -57,6 +57,10 @@ class ImportedCommoditiesController extends Controller
                     return view('admin.importedCommodities.dt.action')->with(['data' => $data]);
                 })
 
+                ->filterColumn('name', function($query, $keyword) {
+                    $query->whereRaw("CONCAT(imported_commodoties.name, ' ', company.name) LIKE ?", ["%{$keyword}%"]);
+                })
+
                 ->rawColumns(['slug', 'importedCommodities_type', 'action'])
                 ->escapeColumns([])
                 ->setRowId('slug')

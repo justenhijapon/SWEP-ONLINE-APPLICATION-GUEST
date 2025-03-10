@@ -16,11 +16,6 @@ class ImportedCommoditiesRepository extends BaseRepository implements Applicatio
         parent::__construct();
     }
 
-//    public function fetchTable($data){
-//        $get = $this->$this->importedCommodoties;
-//        return $get->all();
-//    }
-
     public function fetchTable($data)
     {
         return $this->importedCommodoties
@@ -36,6 +31,20 @@ class ImportedCommoditiesRepository extends BaseRepository implements Applicatio
             ->orderByDesc('revoked_date');
 
     }
+
+//    public function fetchTableRevoked($data)
+//    {
+//        return $this->importedCommodoties
+//            ->select([
+//                'company.*',
+//                'company.name as company_name' // Include company name
+//            ])
+////            ->leftJoin('company') // Adjust foreign key if needed
+//            ->where('submission', 1)
+//            ->where('received', 0)
+//            ->orderByDesc('submission_date');
+//    }
+
 
     public function fetchTableApproved($data)
     {

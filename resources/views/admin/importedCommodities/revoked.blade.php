@@ -138,14 +138,31 @@
 
     </script>
     <script>
+        // $(document).ready(function () {
+        //     // Assume receivedValue is retrieved from your backend
+        //     var receivedValue = 1; // Replace this with the actual value from your database
+        //
+        //     if (receivedValue === 1) {
+        //         $("#receivedBtn").removeClass("btn-info").addClass("btn-success").prop("disabled", true);
+        //     }
+        // });
         $(document).ready(function () {
-            // Assume receivedValue is retrieved from your backend
-            var receivedValue = 1; // Replace this with the actual value from your database
+            var receivedValue = {{ $data->received ?? 0 }}; // Fetch from backend
+            var revokedValue = {{ $data->revoked ?? 0 }}; // Fetch from backend
 
-            if (receivedValue === 1) {
-                $("#receivedBtn").removeClass("btn-info").addClass("btn-success").prop("disabled", true);
+            if (revokedValue === 1) {
+                $("#receivedBtn").removeClass("btn-info btn-success")
+                    .addClass("btn-danger")
+                    .text("Revoked")
+                    .prop("disabled", true);
+            } else if (receivedValue === 1) {
+                $("#receivedBtn").removeClass("btn-info")
+                    .addClass("btn-success")
+                    .text("Received")
+                    .prop("disabled", true);
             }
         });
+
     </script>
     <script type="text/javascript">
         $(document).on('click', '.view-file-link', function (e) {

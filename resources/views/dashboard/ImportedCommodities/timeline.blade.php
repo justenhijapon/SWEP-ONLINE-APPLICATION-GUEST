@@ -121,7 +121,7 @@
                         <div class="row">
                             <div class="col-5 date">
                                 @if($event['type'] == 'Submitted' || $event['type'] == 'Resubmitted')
-                                    <i class="fa fa-arrow-circle-right text-{{ $event['type'] == 'Submitted' ? 'success' : 'warning' }}"></i>
+                                    <i class="fa fa-arrow-circle-up text-{{ $event['type'] == 'Submitted' ? 'success' : 'warning' }}"></i>
                                 @else
                                     <i class="fa fa-times-circle text-danger"></i>
                                 @endif

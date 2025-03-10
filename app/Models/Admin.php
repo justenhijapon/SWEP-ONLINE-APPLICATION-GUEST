@@ -26,7 +26,7 @@ class Admin extends Authenticatable{
         'username' => '', 
         'password' => '', 
         'slug' => '',
-        'last_name' => '', 
+        'last_name' => '',
         'middle_name' => '', 
         'first_name' => '', 
         'position' => '', 

@@ -4,12 +4,20 @@
      <code>{{$data->slug}}</code> | Application Preview
      <span class="pull-right" style="padding-right: 20px">
           <div class="pull-right" style="padding-right: 20px">
-                <button type="submit"
-                        id="receivedBtn"
-                        class="btn {{ $data->received == 1 ? 'btn-success' : 'btn-info' }} btn-md"
-                       {{ $data->received == 1 ? 'disabled' : '' }}>
-                       {{ $data->received == 1 ? 'Received' : 'Mark as Received' }}
-              </button>
+{{--                <button type="submit"--}}
+{{--                        id="receivedBtn"--}}
+{{--                        class="btn {{ $data->received == 1 ? 'btn-success' : 'btn-info' }} btn-md"--}}
+{{--                       {{ $data->received == 1 ? 'disabled' : '' }}>--}}
+{{--                       {{ $data->received == 1 ? 'Received' : 'Mark as Received' }}--}}
+{{--               </button>--}}
+
+               <button type="submit"
+                       id="receivedBtn"
+                       class="btn {{ $data->revoked == 1 ? 'btn-danger' : ($data->received == 1 ? 'btn-success' : 'btn-info') }} btn-md"
+                   {{ $data->revoked == 1 || $data->received == 1 ? 'disabled' : '' }}>
+                   {{ $data->revoked == 1 ? 'Revoked' : ($data->received == 1 ? 'Received' : 'Mark as Received') }}
+               </button>
+
           </div>
 
      </span>

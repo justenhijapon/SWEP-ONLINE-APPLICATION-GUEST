@@ -30,8 +30,8 @@
 
 <div class="btn-group d-flex flex-wrap w-auto">
     <button type="button" data="{{ $data->slug }}" class="btn btn-info btn-sm edit_btn mr-1 w-auto"
-            data-toggle="modal" data-target="#edit_modal" title="Receive" >
-        <i class="fa fa-search"></i> Receive
+            data-toggle="modal" data-target="#edit_modal" title="Show" >
+        <i class="fa fa-file-text-o"></i> Show
     </button>
 {{--    @if($data->received != 0)--}}
 
