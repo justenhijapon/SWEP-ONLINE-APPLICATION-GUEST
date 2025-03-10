@@ -46,5 +46,9 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-success approved" data="{{$preReg->slug}}">Approve</button>
+{{--    <button type="button" class="btn btn-success approved" data="{{$preReg->slug}}">Approve</button>--}}
+    <button type="button" class="btn btn-success approved" data="{{$preReg->slug}}"
+            @if($preReg->is_verified == 1) disabled @endif>
+        {{ $preReg->is_verified == 1 ? 'Approved' : 'Approve' }}
+    </button>
 </div>
