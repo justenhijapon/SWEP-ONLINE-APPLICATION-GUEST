@@ -76,6 +76,12 @@
 			{!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('LOGOUT_SUCCESS')) !!}
 		@endif
 
+		@if ($errors->has('login'))
+			<div class="alert alert-danger">
+				<i class="icon fa fa-ban"></i> Oops! {{ $errors->first('login') }}
+			</div>
+		@endif
+
 		<div class="login-box-body">
 			<p class="login-box-msg">Sign in to start your session</p>
 

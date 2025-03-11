@@ -16,20 +16,47 @@ class AdminLoginController extends Controller
     	return view('auth.admin-login');
     }
 
-    public function login(Request $request){
-   
-    	//return $request;
-    	//validate form data
-    	// $this->validate($request,[
-    	// 	'username' => 'reqired',
-    	// 	'password' => 'reqired|min:6'
-    	// ]);
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
 
-    	//attemt login
-    	//if success
-    	if(\Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])){
-    		return redirect()->intended(route('admin.home'));
-    	}
-    	return redirect()->back()->withInput($request->only('email'));
+        // Find the admin user by username
+        $admin = \App\Models\Admin::where('username', $request->username)->first();
+
+        if (!$admin) {
+            return redirect()->back()
+                ->withInput($request->only('username'))
+                ->withErrors(['login' => 'Invalid credentials. Please try again.']);
+        }
+
+        // Check if the account is deactivated
+        if (!$admin->is_activated) {
+            return redirect()->back()
+                ->withInput($request->only('username'))
+                ->withErrors(['login' => 'Your account is deactivated.']);
+        }
+
+        // Attempt login only if the account is active
+        if (\Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->intended(route('admin.home'));
+        }
+
+        return redirect()->back()
+            ->withInput($request->only('username'))
+            ->withErrors(['login' => 'Invalid credentials. Please try again.']);
     }
+
+
+//    public function login(Request $request)
+//    {
+//        $credentials = $request->only('username', 'password');
+//
+//        if (\Auth::guard('admin')->attempt($credentials)) {
+//            return redirect()->intended(route('admin.home'));
+//        }
+//
+//        return redirect()->back()
+//            ->withInput($request->only('username'))
+//            ->withErrors(['login' => 'Invalid credentials. Please try again.']);
+//    }
 }
