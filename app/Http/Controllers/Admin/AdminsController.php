@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Swep\Services\Admin\MenuService;
@@ -57,7 +58,23 @@ class AdminsController extends Controller
             })
             ->editColumn('fullname', function($data){
                 return $data->first_name.' '.$data->middle_name.' '.$data->last_name;
-            })         
+            })
+
+            ->editColumn('last_activity', function($data) {
+                if ($data->is_online) {
+                    return '<span class="badge label-success">ONLINE</span>';
+                } else {
+                    $lastActivity = $data->last_activity
+                        ? Carbon::parse($data->last_activity)->diffForHumans()
+                        : 'Unknown';
+                    return '<span class="badge label-default">Active <br> <strong>' . $lastActivity . '</strong></span>';
+                }
+            })
+//            ->orderColumn('is_online', function ($query, $direction) {
+//                $query->orderBy('last_activity', $direction);
+//            })
+
+            ->rawColumns(['is_online', 'is_activated', 'fullname', 'action']) // Enable HTML rendering
             ->escapeColumns([])
             ->setRowId('slug')
             ->make(true);

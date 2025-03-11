@@ -127,6 +127,12 @@ return [
         str_slug(env('APP_NAME', 'laravel'), '_').'_session'
     ),
 
+//    'cookie' => env(
+//        'SESSION_COOKIE',
+//        str_slug(env('APP_NAME', 'laravel'), '_').'_session_'.(Auth::guard('admin')->check() ? 'admin' : 'user')
+//    ),
+
+
     /*
     |--------------------------------------------------------------------------
     | Session Cookie Path

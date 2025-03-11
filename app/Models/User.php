@@ -43,6 +43,18 @@ class User extends Authenticatable{
         'remember_token' => '',
         'created_at' => '',
         'updated_at' => '',
+        'last_activity' => '',
+        'last_login_ip' => '',
+        'is_online' => false,
+    ];
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'last_activity', // Add this line
+        'last_login_ip',
+        'is_online',
     ];
 
 
@@ -89,6 +101,8 @@ class User extends Authenticatable{
         }
 
     }
+
+
 
 
 

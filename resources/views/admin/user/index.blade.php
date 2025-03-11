@@ -32,11 +32,11 @@
 							<thead>
 								<tr>
 									<th>Fullname</th>
-									<th>Username</th>
 									<th>Email Address</th>
 									<th>Phone</th>
 									<th>Activated</th>
 									<th>Verified</th>
+									<th>Status</th>
 									<th style="width: 100px">Action</th>
 								</tr>
 							</thead>
@@ -156,28 +156,26 @@
 			"ajax" : '{{ route("admin.users.index") }}',
 			"columns": [
 			  { "data": "full_name" },
-			  { "data": "username" },
 			  { "data": "email" },
 			  { "data": "phone" },
 			  { "data": "is_active" },
 			  { "data": "is_verified" },
-			  { "data": "action" }
+			  { "data": "last_activity" },
+			  { "data": "action"  }
 			],
-			// buttons: [
-			//     'copy', 'excel', 'pdf'
-			// ],
+
 			"columnDefs":[
-			{
-			  "targets" : 6,
-			  "orderable" : false,
-			  "class" : 'action'
-			},
-			{
-			  "targets": 3, 
-			  // "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
-			}
+				{
+					"targets" : 6,
+					"orderable" : false,
+					"class" : 'action'
+				},
+				{
+					"targets": 3,
+					// "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
+				}
 			],
-			"order" : [[0, 'asc']],
+			"order" : [[5, 'desc']],
 			"responsive": false,
 			"initComplete": function( settings, json ) {
 			  $('#tbl_loader').fadeOut(function(){
@@ -194,7 +192,7 @@
 			$('[data-toggle="modal"]').tooltip();
 			if(active != ''){
 			   $("#users_table #"+active).addClass('success');
-			}
+				}
 			}
 		});
 

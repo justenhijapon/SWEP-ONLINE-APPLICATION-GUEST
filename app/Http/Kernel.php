@@ -2,6 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\SeparateSession;
+use App\Http\Middleware\UpdateAdminActivity;
+use App\Http\Middleware\UpdateUserActivity;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -19,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+        \App\Http\Middleware\SeparateSession::class,
         'JacobBennett\Pjax\PjaxMiddleware',
     ];
 
@@ -36,6 +40,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\UpdateUserActivity::class,
+            \App\Http\Middleware\UpdateAdminActivity::class,
+
         ],
 
         'api' => [

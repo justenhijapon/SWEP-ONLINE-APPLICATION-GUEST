@@ -16,7 +16,7 @@ class Admin extends Authenticatable{
     public $sortable = ['username', 'firstname', 'is_online', 'is_active'];
     public $timestamps = false;
     protected $hidden = ['password', 'remember_token',];
-    protected $fillable = ['slug'];
+    protected $fillable = ['slug','name', 'email', 'password', 'last_activity', 'last_login_ip', 'is_online'];
 
 
     protected $attributes = [
@@ -45,6 +45,10 @@ class Admin extends Authenticatable{
         // 'last_login_ip' => '',
 
     ];
+
+//    protected $fillable = [
+//        'name', 'email', 'password', 'last_activity', 'last_login_ip', 'is_online',
+//    ];
 
 
     public function admin_functions(){

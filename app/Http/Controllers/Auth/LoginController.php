@@ -112,21 +112,47 @@ class LoginController extends Controller{
 //
 //    }
 
-    public function logout(Request $request){
-        
-        if($request->isMethod('get')){
-            //$user = $this->user_repo->logout($this->auth->user()->slug);
-            $this->session->flush();
-            $this->auth->guard('web')->logout();
-            // $request->session()->invalidate();
-            // // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
-            // $this->session->flash('LOGOUT_SUCCESS','You have been logged out successfully!');
+//    public function logout(Request $request){
+//
+//        if($request->isMethod('get')){
+//            //$user = $this->user_repo->logout($this->auth->user()->slug);
+//            $this->session->flush();
+//            $this->auth->guard('web')->logout();
+//            // $request->session()->invalidate();
+//            // // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
+//            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
+//            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+//            // $this->session->flash('LOGOUT_SUCCESS','You have been logged out successfully!');
+//            return redirect('/');
+//        }
+//        return abort(404);
+//
+//    }
+
+
+    public function logout(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            if (Auth::guard('web')->check()) {
+                Auth::guard('web')->user()->update(['is_online' => 0]);
+                Auth::guard('web')->logout();
+                $request->session()->forget(Auth::guard('web')->getName()); // Remove only user session
+            }
+
+            if (Auth::guard('admin')->check()) {
+                Auth::guard('admin')->user()->update(['is_online' => 0]);
+                Auth::guard('admin')->logout();
+                $request->session()->forget(Auth::guard('admin')->getName()); // Remove only admin session
+            }
+
+            $request->session()->regenerateToken();
+
             return redirect('/');
         }
-        return abort(404);
 
+        return abort(404);
     }
+
+
 
 }

@@ -21,58 +21,120 @@ class UserController extends Controller
     }
 
     public function index()
-    {   
+    {
         if(request()->ajax())
-        {   
+        {
             $data = request();
-
             return DataTables::of($this->user_service->fetchTable($data))
-            ->addColumn('action', function($data){
-                $button = '<div class="btn-group">
-                                <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_menu_btn" data-toggle="modal" data-target="#edit_menu_modal" title="Edit" data-placement="top">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_menu_btn" data-toggle="tooltip" title="Delete" data-placement="top">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>';
-                return $button;
-            })->editColumn('is_active',function($data){
-                if($data->is_active == 1){
-                    return '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>';
-                }elseif($data->is_active == 0){
-                    return '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
-                }else{
-                    return $data->is_active;
-                }
-                
-            })
-            ->editColumn('is_verified',function($data){
-                if($data->is_verified == 1){
-                    return '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>';
-                }elseif($data->is_verified == 0){
-                    return '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
-                }else{
-                    return $data->is_verified;
-                }
-                
-            })
-            ->editColumn('functions', function($data){
-               'a';
-            }) 
-            ->editColumn('icon', function($data){
-                return '<center><span><i class="fa '.$data->icon.'"></i></span></center>';
-            })
-            ->editColumn('full_name', function($data){
-                return $data->last_name.', '.$data->first_name;
-                
-            })        
-            ->escapeColumns([])
-            ->setRowId('slug')
-            ->make(true);
+                ->addColumn('action', function($data){
+                    return '<div class="btn-group">
+                            <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_menu_btn" data-toggle="modal" data-target="#edit_menu_modal" title="Edit" data-placement="top">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_menu_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>';
+                })
+                ->editColumn('is_active', function($data){
+                    return $data->is_active == 1
+                        ? '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>'
+                        : '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
+                })
+                ->editColumn('is_verified', function($data){
+                    return $data->is_verified == 1
+                        ? '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>'
+                        : '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
+                })
+                ->editColumn('icon', function($data){
+                    return '<center><span><i class="fa '.$data->icon.'"></i></span></center>';
+                })
+                ->editColumn('full_name', function($data){
+                    return $data->last_name.', '.$data->first_name;
+                })
+                ->editColumn('last_activity', function($data) {
+                    if ($data->is_online) {
+                        return '<span class="badge label-success">ONLINE</span>';
+                    } else {
+                        $lastActivity = $data->last_activity
+                            ? Carbon::parse($data->last_activity)->diffForHumans()
+                            : 'Unknown';
+                        return '<span class="badge label-default">Active <br> <strong>' . $lastActivity . '</strong></span>';
+                    }
+                })
+                ->rawColumns(['is_online', 'is_active', 'is_verified', 'icon', 'action']) // Enable HTML rendering
+                ->escapeColumns([]) // Don't escape special characters
+                ->setRowId('slug')
+                ->make(true);
         }
+
         return view('admin.user.index');
     }
+
+
+//    public function index()
+//    {
+//        if(request()->ajax())
+//        {
+//            $data = request();
+//            return DataTables::of($this->user_service->fetchTable($data))
+//            ->addColumn('action', function($data){
+//                $button = '<div class="btn-group">
+//                                <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_menu_btn" data-toggle="modal" data-target="#edit_menu_modal" title="Edit" data-placement="top">
+//                                    <i class="fa fa-edit"></i>
+//                                </button>
+//                                <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_menu_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+//                                    <i class="fa fa-trash"></i>
+//                                </button>
+//                            </div>';
+//                return $button;
+//            })->editColumn('is_active',function($data){
+//                if($data->is_active == 1){
+//                    return '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>';
+//                }elseif($data->is_active == 0){
+//                    return '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
+//                }else{
+//                    return $data->is_active;
+//                }
+//
+//            })
+//            ->editColumn('is_verified',function($data){
+//                if($data->is_verified == 1){
+//                    return '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>';
+//                }elseif($data->is_verified == 0){
+//                    return '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
+//                }else{
+//                    return $data->is_verified;
+//                }
+//
+//            })
+//
+//            ->editColumn('functions', function($data){
+//               'a';
+//            })
+//            ->editColumn('icon', function($data){
+//                return '<center><span><i class="fa '.$data->icon.'"></i></span></center>';
+//            })
+//            ->editColumn('full_name', function($data){
+//                return $data->last_name.', '.$data->first_name;
+//
+//            })
+//
+//            ->editColumn('is_online', function($data) {
+//                if ($data->is_online) {
+//                    return '<span class="badge label-success">ONLINE</span>';
+//                } else {
+//                    $lastActivity = $data->last_activity ? Carbon::parse($data->last_activity)->diffForHumans() : 'Unknown';
+//                    return '<span class="badge label-default">Active <br> <strong>' . $lastActivity . '</strong></span>';
+//                }
+//            })
+//            ->rawColumns(['is_online'])
+//            ->escapeColumns([])
+//            ->setRowId('slug')
+//            ->make(true);
+//        }
+//        return view('admin.user.index');
+//    }
 
     
     public function create()

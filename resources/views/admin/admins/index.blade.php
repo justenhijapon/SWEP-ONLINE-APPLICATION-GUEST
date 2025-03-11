@@ -44,7 +44,8 @@
 									<th>Email</th>
 									<th>Position</th>
 									<th>Color</th>
-									<th>Active</th>
+									<th>Status</th>
+									<th>Account</th>
 									<th style="width: 100px">Action</th>
 								</tr>
 							</thead>
@@ -214,6 +215,7 @@
 			  { "data": "email" },
 			  { "data": "position" },
 			  { "data": "color" },
+			  { "data": "last_activity" },
 			  { "data": "is_activated" },
 			  { "data": "action" }
 			],
@@ -222,7 +224,7 @@
 			// ],
 			"columnDefs":[
 			{
-			  "targets" : 6,
+			  "targets" : 7,
 			  "orderable" : false,
 			  "class" : 'action'
 			},
@@ -231,7 +233,7 @@
 			  // "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
 			}
 			],
-			"order" : [[0, 'asc']],
+			"order" : [[5, 'desc']],
 			"responsive": false,
 			"initComplete": function( settings, json ) {
 			  $('#tbl_loader').fadeOut(function(){
