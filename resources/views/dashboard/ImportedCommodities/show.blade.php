@@ -60,7 +60,7 @@
                 <td style="padding-bottom: 30px">Date: {{ \Carbon\Carbon::parse($data->date)->format('F d, Y') }}</td>
             </tr>
             <tr>
-                <td><h4 style="margin: 0">PABLO LUIS S. AZCUNA</h4></td>
+                <td><h4 style="margin: 0">PABLO LUIS S. AZCONA</h4></td>
             </tr>
             <tr>
                 <td>The Administrator</td>
