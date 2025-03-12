@@ -2,7 +2,7 @@
     $attachmentFields = [
         'application_form_path' => 'Application Form',
         'affidavit_path' => 'Affidavit',
-        'bill_landing_path' => 'Bill of Landing',
+        'bill_landing_path' => 'Bill of Lading',
         'commercial_invoice_path' => 'Commercial Invoice',
         'packing_list_path' => 'Packing List',
         'cert_origin_path' => 'Certificate of Origin',
