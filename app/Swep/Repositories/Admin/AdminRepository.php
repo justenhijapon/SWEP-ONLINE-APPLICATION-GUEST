@@ -51,6 +51,7 @@ class AdminRepository extends BaseRepository implements AdminInterface {
         $admin->middle_name = $request->middle_name;
         $admin->last_name = $request->last_name;
         $admin->username = $request->username;
+        $admin->is_activated = true;
 
         $admin->created_at = $this->carbon->now();
         $admin->updated_at = $this->carbon->now();

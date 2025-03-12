@@ -400,3 +400,22 @@ function populate_modal2_error(response){
     }
     alert(response.responseJSON.message);
 }
+
+function delete_data(slug, route) {
+    if (confirm("Are you sure you want to delete this user?")) {
+        $.ajax({
+            url: route.replace("slug", slug),
+            type: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content') // Ensure you have a CSRF token
+            },
+            success: function(response) {
+                alert("User deleted successfully!");
+                location.reload(); // Reload the page or update the table dynamically
+            },
+            error: function(xhr) {
+                alert("Error deleting user!");
+            }
+        });
+    }
+}

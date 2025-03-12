@@ -40,7 +40,7 @@
       <div class="pull-right hidden-xs">
         <b>Version</b> 1
       </div>
-      <strong>Copyright &copy; 2021 <a href="">SRA</a>.</strong> All rights
+      <strong>Copyright &copy; 2025 <a href="">SRA</a>.</strong> All rights
       reserved.
     </footer>
 

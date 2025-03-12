@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Swep\BaseClasses\Admin\BaseService;
 use App\Swep\Repositories\User\UserRepository;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use Validator;
 use Mail;
@@ -17,9 +18,10 @@ class UserService extends BaseService{
 
 
     protected $user_repo;
+    protected $user;
 
 
-    public function __construct(UserRepository $user_repo){
+    public function __construct(User $user, UserRepository $user_repo){
         $this->user_repo = $user_repo;
     }
 
@@ -180,13 +182,36 @@ class UserService extends BaseService{
 
     }
 
+//    public function destroy($slug){
+//
+//        $user = User::query()->where('slug', '=', $slug)->first();
+//
+//        $user->delete();
+//
+//        return $user;
+//
+//    }
+
     public function destroy($slug){
-      return $this->user_repo->destroy($slug);
+
+        $user = $this->findBySlug($slug);
+        $user->delete();
+        return $user;
+
+    }
+    public function findBySlug($slug){
+        $user = $this->user
+            ->select('*', DB::raw('CONCAT(first_name, " ", last_name) AS fullname'))
+            ->where('slug','=' ,$slug)
+            ->first();
+        return $user;
     }
 
     public function verifyEmail($request){
         return $this->user_repo->verifyEmail($request);
     }
+
+
 
     public function new_slug(){
 

@@ -13,46 +13,63 @@ use Hash;
 use Validator;
 
 class UserController extends Controller
-{   
+{
     protected $user_service;
 
-    public function __construct(UserService $user_service){
+    public function __construct(UserService $user_service)
+    {
         $this->user_service = $user_service;
     }
 
     public function index()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             $data = request();
             return DataTables::of($this->user_service->fetchTable($data))
-                ->addColumn('action', function($data){
+                ->addColumn('action', function ($data) {
+                    $destroy_route = "'" . route("admin.users.destroy", "slug") . "'";
+                    $slug = "'" . $data->slug . "'";
                     return '<div class="btn-group">
-                            <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_menu_btn" data-toggle="modal" data-target="#edit_menu_modal" title="Edit" data-placement="top">
+                            <button type="button" data="' . $data->slug . '" class="btn btn-default btn-sm edit_menu_btn" data-toggle="modal" data-target="#edit_menu_modal" title="Edit" data-placement="top">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_menu_btn" data-toggle="tooltip" title="Delete" data-placement="top">
-                                <i class="fa fa-trash"></i>
+                            
+                            <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_user_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+                                    <i class="fa fa-trash"></i>
                             </button>
+
+
                         </div>';
                 })
-                ->editColumn('is_active', function($data){
+
+//                <button type="button" class="btn btn-sm btn-danger delete_user_btn"
+//                                data-slug="' . $data->slug . '"
+//                                data-toggle="tooltip" title="Delete" data-placement="top">
+//                                <i class="fa fa-trash"></i>
+//                            </button>
+
+                //                          <button type="button" onclick="delete_data('.$slug.','.$destroy_route.')" data="'.$data->slug.'" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete">
+//                                    <i class="fa fa-trash"></i>
+//                            </button>
+
+
+                ->editColumn('is_active', function ($data) {
                     return $data->is_active == 1
                         ? '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>'
                         : '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
                 })
-                ->editColumn('is_verified', function($data){
+                ->editColumn('is_verified', function ($data) {
                     return $data->is_verified == 1
                         ? '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>'
                         : '<center><span class="bg-red badge"><i class="fa fa-times"></i></span></center>';
                 })
-                ->editColumn('icon', function($data){
-                    return '<center><span><i class="fa '.$data->icon.'"></i></span></center>';
+                ->editColumn('icon', function ($data) {
+                    return '<center><span><i class="fa ' . $data->icon . '"></i></span></center>';
                 })
-                ->editColumn('full_name', function($data){
-                    return $data->last_name.', '.$data->first_name;
+                ->editColumn('full_name', function ($data) {
+                    return $data->last_name . ', ' . $data->first_name;
                 })
-                ->editColumn('last_activity', function($data) {
+                ->editColumn('last_activity', function ($data) {
                     if ($data->is_online) {
                         return '<span class="badge label-success">ONLINE</span>';
                     } else {
@@ -136,17 +153,18 @@ class UserController extends Controller
 //        return view('admin.user.index');
 //    }
 
-    
+
     public function create()
     {
         //
     }
 
-    public function new_slug(){
+    public function new_slug()
+    {
 
-        $slug = rand(10000000,99999999);
+        $slug = rand(10000000, 99999999);
 
-        $validator = Validator::make(['slug'=> $slug],
+        $validator = Validator::make(['slug' => $slug],
             [
                 'slug' => 'required|unique:users,slug',
             ]
@@ -188,13 +206,13 @@ class UserController extends Controller
         $user->save();
     }
 
-    
+
     public function show($id)
     {
         //
     }
 
-    
+
     public function edit($id)
     {
         //
@@ -206,9 +224,9 @@ class UserController extends Controller
         //
     }
 
-    
-    public function destroy($id)
+
+    public function destroy($slug)
     {
-        //
+        return $this->user_service->destroy($slug);
     }
 }

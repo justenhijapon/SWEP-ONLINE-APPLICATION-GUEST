@@ -229,7 +229,7 @@
 			  "class" : 'action'
 			},
 			{
-			  "targets": 3, 
+			  "targets": 3,
 			  // "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
 			}
 			],
@@ -241,8 +241,8 @@
 			  });
 			  dt_press_enter('#admins_table_filter',admins_tbl);
 			},
-			"language": 
-			{          
+			"language":
+			{
 			  "processing": "<center><img style='width: 70px' src=''></center>",
 			},
 			"drawCallback": function(settings){
@@ -253,7 +253,7 @@
 			}
 			}
 		});
-	});	
+	});
 
 	$("#add_admin_form").submit(function(e){
 		e.preventDefault();
@@ -354,5 +354,37 @@
 		percentage = selected/total*100;
 		$(".progress-bar[menu='"+t.attr('menu')+"']").css('width',percentage+'%')
 	})
+
+
+
+
+
 </script>
+	<script>
+		$(document).on('click', '.update-status', function (e) {
+			e.preventDefault();
+
+			let userId = $(this).data('user-id');
+			let isActivated = $(this).data('status');
+			let statusLabel = isActivated == 1 ? 'Activated' : 'Deactivated';
+			let button = $(this).closest('.btn-group').find('.status-label');
+
+			$.ajax({
+				url: "{{ route('admin.admins.update.status') }}", // Ensure you have this route in web.php
+				type: "POST",
+				data: {
+					_token: "{{ csrf_token() }}",
+					user_id: userId,
+					is_activated: isActivated
+				},
+				success: function (response) {
+					if (response.success) {
+						button.text(statusLabel); // Update button label dynamically
+					}
+				}
+			});
+		});
+
+	</script>
+
 @endsection

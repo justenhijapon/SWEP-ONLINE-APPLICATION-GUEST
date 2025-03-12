@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,6 +37,7 @@ class AdminsController extends Controller
 
             return DataTables::of($this->admin_service->fetchTable($data))
             ->addColumn('action', function($data){
+                $statusLabel = $data->is_activated ? 'Activated' : 'Deactivated';
                 $button = '<div class="btn-group">
                                 <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_admin_btn" data-toggle="modal" data-target="#edit_admin_modal" title="Edit" data-placement="top">
                                     <i class="fa fa-edit"></i>
@@ -43,7 +45,19 @@ class AdminsController extends Controller
                                 <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_admin_btn" data-toggle="tooltip" title="Delete" data-placement="top">
                                     <i class="fa fa-trash"></i>
                                 </button>
+                               <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-primary dropdown-toggle w-auto status-btn" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        <span class="status-label">'.$statusLabel.'</span> 
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" class="update-status" data-user-id="'.$data->id.'" data-status="1"><small class="no-margin">Activate</small></a></li>
+                                        <li><a href="#" class="update-status" data-user-id="'.$data->id.'" data-status="0"><small class="no-margin">Deactivate</small></a></li>
+                                    </ul>
+                                </div>
                             </div>';
+
                 return $button;
             })
             ->editColumn('is_activated',function($data){
@@ -125,4 +139,15 @@ class AdminsController extends Controller
     public function test(){
         return $this->admin_functions_service->test();
     }
+
+    public function updateStatus(Request $request)
+    {
+        $user = User::findOrFail($request->user_id);
+        $user->is_activated = $request->is_activated;
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+    }
+
+
 }

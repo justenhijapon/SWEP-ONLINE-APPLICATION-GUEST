@@ -74,6 +74,8 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
 		Route::post('functions/add_resource','Admin\FunctionController@add_resource')->name('functions.add_resource');
 		//Route::get('/', 'AdminController@index')->name('admin.dashboard');
 		Route::resource('users','Admin\UserController');
+
+		Route::post('admins/update-status','Admin\AdminsController@updateStatus')->name('admins.update.status');
 		Route::resource('admins','Admin\AdminsController');
 		Route::get('/test', 'Admin\AdminsController@test')->name('admins.test');
         Route::resource('/order_of_payments','Admin\OrderOfPaymentsController');

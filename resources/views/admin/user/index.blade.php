@@ -184,8 +184,8 @@
 			  dt_press_enter('#users_table_filter',users_tbl);
 			},
 			"language": 
-			{          
-			  "processing": "<center><img style='width: 70px' src=''></center>",
+			{
+				"processing": "<center><img  style='width: 70px' src='{{ asset('images/loader.gif') }}'></center>",
 			},
 			"drawCallback": function(settings){
 			$('[data-toggle="tooltip"]').tooltip();
@@ -223,6 +223,79 @@
 				}
 			})
 		});
+
+
+
+		{{--$("body").on("click", ".delete_user_btn", function(){--}}
+		{{--	let btn = $(this);--}}
+		{{--	let userSlug = btn.data("slug"); // Get the slug from the button--}}
+		{{--	let uri = "{{ route('admin.users.destroy', ':user') }}".replace(':user', userSlug);--}}
+
+		{{--	swal({--}}
+		{{--				title: "Are you sure?",--}}
+		{{--				text: "You won't be able to revert this!",--}}
+		{{--				type: "warning",--}}
+		{{--				showCancelButton: true,--}}
+		{{--				confirmButtonColor: "#d33",--}}
+		{{--				cancelButtonColor: "#3085d6",--}}
+		{{--				confirmButtonText: "Yes, delete it!",--}}
+		{{--				cancelButtonText: "Cancel",--}}
+		{{--				closeOnConfirm: false--}}
+		{{--			},--}}
+		{{--			function(isConfirm) {--}}
+		{{--				if (isConfirm) {--}}
+		{{--					delete_item(uri, btn, users_tbl);--}}
+		{{--					swal("Deleted!", "The user has been deleted.", "success");--}}
+		{{--				}--}}
+		{{--			});--}}
+		{{--});--}}
+
+		$("body").on("click", ".delete_user_btn", function(){
+			let btn = $(this);
+			let userSlug = btn.data("slug"); // Get the slug from the button
+
+			let uri = "{{ route('admin.users.destroy', ':user') }}".replace(':user', userSlug);
+
+			delete_item(uri, btn, users_tbl);
+		});
+
+		{{--$("body").on("click", ".delete_user_btn", function(){--}}
+		{{--	btn = $(this);--}}
+		{{--	uri = "{{route('admin.users.destroy','slug')}}";--}}
+		{{--	delete_item(uri,btn,users_tbl);--}}
+		{{--})--}}
+
+		{{--$("body").on("click", ".delete_user_btn", function() {--}}
+		{{--	let btn = $(this);--}}
+		{{--	let userId = btn.data("slug"); // Ensure the button has a data attribute with the user ID--}}
+
+		{{--	let uri = "{{ route('admin.users.destroy', ':slug') }}".replace(':slug', userId);--}}
+
+		{{--	delete_item(uri, btn, users_tbl);--}}
+		{{--});--}}
+
 	});
+
+
+
+	{{--$("body").on("click", ".delete_user_btn", function() {--}}
+	{{--	let btn = $(this);--}}
+	{{--	let userSlug = btn.data("slug"); // Get the slug from the button--}}
+
+	{{--	let uri = "{{ route('admin.users.destroy', ':user') }}".replace(':user', userSlug);--}}
+
+	{{--	delete_item(uri, btn, users_tbl, function(response) {--}}
+	{{--		if (response.success) {--}}
+	{{--			Swal.fire({--}}
+	{{--				icon: "success",--}}
+	{{--				title: "Deleted!",--}}
+	{{--				text: "User has been deleted successfully.",--}}
+	{{--				timer: 2000,--}}
+	{{--				showConfirmButton: false--}}
+	{{--			});--}}
+	{{--		}--}}
+	{{--	});--}}
+	{{--});--}}
+
 </script>
 @endsection

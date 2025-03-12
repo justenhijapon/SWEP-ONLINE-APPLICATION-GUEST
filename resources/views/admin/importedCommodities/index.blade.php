@@ -209,8 +209,6 @@
             });
 
 
-
-
             $("body").on("click",".edit_btn", function(){
                 btn = $(this);
                 slug = btn.attr('data');
