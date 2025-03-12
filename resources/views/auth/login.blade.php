@@ -48,7 +48,7 @@
 					<li><a class="nav-link page-scroll" href="#home">Home</a></li>
 {{--					<li><a data-toggle="modal" data-target="#verifyTransactionModal">Verify</a></li>--}}
 					<li><a class="nav-link page-scroll" href="#contact">Contact</a></li>
-					<li><a data-toggle="modal" href="#modal-form-pre">Pre-Registration</a></li>
+{{--					<li><a data-toggle="modal" href="#modal-form-pre">Pre-Registration</a></li>--}}
 					<li><a data-toggle="modal" href="#modal-form-login">Login</a></li>
 				</ul>
 			</div>
