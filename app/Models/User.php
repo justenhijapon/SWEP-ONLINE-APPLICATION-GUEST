@@ -43,7 +43,7 @@ class User extends Authenticatable{
         'remember_token' => '',
         'created_at' => '',
         'updated_at' => '',
-        'last_activity' => '',
+        'last_activity' => null,
         'last_login_ip' => '',
         'is_online' => false,
     ];

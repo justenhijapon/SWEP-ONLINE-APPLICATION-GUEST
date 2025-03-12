@@ -122,6 +122,7 @@ class PreRegistrationController extends Controller
     }
 
     public function approved($id){
+
         $preReg = PreRegistrationModel::where('slug',$id)->first();
         $appData = new User\ImportedCommodities();
         $user = new User();
@@ -147,9 +148,10 @@ class PreRegistrationController extends Controller
         $user->is_active = true;
         $user->is_verified = true;
         $preReg->status = 'APPROVED';
-        $preReg->is_verified = true;
+//        $preReg->is_verified = true;
         $user->created_at = Carbon::now();
         $user->updated_at = Carbon::now();
+
 
 //        $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
 //        $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
@@ -160,6 +162,7 @@ class PreRegistrationController extends Controller
 
 //        $appData->save();
         $user->save();
+
         $preReg->save();
 
 
