@@ -28,6 +28,7 @@ class PreRegistrationController extends Controller
         {
             $data = request();
             return DataTables::of($this->preRegistrationRepo->fetchTable($data))
+
                 ->addColumn('action', function($data){
                     $button = '<div class="btn-group" role="group" aria-label="Basic example" style="height: 45%">
                                 <button type="button" data="'.$data->slug.'" class="btn btn-success btn-sm view_btn" data-toggle="modal" data-target="#view_modal">
@@ -38,6 +39,25 @@ class PreRegistrationController extends Controller
                                 </button>
                             </div>';
                     return $button;
+                })
+
+//                ->editColumn('last_name', function($data) {
+//                    return view('admin.preRegistration.td_fullName')->with(['data' => $data]);
+//                })
+
+                ->editColumn('last_name', function($data) {
+                    $fullname= $data->first_name . ' ' . ($data->middle_name ? strtoupper(substr($data->middle_name, 0, 1)) . '. ' : '') . $data->last_name;
+                    return '<p style="" class="no-margin">'.$fullname.' </p>';
+                })
+                ->editColumn('business_name', function($data) {
+                    $full_address = $data->business_street . ', ' . $data->business_barangay . ', ' . $data->business_city;
+                    return '<p style="" class="no-margin">'.$data->business_name.'</p>
+                    <p style="font-size: smaller" class="no-margin">'.$full_address.'</p>';
+                })
+
+                ->editColumn('email', function($data) {
+                    return '<p style="color: cornflowerblue;" class="no-margin"><u>'.$data->email.'</u> </p>
+                            <p style="" class="no-margin">'.$data->phone.' </p>';
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -124,7 +144,6 @@ class PreRegistrationController extends Controller
     public function approved($id){
 
         $preReg = PreRegistrationModel::where('slug',$id)->first();
-        $appData = new User\ImportedCommodities();
         $user = new User();
         $user->slug = $preReg->slug;
         $user->username = $preReg->username;
@@ -148,21 +167,11 @@ class PreRegistrationController extends Controller
         $user->is_active = true;
         $user->is_verified = true;
         $preReg->status = 'APPROVED';
-//        $preReg->is_verified = true;
+        $preReg->is_verified = true;
         $user->created_at = Carbon::now();
         $user->updated_at = Carbon::now();
 
-
-//        $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
-//        $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
-//        $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
-//        $appData->user_created = $preReg ->slug;
-//        $appData->name = $fullname; $appData->contact_no = $preReg->business_phone;  $appData->designation = $preReg->position; $appData->company = $preReg->business_name;
-//        $appData->tin = $preReg->business_tin; $appData->address = $full_address; $appData->email = $preReg->email;
-
-//        $appData->save();
         $user->save();
-
         $preReg->save();
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,6 +39,7 @@ class AdminsController extends Controller
             return DataTables::of($this->admin_service->fetchTable($data))
             ->addColumn('action', function($data){
                 $statusLabel = $data->is_activated ? 'Activated' : 'Deactivated';
+                $btnClass = $data->is_activated ? 'btn-success' : 'btn-danger';
                 $button = '<div class="btn-group">
                                 <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_admin_btn" data-toggle="modal" data-target="#edit_admin_modal" title="Edit" data-placement="top">
                                     <i class="fa fa-edit"></i>
@@ -45,9 +47,9 @@ class AdminsController extends Controller
                                 <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_admin_btn" data-toggle="tooltip" title="Delete" data-placement="top">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                               <div class="btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-primary dropdown-toggle w-auto status-btn" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
+                                
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn '.$btnClass.' dropdown-toggle w-auto status-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="status-label">'.$statusLabel.'</span> 
                                         <span class="caret"></span>
                                     </button>
@@ -140,14 +142,30 @@ class AdminsController extends Controller
         return $this->admin_functions_service->test();
     }
 
-    public function updateStatus(Request $request)
+//    public function updateStatus(Request $request)
+//    {
+//        $user = Admin::findOrFail($request->user_id);
+//        $user->is_activated = $request->is_activated;
+//        $user->save();
+//
+//        return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+//    }
+
+    public function updateStatus($id, Request $request)
     {
-        $user = User::findOrFail($request->user_id);
-        $user->is_activated = $request->is_activated;
+        $user = Admin::find($id);
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found!'], 404);
+        }
+
+        $user->is_activated = ($request->active == 1) ? 1 : 0;
         $user->save();
 
-        return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        return response()->json(['success' => true, 'message' => 'Status updated successfully!', 'id' => $user->id]);
     }
+
+
 
 
 }

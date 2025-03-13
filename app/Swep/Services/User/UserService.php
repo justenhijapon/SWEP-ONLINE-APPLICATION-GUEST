@@ -30,44 +30,6 @@ class UserService extends BaseService{
         return $this->user_repo->fetchTable($data);
     }
 
-//    public function fetchTable($data){
-//       $get = $this->user_repo;
-//       return $get->all();
-//    }
-
-
-
-//    public function fetchTable(Request $request)
-//    {
-//        $query = User::query()
-//            ->orderByRaw("CASE WHEN is_online = 1 THEN 1 ELSE 2 END")
-//            ->orderByDesc('last_activity');
-//
-//        return DataTables::of($query)
-//            ->editColumn('is_online', function($data) {
-//                if ($data->is_online) {
-//                    return '<span class="badge bg-success">ONLINE</span>';
-//                } else {
-//                    $lastActivity = $data->last_activity
-//                        ? Carbon::parse($data->last_activity)->diffForHumans()
-//                        : 'Unknown';
-//                    return '<span class="badge bg-secondary">Active <br> <strong>' . $lastActivity . '</strong></span>';
-//                }
-//            })
-//            ->rawColumns(['is_online']) // Allows rendering of HTML in DataTables
-//            ->make(true);
-//    }
-
-
-//    public function fetchTable($data)
-//    {
-//        return User::query()
-////            ->orderByRaw("CASE WHEN is_online = 1 THEN 1 ELSE 2 END")
-//            ->orderByDesc('last_activity')
-//            ->get();
-//    }
-
-
     public function fetch($slug){
 
     }
@@ -182,29 +144,34 @@ class UserService extends BaseService{
 
     }
 
+
+
 //    public function destroy($slug){
 //
-//        $user = User::query()->where('slug', '=', $slug)->first();
+//        $user = $this->findBySlug($slug);
 //
 //        $user->delete();
-//
 //        return $user;
 //
 //    }
 
-    public function destroy($slug){
+    public function destroy($slug)
+    {
+        $user = $this->user_repo->destroy($slug);
 
-        $user = $this->findBySlug($slug);
         $user->delete();
-        return $user;
 
+        return 1;
     }
-    public function findBySlug($slug){
-        $user = $this->user
-            ->select('*', DB::raw('CONCAT(first_name, " ", last_name) AS fullname'))
-            ->where('slug','=' ,$slug)
+
+
+
+    public function findBySlug($slug)
+    {
+        return $this->user
+            ->select(['id', 'first_name', 'last_name', 'email', 'slug', DB::raw('CONCAT(first_name, " ", last_name) AS fullname')])
+            ->where('slug', $slug)
             ->first();
-        return $user;
     }
 
     public function verifyEmail($request){

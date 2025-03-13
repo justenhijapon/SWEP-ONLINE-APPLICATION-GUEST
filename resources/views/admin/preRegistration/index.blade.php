@@ -28,11 +28,10 @@
                     <table class="table table-bordered table-condensed table-striped" id="preRegistrationTable" style="width: 100%">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Last Name</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Phone Number</th>
+                            <th>Date</th>
+                            <th>Full Name</th>
+                            <th>Company Name</th>
+                            <th>Contact Details</th>
                             <th>Status</th>
                             <th style="width: 100px">Action</th>
                         </tr>
@@ -68,11 +67,21 @@
             "serverSide": true,
             "ajax" : '{{ route("admin.preRegistration.index") }}',
             "columns": [
-                { "data": "slug"},
+                {"data": "created_at",
+                    "render": function(data, type, row) {
+                        if (type === 'display') {
+                            let date = new Date(data);
+                            return date.toLocaleString('en-US', {
+                                month: '2-digit', day: '2-digit', year: 'numeric',
+                                hour: '2-digit', minute: '2-digit', hour12: true
+                            }).replace(',', ' |'); // Adds a "|" separator
+                        }
+                        return data;
+                    }
+                },
                 { "data": "last_name"},
-                { "data": "first_name"},
-                { "data": "middle_name"},
-                { "data": "phone"},
+                { "data": "business_name"},
+                { "data": "email"},
                 {
                     "data": "status",
                     "render": function(data, type, row) {
@@ -84,7 +93,7 @@
             ],
             "columnDefs":[
                 {
-                    "targets" : 6,
+                    "targets" : 5,
                     "orderable" : false,
                     "class" : 'action'
                 },
@@ -93,7 +102,7 @@
                     // "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
                 }
             ],
-            "order" : [[2, 'desc']],
+            "order" : [[0, 'desc']],
             "responsive": false,
             "initComplete": function( settings, json ) {
                 $('#tbl_loader').fadeOut(function(){
@@ -103,7 +112,7 @@
             },
             "language":
                 {
-                    "processing": "<center><img style='width: 70px' src=''></center>",
+                    "processing": "<center><img  style='width: 70px' src='{{ asset('images/loader.gif') }}'></center>",
                 },
             "drawCallback": function(settings){
                 $('[data-toggle="tooltip"]').tooltip();
@@ -113,6 +122,16 @@
                 }
             }
         });
+
+        //Need to press enter to search
+        $('#preRegistrationTable_filter  input').unbind();
+        $('#preRegistrationTable_filter  input').bind('keyup', function (e) {
+            if (e.keyCode == 13) {
+                preRegistrationTbl.search(this.value).draw();
+            }
+        });
+
+
 
         $("body").on("click",".view_btn", function () {
             target_modal = $(this).attr('data-target');

@@ -3,25 +3,25 @@
 	<div class="row wrapper border-bottom white-bg page-heading" style="padding-bottom: 5px">
 		<div class="col-lg-10">
 			<h2 style="">Imported Commodities</h2>
-{{--			<div class="pull-right no-padding">--}}
-{{--				<code class="no-padding">Fields with asterisks(*) are required</code>--}}
-{{--			</div>--}}
+			{{--			<div class="pull-right no-padding">--}}
+			{{--				<code class="no-padding">Fields with asterisks(*) are required</code>--}}
+			{{--			</div>--}}
 		</div>
 	</div>
 
 	<section class="content">
 		<div class="ibox">
-{{--			<div class="box-header with-border ibox-content" style="padding: 5px">--}}
-{{--				<div class="col-md-12">--}}
-{{--					<div class="row">--}}
-{{--						<div class="col-md-8">--}}
-{{--							<div class="pull-right">--}}
-{{--								<code>Fields with asterisks(*) are required</code>--}}
-{{--							</div>--}}
-{{--						</div>--}}
-{{--					</div>--}}
-{{--				</div>--}}
-{{--			</div>--}}
+			{{--			<div class="box-header with-border ibox-content" style="padding: 5px">--}}
+			{{--				<div class="col-md-12">--}}
+			{{--					<div class="row">--}}
+			{{--						<div class="col-md-8">--}}
+			{{--							<div class="pull-right">--}}
+			{{--								<code>Fields with asterisks(*) are required</code>--}}
+			{{--							</div>--}}
+			{{--						</div>--}}
+			{{--					</div>--}}
+			{{--				</div>--}}
+			{{--			</div>--}}
 			@csrf
 			<form id="importedCommoditiesForm" method="POST" autocomplete="off" enctype="multipart/form-data">
 
@@ -166,12 +166,12 @@
 
 
 
-{{--										<div class="col-sm-8" style="padding-bottom: 10px; margin-top: 20px">--}}
+										{{--										<div class="col-sm-8" style="padding-bottom: 10px; margin-top: 20px">--}}
 
-{{--											<span class="pull-right" style="padding-right: 20px">--}}
-{{--												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal"><i class="fa fa-print"></i> Print Application Form</button>--}}
-{{--											</span>--}}
-{{--										</div>--}}
+										{{--											<span class="pull-right" style="padding-right: 20px">--}}
+										{{--												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal"><i class="fa fa-print"></i> Print Application Form</button>--}}
+										{{--											</span>--}}
+										{{--										</div>--}}
 
 
 										<div class="col-md-12">
@@ -210,7 +210,7 @@
 															$files = [
                                                                 'application_form_path' => 'Application Form (Notarized)*',
                                                                 'affidavit_path' => 'Affidavit*',
-                                                                'bill_landing_path' => 'Bill of Lading*',
+                                                                'bill_landing_path' => 'Bill of Landing*',
                                                                 'commercial_invoice_path' => 'Commercial Invoice*',
                                                                 'packing_list_path' => 'Packing List*',
                                                                 'cert_origin_path' => 'Certificate of Origin*',
@@ -236,13 +236,13 @@
                                                                 $fileName = $fileExists ? basename($data->$columnName) : ''; // Extract file name
 															@endphp
 
-{{--																								{!! \App\Core\Helpers\__form2::file($columnName, [--}}
-{{--															                                        'label' => $label,--}}
-{{--															                                        'cols' => '4',--}}
-{{--															                                        'id' => 'img_url_' . $columnName, // Ensure a unique ID--}}
-{{--															                                        'class' => 'file-input',--}}
-{{--															                                        'data-file-url' => $fileUrl--}}
-{{--															                                    ]) !!}--}}
+															{{--																								{!! \App\Core\Helpers\__form2::file($columnName, [--}}
+															{{--															                                        'label' => $label,--}}
+															{{--															                                        'cols' => '4',--}}
+															{{--															                                        'id' => 'img_url_' . $columnName, // Ensure a unique ID--}}
+															{{--															                                        'class' => 'file-input',--}}
+															{{--															                                        'data-file-url' => $fileUrl--}}
+															{{--															                                    ]) !!}--}}
 
 															<div class="col-md-4">
 																<div class="form-group">
@@ -260,7 +260,7 @@
 																	</div>
 																</div>
 															</div>
-													@endforeach
+														@endforeach
 													</div>
 												</div>
 											</div>
@@ -301,24 +301,24 @@
 								</div>
 							</div>
 						</div>
-{{--						<div class="col-md-4">--}}
-{{--							<div class="row">--}}
-{{--								<div class="col-md-12">--}}
-{{--									<h4 style="color: darkslategray">REQUIRED ATTACHED DOCUMENTS</h4>--}}
-{{--									<ul>--}}
-{{--										<li><p class="text-bold">Application Form (Notarized)</p></li>--}}
-{{--										<li><p class="text-bold">Affidavit</p></li>--}}
-{{--										<li><p class="text-bold">Bill of Landing</p></li>--}}
-{{--										<li><p class="text-bold">Commercial Invoice</p></li>--}}
-{{--										<li><p class="text-bold">Packing List</p></li>--}}
-{{--										<li><p class="text-bold">Certificate of Origin</p></li>--}}
-{{--										<li><p class="text-bold">Certificate of Analysis</p></li>--}}
-{{--										<li><p class="text-bold">Notarized Declaration of GMO and Non-GMO</p></li>--}}
-{{--										<li><p class="text-bold">Import Declaration (once available)</p></li>--}}
-{{--									</ul>--}}
-{{--								</div><br>--}}
-{{--							</div>--}}
-{{--						</div>--}}
+						{{--						<div class="col-md-4">--}}
+						{{--							<div class="row">--}}
+						{{--								<div class="col-md-12">--}}
+						{{--									<h4 style="color: darkslategray">REQUIRED ATTACHED DOCUMENTS</h4>--}}
+						{{--									<ul>--}}
+						{{--										<li><p class="text-bold">Application Form (Notarized)</p></li>--}}
+						{{--										<li><p class="text-bold">Affidavit</p></li>--}}
+						{{--										<li><p class="text-bold">Bill of Landing</p></li>--}}
+						{{--										<li><p class="text-bold">Commercial Invoice</p></li>--}}
+						{{--										<li><p class="text-bold">Packing List</p></li>--}}
+						{{--										<li><p class="text-bold">Certificate of Origin</p></li>--}}
+						{{--										<li><p class="text-bold">Certificate of Analysis</p></li>--}}
+						{{--										<li><p class="text-bold">Notarized Declaration of GMO and Non-GMO</p></li>--}}
+						{{--										<li><p class="text-bold">Import Declaration (once available)</p></li>--}}
+						{{--									</ul>--}}
+						{{--								</div><br>--}}
+						{{--							</div>--}}
+						{{--						</div>--}}
 
 						<div class="col-md-3">
 							<div class="panel panel-primary">
@@ -429,6 +429,26 @@
 			// Run check when any file input changes
 			$(".file-input").on("change", function () {
 				toggleSubmitButton();
+			});
+
+			// Handle Submit Button Click
+			$("#applicationForm").on("submit", function (event) {
+				let submitButton = $("#btnSubmitApplication");
+				submitButton.prop("disabled", true); // Prevent multiple submissions
+				submitButton.css("cursor", "not-allowed");
+			});
+
+			// Handle Unprocessable Content (422 Error)
+			$(document).ajaxError(function (event, jqxhr, settings, thrownError) {
+				if (jqxhr.status === 422) {
+					$("#btnSubmitApplication").prop("disabled", true);
+					$("#btnSubmitApplication").css("cursor", "not-allowed");
+				}
+			});
+
+			// Handle "Save as Draft" button click
+			$("#btnSaveDraft").on("click", function () {
+				$("#btnSubmitApplication").prop("disabled", false); // Keep submit button enabled
 			});
 
 			// Initialize Bootstrap tooltip (if Bootstrap is used)

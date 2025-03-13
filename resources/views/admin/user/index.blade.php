@@ -225,77 +225,53 @@
 		});
 
 
-
-		{{--$("body").on("click", ".delete_user_btn", function(){--}}
-		{{--	let btn = $(this);--}}
-		{{--	let userSlug = btn.data("slug"); // Get the slug from the button--}}
-		{{--	let uri = "{{ route('admin.users.destroy', ':user') }}".replace(':user', userSlug);--}}
-
-		{{--	swal({--}}
-		{{--				title: "Are you sure?",--}}
-		{{--				text: "You won't be able to revert this!",--}}
-		{{--				type: "warning",--}}
-		{{--				showCancelButton: true,--}}
-		{{--				confirmButtonColor: "#d33",--}}
-		{{--				cancelButtonColor: "#3085d6",--}}
-		{{--				confirmButtonText: "Yes, delete it!",--}}
-		{{--				cancelButtonText: "Cancel",--}}
-		{{--				closeOnConfirm: false--}}
-		{{--			},--}}
-		{{--			function(isConfirm) {--}}
-		{{--				if (isConfirm) {--}}
-		{{--					delete_item(uri, btn, users_tbl);--}}
-		{{--					swal("Deleted!", "The user has been deleted.", "success");--}}
-		{{--				}--}}
-		{{--			});--}}
-		{{--});--}}
-
 		$("body").on("click", ".delete_user_btn", function(){
 			let btn = $(this);
-			let userSlug = btn.data("slug"); // Get the slug from the button
+			let userSlug = btn.attr("data"); // Get the slug from the button
 
 			let uri = "{{ route('admin.users.destroy', ':user') }}".replace(':user', userSlug);
+
 
 			delete_item(uri, btn, users_tbl);
 		});
 
-		{{--$("body").on("click", ".delete_user_btn", function(){--}}
-		{{--	btn = $(this);--}}
-		{{--	uri = "{{route('admin.users.destroy','slug')}}";--}}
-		{{--	delete_item(uri,btn,users_tbl);--}}
-		{{--})--}}
+		$('body').on('click', '.update-status', function (e) {
+			e.preventDefault();
 
-		{{--$("body").on("click", ".delete_user_btn", function() {--}}
-		{{--	let btn = $(this);--}}
-		{{--	let userId = btn.data("slug"); // Ensure the button has a data attribute with the user ID--}}
+			let statusLink = $(this);
+			let userSlug = statusLink.data('user-slug'); // Change to slug
+			let newStatus = statusLink.data('status');
 
-		{{--	let uri = "{{ route('admin.users.destroy', ':slug') }}".replace(':slug', userId);--}}
+			let url = `/admin/users/update-status/${userSlug}`; // Use slug
 
-		{{--	delete_item(uri, btn, users_tbl);--}}
-		{{--});--}}
+			// console.log("Sending request to:", url); // Debugging
+
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: {
+					active: newStatus,
+					_token: "{{ csrf_token() }}"
+				},
+				success: function (response) {
+					// console.log("Success response:", response);
+					users_tbl.draw(false);
+					let statusText = newStatus == 1 ? 'Activated' : 'Deactivated';
+					statusLink.closest('.btn-group').find('.status-label').text(statusText);
+				},
+				error: function (xhr) {
+					console.error("Error response:", xhr.responseText);
+				}
+			});
+		});
+
+
+
 
 	});
 
 
 
-	{{--$("body").on("click", ".delete_user_btn", function() {--}}
-	{{--	let btn = $(this);--}}
-	{{--	let userSlug = btn.data("slug"); // Get the slug from the button--}}
-
-	{{--	let uri = "{{ route('admin.users.destroy', ':user') }}".replace(':user', userSlug);--}}
-
-	{{--	delete_item(uri, btn, users_tbl, function(response) {--}}
-	{{--		if (response.success) {--}}
-	{{--			Swal.fire({--}}
-	{{--				icon: "success",--}}
-	{{--				title: "Deleted!",--}}
-	{{--				text: "User has been deleted successfully.",--}}
-	{{--				timer: 2000,--}}
-	{{--				showConfirmButton: false--}}
-	{{--			});--}}
-	{{--		}--}}
-	{{--	});--}}
-	{{--});--}}
 
 </script>
 @endsection

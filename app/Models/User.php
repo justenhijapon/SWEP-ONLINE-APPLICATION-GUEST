@@ -14,7 +14,8 @@ class User extends Authenticatable{
 
     public $timestamps = false;
     protected $hidden = ['password', 'remember_token',];
-
+    protected $primaryKey = 'slug';
+    public $incrementing = false;
 
     protected $attributes = [
 
@@ -38,7 +39,7 @@ class User extends Authenticatable{
         'business_street' => '',
         'business_barangay' => '',
         'business_city' => '',
-        'is_active' => 1,
+        'is_active' => false,
         'is_verified' => 1,
         'remember_token' => '',
         'created_at' => '',
@@ -49,12 +50,17 @@ class User extends Authenticatable{
     ];
 
     protected $fillable = [
-        'name',
         'email',
         'password',
-        'last_activity', // Add this line
+        'last_activity',
         'last_login_ip',
         'is_online',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'is_online' => 'boolean',
     ];
 
 

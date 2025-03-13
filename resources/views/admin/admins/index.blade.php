@@ -242,9 +242,9 @@
 			  dt_press_enter('#admins_table_filter',admins_tbl);
 			},
 			"language":
-			{
-			  "processing": "<center><img style='width: 70px' src=''></center>",
-			},
+				{
+					"processing": "<center><img  style='width: 70px' src='{{ asset('images/loader.gif') }}'></center>",
+				},
 			"drawCallback": function(settings){
 			$('[data-toggle="tooltip"]').tooltip();
 			$('[data-toggle="modal"]').tooltip();
@@ -355,35 +355,66 @@
 		$(".progress-bar[menu='"+t.attr('menu')+"']").css('width',percentage+'%')
 	})
 
+	$('body').on('click', '.update-status', function (e) {
+		e.preventDefault();
+
+		let statusLink = $(this);
+		let userId = statusLink.data('user-id');
+		let newStatus = statusLink.data('status');
+		let url = '{{ route("admin.admins.update.status", ":id") }}'.replace(':id', userId);
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: {
+				active: newStatus,
+				_token: "{{ csrf_token() }}"
+			},
+			success: function (response) {
+				admins_tbl.draw(false);
+				let statusText = newStatus == 1 ? 'Activated' : 'Deactivated';
+				statusLink.closest('.btn-group').find('.status-label').text(statusText);
+				console.log(response.message);
+			},
+			error: function (xhr) {
+				console.error(xhr.responseText);
+			}
+		});
+	});
+
 
 
 
 
 </script>
 	<script>
-		$(document).on('click', '.update-status', function (e) {
-			e.preventDefault();
+		{{--$(document).on('click', '.update-status', function (e) {--}}
+		{{--	e.preventDefault();--}}
 
-			let userId = $(this).data('user-id');
-			let isActivated = $(this).data('status');
-			let statusLabel = isActivated == 1 ? 'Activated' : 'Deactivated';
-			let button = $(this).closest('.btn-group').find('.status-label');
+		{{--	let userId = $(this).data('user-id');--}}
+		{{--	let isActivated = $(this).data('status');--}}
+		{{--	let statusLabel = isActivated == 1 ? 'Activated' : 'Deactivated';--}}
+		{{--	let button = $(this).closest('.btn-group').find('.status-label');--}}
 
-			$.ajax({
-				url: "{{ route('admin.admins.update.status') }}", // Ensure you have this route in web.php
-				type: "POST",
-				data: {
-					_token: "{{ csrf_token() }}",
-					user_id: userId,
-					is_activated: isActivated
-				},
-				success: function (response) {
-					if (response.success) {
-						button.text(statusLabel); // Update button label dynamically
-					}
-				}
-			});
-		});
+		{{--	$.ajax({--}}
+		{{--		url: "{{ route('admin.admins.update.status') }}", // Ensure you have this route in web.php--}}
+		{{--		type: "POST",--}}
+		{{--		data: {--}}
+		{{--			_token: "{{ csrf_token() }}",--}}
+		{{--			user_id: userId,--}}
+		{{--			is_activated: isActivated--}}
+		{{--		},--}}
+		{{--		success: function (response) {--}}
+		{{--			if (response.success) {--}}
+		{{--				button.text(statusLabel); // Update button label dynamically--}}
+		{{--			}--}}
+		{{--		}--}}
+		{{--	});--}}
+		{{--});--}}
+
+
+
+
 
 	</script>
 

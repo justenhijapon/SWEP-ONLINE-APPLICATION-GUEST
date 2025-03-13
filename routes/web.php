@@ -3,8 +3,11 @@
 //test commit
     /** Auth **/
 
+use App\Http\Controllers\Admin\AdminsController;
 use App\Http\Controllers\Admin\ApplicationController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\ImportedCommoditiesController;
+use App\Models\User;
 
 Route::group(['as' => 'auth.'], function () {
 
@@ -62,8 +65,13 @@ Route::group(['as' => 'auth.'], function () {
 
 
 
+    Route::post('admin/admins/update-status/{id}', [AdminsController::class, 'updateStatus'])
+        ->name('admin.admins.update.status');
 
-Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.verify_email');
+    Route::post('admin/users/update-status/{slug}', [UserController::class, 'updateStatus'])
+        ->name('admin.users.update.status');
+
+    Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.verify_email');
 	Route::get('/sendmail', 'User\UserController@sendEmailVerification');
 
 	Route::group(['prefix'=>'admin', 'as' => 'admin.', 'middleware' => ['check.admin_route']], function () {
@@ -75,7 +83,7 @@ Route::get('/verify_email','User\UserController@verifyEmail')->name('dashboard.v
 		//Route::get('/', 'AdminController@index')->name('admin.dashboard');
 		Route::resource('users','Admin\UserController');
 
-		Route::post('admins/update-status','Admin\AdminsController@updateStatus')->name('admins.update.status');
+//		Route::post('admins/update-status/{id}','Admin\AdminsController@updateStatus')->name('admins.update.status');
 		Route::resource('admins','Admin\AdminsController');
 		Route::get('/test', 'Admin\AdminsController@test')->name('admins.test');
         Route::resource('/order_of_payments','Admin\OrderOfPaymentsController');

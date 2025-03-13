@@ -81,8 +81,9 @@ class UserRepository extends BaseRepository implements UserInterface {
 
     public function destroy($slug){
 
-        $user = $this->user->where('slug',$slug)->first();
+        $user = $this->user->findBySlug($slug);
         $user->delete();
+        return $user;
 
     }
 
