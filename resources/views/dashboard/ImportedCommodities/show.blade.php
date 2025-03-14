@@ -54,7 +54,7 @@
            <button type="button" class="btn btn-success btn-lg btn-outline print_btn" data="{{$data->slug}}" id="printBtn{{$data->slug}}"><i class="fa fa-print"></i> Print</button>
         </span>
     </p>
-    <div style="height: 800px; width: 800px; overflow: auto; border: 2px solid #e1edf7; padding-left: 20px">
+    <div style="height: 800px; width: 100%; overflow: auto; border: 2px solid #e1edf7; padding-left: 20px">
         <table class="" style="margin-top: 200px;">
             <tr>
                 <td style="padding-bottom: 30px">Date: {{ \Carbon\Carbon::parse($data->date)->format('F d, Y') }}</td>
@@ -97,32 +97,32 @@
 
         <table style="margin-top: 20px">
             <tr>
-                <td style="width: 125px">Quantity in MT</td>
+                <td style="width: 150px">Quantity in MT</td>
                 <td style="width: 5px">:</td>
                 <td>{{$data->quantity_mt}}</td>
             </tr>
             <tr>
-                <td style="width: 125px">Bill of Lading No.</td>
+                <td style="width: 150px">Bill of Lading No.</td>
                 <td style="width: 5px">:</td>
                 <td>{{$data->bill_landing_no}}</td>
             </tr>
             <tr>
-                <td style="width: 125px">Product Description</td>
+                <td style="width: 150px">Product Description</td>
                 <td style="width: 5px">:</td>
                 <td>{{$data->prod_description}}</td>
             </tr>
             <tr>
-                <td style="width: 125px">Country of Origin</td>
+                <td style="width: 150px">Country of Origin</td>
                 <td style="width: 5px">:</td>
                 <td>{{$data->country_origin}}</td>
             </tr>
             <tr>
-                <td style="width: 125px">Port of Discharge</td>
+                <td style="width: 150px">Port of Discharge</td>
                 <td style="width: 5px">:</td>
                 <td>{{$data->port_discharge}}</td>
             </tr>
             <tr>
-                <td style="width: 125px">Purpose of Importation</td>
+                <td style="width: 150px">Purpose of Importation</td>
                 <td style="width: 5px">:</td>
                 <td>{{$data->purpose_importation}}</td>
             </tr>

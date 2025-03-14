@@ -100,13 +100,15 @@
 											], $data->contact_no) !!}
 
 										{!! \App\Core\Helpers\__form2::textbox('email', [
-												'label'=>'<span style="color: ' . (empty($data->email) ? 'red' : 'grey') . ';">Email:*</span>',
+//												'label'=>'<span style="color: ' . (empty($data->email) ? 'red' : 'grey') . ';">Email:*</span>',
+												'label'=>'Email:*',
 												'cols'=>'4',
 												'type'=>'email',
 												'id'=>'email',
 												'placeholder' => '',
 												'required'=>'required',
 											], $data->email) !!}
+
 
 										{!! \App\Core\Helpers\__form2::textbox('address', [
 												'label'=>'<span style="color: ' . (empty($data->address) ? 'red' : 'grey') . ';">Address:*</span>',
@@ -166,12 +168,12 @@
 
 
 
-										{{--										<div class="col-sm-8" style="padding-bottom: 10px; margin-top: 20px">--}}
-
-										{{--											<span class="pull-right" style="padding-right: 20px">--}}
-										{{--												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal"><i class="fa fa-print"></i> Print Application Form</button>--}}
-										{{--											</span>--}}
-										{{--										</div>--}}
+{{--								<div class="col-sm-12" style="padding-bottom: 10px; margin-top: 20px">--}}
+{{--									<span class="pull-right" style="padding-right: 20px">--}}
+{{--										<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal"><i class="fa fa-print"></i> Print Application Form</button>--}}
+{{--									</span>--}}
+{{--									<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline pull-right" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>--}}
+{{--								</div>--}}
 
 
 										<div class="col-md-12">
@@ -236,14 +238,6 @@
                                                                 $fileName = $fileExists ? basename($data->$columnName) : ''; // Extract file name
 															@endphp
 
-															{{--																								{!! \App\Core\Helpers\__form2::file($columnName, [--}}
-															{{--															                                        'label' => $label,--}}
-															{{--															                                        'cols' => '4',--}}
-															{{--															                                        'id' => 'img_url_' . $columnName, // Ensure a unique ID--}}
-															{{--															                                        'class' => 'file-input',--}}
-															{{--															                                        'data-file-url' => $fileUrl--}}
-															{{--															                                    ]) !!}--}}
-
 															<div class="col-md-4">
 																<div class="form-group">
 																	<label style="color: {{ $fileExists ? 'dark-grey' : 'red' }};">
@@ -279,7 +273,7 @@
 
 										<div class="col-md-12" align="right">
 											<div class="box-footer">
-												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
+												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" id="printSaveBtn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
 												<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>
 												<span style="margin-right: 20px">
 													<button type="submit" id="btnSaveDraft" class="btn btn-lg btn-outline btn-primary"
@@ -301,24 +295,6 @@
 								</div>
 							</div>
 						</div>
-						{{--						<div class="col-md-4">--}}
-						{{--							<div class="row">--}}
-						{{--								<div class="col-md-12">--}}
-						{{--									<h4 style="color: darkslategray">REQUIRED ATTACHED DOCUMENTS</h4>--}}
-						{{--									<ul>--}}
-						{{--										<li><p class="text-bold">Application Form (Notarized)</p></li>--}}
-						{{--										<li><p class="text-bold">Affidavit</p></li>--}}
-						{{--										<li><p class="text-bold">Bill of Landing</p></li>--}}
-						{{--										<li><p class="text-bold">Commercial Invoice</p></li>--}}
-						{{--										<li><p class="text-bold">Packing List</p></li>--}}
-						{{--										<li><p class="text-bold">Certificate of Origin</p></li>--}}
-						{{--										<li><p class="text-bold">Certificate of Analysis</p></li>--}}
-						{{--										<li><p class="text-bold">Notarized Declaration of GMO and Non-GMO</p></li>--}}
-						{{--										<li><p class="text-bold">Import Declaration (once available)</p></li>--}}
-						{{--									</ul>--}}
-						{{--								</div><br>--}}
-						{{--							</div>--}}
-						{{--						</div>--}}
 
 						<div class="col-md-3">
 							<div class="panel panel-primary">
@@ -470,13 +446,16 @@
 
 			$("#btnSaveDraft").click(function (e) {
 				e.preventDefault();
-				submitForm(false); // Pass false to indicate it's a draft
+				submitForm(false, true); // Save as draft and reload
 			});
 
-			// $("#btnSubmitApplication").click(function (e) {
-			// 	e.preventDefault();
-			// 	submitForm(true); // Pass true to update submission_status
-			// });
+			$("#printSaveBtn").click(function (e) {
+				e.preventDefault();
+				submitForm(false, false, function () {
+					// Callback: Show Print Preview Modal after saving successfully
+					$("#printPreviewModal").modal("show");
+				}, true); // Flag to prevent reload on error
+			});
 
 			$("#btnSubmitApplication").click(function (e) {
 				e.preventDefault();
@@ -492,14 +471,13 @@
 					cancelButtonColor: "#6c757d",
 				}).then((result) => {
 					if (result.isConfirmed) {
-						// Disable buttons after confirmation
 						$("#btnSubmitApplication, #btnSaveDraft").prop("disabled", true);
-						submitForm(true); // Pass true to update submission_status
+						submitForm(true, true);
 					}
 				});
 			});
 
-			function submitForm(isFinalSubmission) {
+			function submitForm(isFinalSubmission, shouldReload, callback = null) {
 				var form = $("#importedCommoditiesForm")[0];
 				var formData = new FormData(form);
 				var slug = "{{$data->slug}}";
@@ -507,21 +485,18 @@
 
 				formData.append('_method', 'PATCH');
 
-				// Only update submission_status when clicking "Submit Application"
 				if (isFinalSubmission) {
 					formData.append("submission", "1");
-					formData.append("revoked", "0"); // Ensure revoked is set to 0
+					formData.append("revoked", "0");
 
-					// Get the correct local time in YYYY-MM-DD HH:MM:SS format
 					var now = new Date();
-					var year = now.getFullYear();
-					var month = String(now.getMonth() + 1).padStart(2, '0');
-					var day = String(now.getDate()).padStart(2, '0');
-					var hours = String(now.getHours()).padStart(2, '0');
-					var minutes = String(now.getMinutes()).padStart(2, '0');
-					var seconds = String(now.getSeconds()).padStart(2, '0');
+					var localDatetime = now.getFullYear() + "-" +
+							String(now.getMonth() + 1).padStart(2, '0') + "-" +
+							String(now.getDate()).padStart(2, '0') + " " +
+							String(now.getHours()).padStart(2, '0') + ":" +
+							String(now.getMinutes()).padStart(2, '0') + ":" +
+							String(now.getSeconds()).padStart(2, '0');
 
-					var localDatetime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 					formData.append("submission_date", localDatetime);
 				}
 
@@ -541,23 +516,28 @@
 								text: "Thank you for your submission! We will review your application, and you can expect a response within 3 working days.",
 								type: "success",
 								button: "OK"
-							},function() {
-								// Redirect immediately after clicking OK
+							}, function() {
 								window.location.href = "/dashboard/home";
 							});
-						} else {
+						} else if (shouldReload) {
 							window.location.href = "/dashboard/home?success_message=Data successfully saved!";
+						} else {
+							// notify("Data successfully saved!", "success");
+							if (callback) callback(); // Execute callback (e.g., show print modal)
 						}
 					},
 					error: function (res) {
 						console.log(res);
 						errored($("#importedCommoditiesForm"), res);
-						// Re-enable buttons in case of an error
+
 						$("#btnSubmitApplication, #btnSaveDraft").prop("disabled", false);
+
+						// if (res.status === 422) {
+						// 	location.reload();
+						// }
 					}
 				});
 			}
-
 
 			// Hide file remove button
 			$(".kv-file-remove").hide();
@@ -565,30 +545,59 @@
 
 			$("body").on("click", ".view_btn", function () {
 				target_modal = $(this).attr('data-target');
-
 				tr_id = $(this).attr('data');
 				uri = "{{route('dashboard.ImportedCommodities.show', 'slug')}}";
 				uri = uri.replace('slug', tr_id);
-				$(target_modal + " .modal-content").html('<div class="loader-demo-box">\n' +
-						'                    <div class="square-box-loader">\n' +
-						'                        <div class="square-box-loader-container">\n' +
-						'                            <div class="square-box-loader-corner-top"></div>\n' +
-						'                            <div class="square-box-loader-corner-bottom"></div>\n' +
-						'                        </div>\n' +
-						'                        <div class="square-box-loader-square"></div>\n' +
-						'                    </div>\n' +
-						'                </div>');
-				$.ajax({
-					url: uri,
-					type: 'GET',
-					success: function (res) {
-						$(target_modal).find('.modal-content').html(res);
-					},
-					error: function (res) {
-						console.log(res);
-					}
-				})
-			})
+
+				// Display the loader inside the modal before fetching content
+				$(target_modal + " .modal-content").html(`
+					<div id="loading" class="loader" style="padding-top: 10%; padding-bottom: 10%; padding-left: 40%;">
+						<img src="{{ asset('images/load_anim.gif') }}">
+					</div>`);
+
+				// Show the modal first before making the AJAX request
+				$(target_modal).modal('show');
+
+				setTimeout(function () {
+					$.ajax({
+						url: uri,
+						type: 'GET',
+						success: function (res) {
+							$(target_modal).find('.modal-content').html(res);
+						},
+						error: function (res) {
+							console.log(res);
+						}
+					});
+				}, 500); // Delay AJAX request by 500ms
+			});
+
+			{{--$("body").on("click", ".view_btn", function () {--}}
+			{{--	target_modal = $(this).attr('data-target');--}}
+
+			{{--	tr_id = $(this).attr('data');--}}
+			{{--	uri = "{{route('dashboard.ImportedCommodities.show', 'slug')}}";--}}
+			{{--	uri = uri.replace('slug', tr_id);--}}
+			{{--	$(target_modal + " .modal-content").html('<div class="loader-demo-box">\n' +--}}
+			{{--			'                    <div class="square-box-loader">\n' +--}}
+			{{--			'                        <div class="square-box-loader-container">\n' +--}}
+			{{--			'                            <div class="square-box-loader-corner-top"></div>\n' +--}}
+			{{--			'                            <div class="square-box-loader-corner-bottom"></div>\n' +--}}
+			{{--			'                        </div>\n' +--}}
+			{{--			'                        <div class="square-box-loader-square"></div>\n' +--}}
+			{{--			'                    </div>\n' +--}}
+			{{--			'                </div>');--}}
+			{{--	$.ajax({--}}
+			{{--		url: uri,--}}
+			{{--		type: 'GET',--}}
+			{{--		success: function (res) {--}}
+			{{--			$(target_modal).find('.modal-content').html(res);--}}
+			{{--		},--}}
+			{{--		error: function (res) {--}}
+			{{--			console.log(res);--}}
+			{{--		}--}}
+			{{--	})--}}
+			{{--})--}}
 
 
 			$("body").on('click', '.print_btn', function () {
