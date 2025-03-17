@@ -31,9 +31,9 @@
 						<table class="table table-bordered table-condensed table-striped" id = "users_table" style="width: 100%">
 							<thead>
 								<tr>
-									<th>Fullname</th>
-									<th>Email Address</th>
-									<th>Phone</th>
+									<th>Full Name</th>
+									<th>Company Name</th>
+									<th>Contact Details</th>
 									<th>Activated</th>
 									<th>Verified</th>
 									<th>Status</th>
@@ -156,8 +156,8 @@
 			"ajax" : '{{ route("admin.users.index") }}',
 			"columns": [
 			  { "data": "full_name" },
+			  { "data": "business_name" },
 			  { "data": "email" },
-			  { "data": "phone" },
 			  { "data": "is_active" },
 			  { "data": "is_verified" },
 			  { "data": "last_activity" },
@@ -266,12 +266,6 @@
 		});
 
 
-
-
 	});
-
-
-
-
 </script>
 @endsection

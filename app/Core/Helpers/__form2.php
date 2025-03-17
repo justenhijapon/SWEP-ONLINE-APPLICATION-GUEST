@@ -418,4 +418,64 @@ class __form2
     public function get($array){
         return $this->name.' Hello';
     }
+
+    public static function passwordBox($name, $options = [], $value = null, $input_only = false) {
+        $n = new __form2;
+        $n->set($options);
+        $r_o = '';
+        $step = '';
+        if (is_object($value)) {
+            $value = $value->$name;
+        }
+        $ext = '';
+
+        if ($n->is_multiple == 1) {
+            $ext = '[]';
+        }
+        $c_class = $n->container_class != '' ? $n->container_class : '';
+
+        $disabled = $n->disabled != '' ? 'disabled="disabled"' : '';
+        $r_o = $n->readonly == 'readonly' ? 'readonly' : '';
+        $id = $n->id != '' ? 'id="' . $n->id . '"' : 'id="' . $name . '"';
+        $tab_index = $n->tab_index != '' ? 'tabindex="' . $n->tab_index . '"' : '';
+        $title = $n->title != '' ? '<i class="fa fa-question-circle" title="' . $n->title . '"></i>' : '';
+
+        $inputField = '
+        <div class="input-group">
+            <input class="form-control ' . $n->class . '" ' . $id . ' ' . $tab_index . ' name="' . $name . $ext . '" 
+                type="password" value="' . $value . '" placeholder="' . $n->placeholder . '" ' . $n->extra_attr . ' 
+                autocomplete="' . $n->autocomplete . '" ' . $r_o . ' ' . $n->required . ' ' . $disabled . '>
+            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword(\'' . $name . '\')">
+                <i id="toggleIcon-' . $name . '" class="fa fa-eye"></i>
+            </button>
+        </div>';
+
+        if ($input_only) {
+            return $inputField;
+        }
+
+        return '<div class="form-group ' . $c_class . ' col-md-' . $n->cols . ' ' . $name . '">
+                <label for="' . $name . '">' . $n->label . '</label> ' . $title . '
+                ' . $inputField . '
+            </div>
+            <script>
+                function togglePassword(fieldId) {
+                    var passwordInput = document.getElementById(fieldId);
+                    var toggleIcon = document.getElementById("toggleIcon-" + fieldId);
+
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        toggleIcon.classList.remove("fa-eye");
+                        toggleIcon.classList.add("fa-eye-slash");
+                    } else {
+                        passwordInput.type = "password";
+                        toggleIcon.classList.remove("fa-eye-slash");
+                        toggleIcon.classList.add("fa-eye");
+                    }
+                }
+            </script>';
+    }
+
+
+
 }

@@ -59,7 +59,7 @@
 {{-- Add Modal --}}
 <div id="modal-form-pre" class="modal fade" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-		<form id="pre_registration_form">
+		<form id="pre_registration_form" autocomplete="off">
 			<!-- Modal content-->
 			<div class="modal-content">
 				@csrf
@@ -68,6 +68,11 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
+					<style>
+						text-uppercase{
+							text-transform: capitalize !important;
+						}
+					</style>
 					<div class="row">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
@@ -75,15 +80,92 @@
 							</div>
 							<div class="panel-body">
 								<div class="row">
-{{--										{!! __form::a_textbox( 6,'Username','username', 'text', 'Username','', 'required')!!}--}}
-									{!! __form::a_textbox( 6,'Email Address','email', 'text', 'Email Address','', 'required')!!}
-									{!! __form::a_textbox( 6,'Password','password', 'password', 'Password','', 'required')!!}
-										{!! __form::a_textbox( 4,'Last Name','lastName', 'text', 'Last Name','', 'required')!!}
-										{!! __form::a_textbox( 4,'First Name','firstName', 'text', 'First Name','', 'required')!!}
-										{!! __form::a_textbox( 4,'Middle Name','middleName', 'text', 'Middle Name','', '')!!}
-										{!! __form::a_select(4, 'Gender', 'gender', ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'], '', 'required') !!}
-										{!! __form::a_textbox( 4,'Birthday','birthday', 'date', 'Birthday','', 'required')!!}
-										{!! __form::a_textbox( 4,'Phone Number','phoneNumber', 'text', 'Phone Number','', 'required')!!}
+
+									<div class="col-md-12" style="margin-bottom: 20px">
+										<div class="pull-right">
+											<code>Fields with asterisks(*) are required</code>
+										</div>
+									</div>
+
+{{--									{!! \App\Core\Helpers\__form2::textbox('password', [--}}
+{{--									   'label'=>'Password:*',--}}
+{{--									   'cols'=>'4',--}}
+{{--									   'type'=>'password',--}}
+{{--									   'placeholder' => '',--}}
+{{--								   ]) !!}--}}
+
+{{--									{!! \App\Core\Helpers\__form2::textbox('password_confirmation', [--}}
+{{--                                       'label'=>'Confirmation Password:*',--}}
+{{--                                       'cols'=>'4',--}}
+{{--                                       'type'=>'password',--}}
+{{--                                       'placeholder' => '',--}}
+{{--                                   ]) !!}--}}
+
+									{!! \App\Core\Helpers\__form2::textbox('email', [
+                                       'label'=>'Email:*',
+                                       'cols'=>'4',
+                                       'type'=>'email',
+										'placeholder' => '',
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::passwordBox('password', [
+                                        'label' => 'Password:*',
+										'cols' => '4',
+										'placeholder' => '',
+										'autocomplete' => 'off'
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::passwordBox('password_confirmation', [
+                                        'label' => 'Confirmation Password:*',
+										'cols' => '4',
+										'placeholder' => '',
+										'autocomplete' => 'off'
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::textbox('last_name', [
+                                       'label'=>'Last Name:*',
+                                       'cols'=>'4',
+                                       'class'=>'text-uppercase',
+                                       'placeholder' => '',
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::textbox('first_name', [
+                                       'label'=>'Middle Name:*',
+                                       'cols'=>'4',
+									   'class'=>'text-uppercase',
+                                       'placeholder' => '',
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::textbox('middle_name', [
+                                       'label'=>'First Name:*',
+                                       'cols'=>'4',
+									   'class'=>'text-uppercase',
+                                       'placeholder' => '',
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::select('gender', [
+                                       'label'=>'Gender:*',
+                                       'cols'=>'4',
+                                       'options' => ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'],
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::textbox('birthday', [
+                                       'label'=>'Birthday:*',
+                                       'cols'=>'4',
+                                       'type'=>'date',
+                                   ]) !!}
+
+									{!! \App\Core\Helpers\__form2::textbox('phone', [
+                                       'label'=>'Phone Number:*',
+                                       'cols'=>'4',
+                                       'placeholder' => '',
+                                   ]) !!}
+{{--										{!! __form::a_textbox( 4,'Last Name','lastName', 'text', 'Last Name','', '')!!}--}}
+{{--										{!! __form::a_textbox( 4,'First Name','firstName', 'text', 'First Name','', '')!!}--}}
+{{--										{!! __form::a_textbox( 4,'Middle Name','middleName', 'text', 'Middle Name','', '')!!}--}}
+{{--										{!! __form::a_select(4, 'Gender', 'gender', ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'], '', '') !!}--}}
+{{--										{!! __form::a_textbox( 4,'Birthday','birthday', 'date', 'Birthday','', '')!!}--}}
+{{--										{!! __form::a_textbox( 4,'Phone Number','phoneNumber', 'text', 'Phone Number','', '')!!}--}}
 									<div class="col-sm-12 m-t-lg">
 										<div class="panel panel-primary">
 											<div class="panel-heading">
@@ -91,9 +173,28 @@
 											</div>
 											<div class="panel-body">
 												<div class="row">
-													{!! __form::a_textbox( 4,'Street No./Lot No./Subd./Bldg.','street', 'text', 'Street','', 'required')!!}
-													{!! __form::a_textbox( 4,'Barangay','barangay', 'text', 'Barangay','', 'required')!!}
-													{!! __form::a_textbox( 4,'Municipality/City','city', 'text', 'Municipality/City','', 'required')!!}
+
+													{!! \App\Core\Helpers\__form2::textbox('street', [
+													   'label'=>'Street No./Lot No./Subd./Bldg.:*',
+													   'cols'=>'4',
+													   'placeholder' => '',
+												   ]) !!}
+
+													{!! \App\Core\Helpers\__form2::textbox('barangay', [
+													   'label'=>'Barangay:*',
+													   'cols'=>'4',
+													   'placeholder' => '',
+												   ]) !!}
+
+													{!! \App\Core\Helpers\__form2::textbox('city', [
+													   'label'=>'Municipality/City:*',
+													   'cols'=>'4',
+													   'placeholder' => '',
+												   ]) !!}
+
+{{--													{!! __form::a_textbox( 4,'Street No./Lot No./Subd./Bldg.','street', 'text', 'Street','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'Barangay','barangay', 'text', 'Barangay','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'Municipality/City','city', 'text', 'Municipality/City','', '')!!}--}}
 												</div>
 											</div>
 										</div>
@@ -105,13 +206,22 @@
 											</div>
 											<div class="panel-body">
 												<div class="row">
-													{!! __form::a_textbox( 12,'Business Name','businessName', 'text', 'Business Name','', '')!!}
-													{!! __form::a_textbox( 4,'TIN','businessTin', 'text', 'TIN','', '')!!}
-													{!! __form::a_textbox( 4,'Business Contact','businessPhone', 'text', 'Business Contact','', '')!!}
-													{!! __form::a_textbox( 4,'Position','position', 'text', 'Position','', '')!!}
-													{!! __form::a_textbox( 4,'Street No./Lot No./Subd./Bldg.','businessStreet', 'text', 'Street','', '')!!}
-													{!! __form::a_textbox( 4,'Barangay','businessBarangay', 'text', 'Barangay','', '')!!}
-													{!! __form::a_textbox( 4,'Municipality/City','businessCity', 'text', 'Municipality/City','', '')!!}
+
+													{!! \App\Core\Helpers\__form2::textbox('business_name', ['label'=>'Business Name:*', 'cols'=>'12', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_tin', ['label'=>'TIN:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_phone', ['label'=>'Business Contact:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('position', ['label'=>'Position:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_street', ['label'=>'Street No./Lot No./Subd./Bldg.:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_barangay', ['label'=>'Barangay:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_city', ['label'=>'Municipality/City:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+
+{{--													{!! __form::a_textbox( 12,'Business Name','businessName', 'text', 'Business Name','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'TIN','businessTin', 'text', 'TIN','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'Business Contact','businessPhone', 'text', 'Business Contact','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'Position','position', 'text', 'Position','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'Street No./Lot No./Subd./Bldg.','businessStreet', 'text', 'Street','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'Barangay','businessBarangay', 'text', 'Barangay','', '')!!}--}}
+{{--													{!! __form::a_textbox( 4,'Municipality/City','businessCity', 'text', 'Municipality/City','', '')!!}--}}
 												</div>
 											</div>
 										</div>
@@ -144,14 +254,20 @@
 							@csrf
 							<div class="form-group">
 								<label>Email</label>
-								<input type="text" name="email" class="form-control" placeholder="Email" required="">
+								<input type="text" name="email" class="form-control" placeholder="Email">
 								@if ($errors->has('email'))
 									<label class="error text-danger">{{$errors->first('email')}}</label>
 								@endif
 							</div>
+
 							<div class="form-group">
 								<label>Password</label>
-								<input type="password" name="password" class="form-control" placeholder="Password" required="">
+								<div class="input-group">
+									<input type="password" id="passwordID" name="password" class="form-control" placeholder="Password">
+									<button type="button" class="btn btn-outline-secondary" onclick="togglePasswordID()">
+										<i id="toggleIcon" class="fa fa-eye"></i>
+									</button>
+								</div>
 								@if ($errors->has('password'))
 									<label class="error text-danger">{{$errors->first('password')}}</label>
 								@endif
@@ -352,6 +468,8 @@
 <script src="{{asset('template/inspinia/js/plugins/pace/pace.min.js')}}"></script>
 <script src="{{asset('template/inspinia/js/plugins/wow/wow.min.js')}}"></script>
 <script src="{{ asset('template/inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+
 <script>
 	document.getElementById("openRegisterModal").addEventListener("click", function(event) {
 		event.preventDefault(); // Prevent the default anchor behavior
@@ -417,7 +535,7 @@
 			return window.pageYOffset || docElem.scrollTop;
 		}
 		init();
-	})();
+	});
 
 	$("#pre_registration_form").submit(function(e){
 		e.preventDefault();
@@ -436,7 +554,7 @@
 				});
 			},
 			error: function(response){
-				alert(response.responseJSON.errors);
+				//alert(response.responseJSON.errors);
 				console.log(response);
 				errored(form,response);
 			}
@@ -444,6 +562,23 @@
 	});
 	// Activate WOW.js plugin for animation on scrol
 	new WOW().init();
+</script>
+
+<script>
+	function togglePasswordID() {
+		var passwordInput = document.getElementById("passwordID");
+		var toggleIcon = document.getElementById("toggleIcon");
+
+		if (passwordInput.type === "password") {
+			passwordInput.type = "text";
+			toggleIcon.classList.remove("fa-eye");
+			toggleIcon.classList.add("fa-eye-slash");
+		} else {
+			passwordInput.type = "password";
+			toggleIcon.classList.remove("fa-eye-slash");
+			toggleIcon.classList.add("fa-eye");
+		}
+	}
 </script>
 
 </body>

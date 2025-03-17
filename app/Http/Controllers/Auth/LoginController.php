@@ -46,88 +46,76 @@ class LoginController extends Controller{
 
     }
 
+//    public function login(Request $request)
+//    {
+//        $credentials = $request->only('email', 'password');
+//
+//        // Check if user exists in the main users table
+//        if (!User::where('email', $request->email)->exists()) {
+//            // Check if user exists in the pre-registration table and is pending approval
+//            $preReg = PreRegistrationModel::where('email', $request->email)->first();
+//            if ($preReg) {
+//                return back()->withErrors(['email' => 'Your pre-registration is for approval of the admin.']);
+//            }
+//        }
+//
+//        // Attempt login
+//        if ($this->auth->guard('web')->attempt($this->credentials($request))) {
+//            if ($this->auth->user()->is_active == false) {
+//                $this->session->flush();
+//                $this->session->flash('AUTH_UNACTIVATED', 'Your account is currently UNACTIVATED! Please contact the designated IT Personnel to activate your account.');
+//                $this->auth->logout();
+//            } else {
+//                $this->clearLoginAttempts($request);
+//                return redirect()->intended('dashboard/home'); // Ensure this route exists
+//            }
+//        }
+//
+//        $this->incrementLoginAttempts($request);
+//        return $this->sendFailedLoginResponse($request);
+//    }
+
+
+
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        // Validate user input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:6'
+        ]);
+
+        $email = strtolower($request->email);
 
         // Check if user exists in the main users table
-        if (!User::where('email', $request->email)->exists()) {
-            // Check if user exists in the pre-registration table and is pending approval
-            $preReg = PreRegistrationModel::where('email', $request->email)->first();
-            if ($preReg) {
+        if (!User::whereRaw('LOWER(email) = ?', [$email])->exists()) {
+            // Check if user exists in the pre-registration table
+            if (PreRegistrationModel::whereRaw('LOWER(email) = ?', [$email])->exists()) {
                 return back()->withErrors(['email' => 'Your pre-registration is for approval of the admin.']);
             }
         }
 
         // Attempt login
-        if ($this->auth->guard('web')->attempt($this->credentials($request))) {
-            if ($this->auth->user()->is_active == false) {
-                $this->session->flush();
-                $this->session->flash('AUTH_UNACTIVATED', 'Your account is currently UNACTIVATED! Please contact the designated IT Personnel to activate your account.');
-                $this->auth->logout();
-            } else {
-                $this->clearLoginAttempts($request);
-                return redirect()->intended('dashboard/home'); // Ensure this route exists
+        if (auth()->guard('web')->attempt(['email' => $email, 'password' => $request->password])) {
+            $user = auth()->user();
+
+            // Check if account is active
+            if (!$user->is_active) {
+                auth()->logout();
+                session()->invalidate();
+                session()->flash('AUTH_UNACTIVATED', 'Your account is currently UNACTIVATED! Please contact the designated IT Personnel to activate your account.');
+                return back();
             }
+
+            $this->clearLoginAttempts($request);
+            return redirect()->intended('dashboard/home');
         }
 
+        // Increment login attempts for rate limiting
         $this->incrementLoginAttempts($request);
         return $this->sendFailedLoginResponse($request);
     }
 
-//    protected function login(Request $request){
-//        $this->validateLogin($request);
-//
-//        if ($this->hasTooManyLoginAttempts($request)) {
-//            $this->fireLockoutEvent($request);
-//            return $this->sendLockoutResponse($request);
-//        }
-//
-//
-//        if($this->auth->guard('web')->attempt($this->credentials($request))){
-//
-//            if($this->auth->user()->is_active == false){
-//
-//                $this->session->flush();
-//                $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personnel to activate your account.');
-//                $this->auth->logout();
-//
-//            }else{
-//
-//                //$user = $this->user_repo->login($this->auth->user()->slug);
-//
-//                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-//                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-//                // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
-//
-//                $this->clearLoginAttempts($request);
-//                return redirect()->intended('dashboard/home');
-//
-//            }
-//
-//        }
-//
-//        $this->incrementLoginAttempts($request);
-//        return $this->sendFailedLoginResponse($request);
-//
-//    }
-
-//    public function logout(Request $request){
-//
-//        if($request->isMethod('get')){
-//            //$user = $this->user_repo->logout($this->auth->user()->slug);
-//            $this->session->flush();
-//            $this->auth->guard('web')->logout();
-//            // $request->session()->invalidate();
-//            // // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-//            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-//            // $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
-//            // $this->session->flash('LOGOUT_SUCCESS','You have been logged out successfully!');
-//            return redirect('/');
-//        }
-//        return abort(404);
-//
-//    }
 
 
     public function logout(Request $request)

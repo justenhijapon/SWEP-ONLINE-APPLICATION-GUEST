@@ -41,10 +41,6 @@ class PreRegistrationController extends Controller
                     return $button;
                 })
 
-//                ->editColumn('last_name', function($data) {
-//                    return view('admin.preRegistration.td_fullName')->with(['data' => $data]);
-//                })
-
                 ->editColumn('last_name', function($data) {
                     $fullname= $data->first_name . ' ' . ($data->middle_name ? strtoupper(substr($data->middle_name, 0, 1)) . '. ' : '') . $data->last_name;
                     return '<p style="" class="no-margin">'.$fullname.' </p>';
@@ -56,7 +52,7 @@ class PreRegistrationController extends Controller
                 })
 
                 ->editColumn('email', function($data) {
-                    return '<p style="color: cornflowerblue;" class="no-margin"><u>'.$data->email.'</u> </p>
+                    return '<p style="color: #15c;" class="no-margin"><u>'.$data->email.'</u> </p>
                             <p style="" class="no-margin">'.$data->phone.' </p>';
                 })
                 ->escapeColumns([])
@@ -87,7 +83,7 @@ class PreRegistrationController extends Controller
         return $slug;
     }
 
-    public function storePreRegistration(Request $request)
+    public function storePreRegistration(PreRegistrationFormRequest $request)
     {
         $appData = new User\ImportedCommodities();
         $preReg = new PreRegistrationModel();
@@ -95,23 +91,23 @@ class PreRegistrationController extends Controller
         $preReg->slug = $this->new_slug();
         $preReg->username = $request->username;
         $preReg->password = $request->password;
-        $preReg->last_name = $request->lastName;
-        $preReg->first_name = $request->firstName;
-        $preReg->middle_name = $request->middleName;
+        $preReg->last_name = $request->last_name;
+        $preReg->first_name = $request->first_name;
+        $preReg->middle_name = $request->middle_name;
         $preReg->gender = $request->gender;
-        $preReg->phone = $request->phoneNumber;
+        $preReg->phone = $request->phone;
         $preReg->email = $request->email;
         $preReg->birthday = $request->birthday;
         $preReg->street = $request->street;
         $preReg->barangay = $request->barangay;
         $preReg->city = $request->city;
-        $preReg->business_name = $request->businessName;
-        $preReg->business_tin = $request->businessTin;
-        $preReg->business_phone = $request->businessPhone;
+        $preReg->business_name = $request->business_name;
+        $preReg->business_tin = $request->business_tin;
+        $preReg->business_phone = $request->business_phone;
         $preReg->position = $request->position;
-        $preReg->business_street = $request->businessStreet;
-        $preReg->business_barangay = $request->businessBarangay;
-        $preReg->business_city = $request->businessCity;
+        $preReg->business_street = $request->business_street;
+        $preReg->business_barangay = $request->business_barangay;
+        $preReg->business_city = $request->business_city;
         $preReg->status = 'FOR APPROVAL';
         $preReg->is_verified = false;
         $preReg->created_at = Carbon::now();
@@ -123,10 +119,10 @@ class PreRegistrationController extends Controller
         $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
         $appData->user_created = $preReg ->slug;
         $appData->name = $fullname;
-        $appData->contact_no = $request->businessPhone;
+        $appData->contact_no = $request->business_phone;
         $appData->designation = $request->position;
-        $appData->company = $request->businessName;
-        $appData->tin = $request->businessTin;
+        $appData->company = $request->business_name;
+        $appData->tin = $request->business_tin;
         $appData->address = $full_address;
         $appData->email = $request->email;
         $appData-> ip_created = $ipAddress;

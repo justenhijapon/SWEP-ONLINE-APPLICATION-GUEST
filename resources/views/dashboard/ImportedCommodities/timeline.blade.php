@@ -154,16 +154,11 @@
                 @endforeach
             </div>
 
-
-
-
-
             <div class="timeline-item">
                 <div class="row">
                     <div class="col-5 date">
                         <i class="fa fa-plus-circle"></i>
                         <p class="no-margin" style="margin: 0; font-size: 10px"> {{ date('M. d, Y | g:i A', strtotime($data->created_at)) }}</p>
-                        {{--															<p class="no-margin" style="margin: 0; font-size: 10px">{{ \Carbon\Carbon::parse($data->created_at)->format('M. j, Y') }}</p>--}}
                         <small class="text-navy">
                             {{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->created_at)->diffForHumans()) }}
                         </small>
@@ -175,17 +170,14 @@
                 </div>
             </div>
 
-                    <div class="timeline-item">
-                        <div class="row">
-                            <div class="col-6 date" style="padding-left: 20px">
-                                <i class="fa fa-circle"></i>
-                                															<i class="fa fa-clock-o"></i>
-                            </div>
-                        </div>
+            <div class="timeline-item">
+                <div class="row">
+                    <div class="col-6 date" style="padding-left: 20px">
+                        <i class="fa fa-clock-o"></i>
                     </div>
-    </div>
-
-
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

@@ -23,276 +23,271 @@
 			{{--				</div>--}}
 			{{--			</div>--}}
 			@csrf
-			<form id="importedCommoditiesForm" method="POST" autocomplete="off" enctype="multipart/form-data">
+{{--			<form id="importedCommoditiesForm" method="POST" autocomplete="off" enctype="multipart/form-data">--}}
 
 				<div class="col-md-12 ibox-content">
 					<div class="row">
-
 						<div class="col-md-9">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h4>Application For Clearance for the Release of Imported Commodities under Tariff Heading 1702 (Other Sugars) and 1704 (Sugar Confectionery)</h4>
 								</div>
-								<div class="panel-body">
-									<div class="row">
+									<form id="importedCommoditiesForm" method="POST" autocomplete="off" enctype="multipart/form-data">
+										<div class="panel-body">
+										<div class="row">
 
-										{!! \App\Core\Helpers\__form2::textbox('date', [
-												'label'=>'<span style="color: ' . (empty($data->date) ? 'red' : 'grey') . ';">Application Date:*</span>',
-												'type'=>'date',
-												'cols'=>'4',
-												'id'=>'date',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->date) !!}
+											{!! \App\Core\Helpers\__form2::textbox('date', [
+													'label'=>'<span style="color: ' . (empty($data->date) ? 'red' : 'grey') . ';">Application Date:*</span>',
+													'type'=>'date',
+													'cols'=>'4',
+													'id'=>'date',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->date) !!}
 
-										<div class="col-md-4" style="margin-top: 30px">
-											<div class=" no-padding">
-												<p>Application Reference No.:<span><code style="font-size: medium" class="no-padding"> {{$data->slug}}</code></span></p>
+											<div class="col-md-4" style="margin-top: 30px">
+												<div class=" no-padding">
+													<p>Application Reference No.:<span><code style="font-size: medium" class="no-padding"> {{$data->slug}}</code></span></p>
+												</div>
+												{!! $revokedDates ?? '' !!}
 											</div>
-											{!! $revokedDates ?? '' !!}
-										</div>
 
-										<div class="col-md-4" style="padding-bottom: 10px">
-											<div class="pull-right no-padding">
-												<code class="no-padding">Fields with asterisks(*) are mandatory</code>
+											<div class="col-md-4" style="padding-bottom: 10px">
+												<div class="pull-right no-padding">
+													<code class="no-padding">Fields with asterisks(*) are mandatory</code>
+												</div>
 											</div>
-										</div>
 
-										{!! \App\Core\Helpers\__form2::textbox('name', [
-										'label'=>'<span style="color: ' . (empty($data->name) ? 'red' : 'grey') . ';">Name:*</span>',
-										'cols'=>'4',
-										'id'=>'name',
-										'placeholder' => '',
-										'required'=>'required',
-										],$data->name) !!}
-
-										{!! \App\Core\Helpers\__form2::textbox('designation', [
-											'label'=>'<span style="color: ' . (empty($data->designation) ? 'red' : 'grey') . ';">Applicant Designation:*</span>',
+											{!! \App\Core\Helpers\__form2::textbox('name', [
+											'label'=>'<span style="color: ' . (empty($data->name) ? 'red' : 'grey') . ';">Name:*</span>',
 											'cols'=>'4',
-											'id'=>'designation',
+											'id'=>'name',
 											'placeholder' => '',
 											'required'=>'required',
-										], $data->designation) !!}
+											],$data->name) !!}
 
-										{!! \App\Core\Helpers\__form2::textbox('company', [
-												'label'=>'<span style="color: ' . (empty($data->company) ? 'red' : 'grey') . ';">Company Name:*</span>',
+											{!! \App\Core\Helpers\__form2::textbox('designation', [
+												'label'=>'<span style="color: ' . (empty($data->designation) ? 'red' : 'grey') . ';">Applicant Designation:*</span>',
 												'cols'=>'4',
-												'id'=>'company',
+												'id'=>'designation',
 												'placeholder' => '',
 												'required'=>'required',
-											], $data->company) !!}
+											], $data->designation) !!}
 
-										{!! \App\Core\Helpers\__form2::textbox('tin', [
-												'label'=>'<span style="color: ' . (empty($data->tin) ? 'red' : 'grey') . ';">Consignee TIN No.:*</span>',
-												'cols'=>'4',
-												'id'=>'tin',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->tin) !!}
+											{!! \App\Core\Helpers\__form2::textbox('company', [
+													'label'=>'<span style="color: ' . (empty($data->company) ? 'red' : 'grey') . ';">Company Name:*</span>',
+													'cols'=>'4',
+													'id'=>'company',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->company) !!}
 
-										{!! \App\Core\Helpers\__form2::textbox('contact_no', [
-												'label'=>'<span style="color: ' . (empty($data->contact_no) ? 'red' : 'grey') . ';">Contact No.:*</span>',
-												'cols'=>'4',
-                                                'class'=>'form-control-message',
-												'id'=>'contact_no',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->contact_no) !!}
+											{!! \App\Core\Helpers\__form2::textbox('tin', [
+													'label'=>'<span style="color: ' . (empty($data->tin) ? 'red' : 'grey') . ';">Consignee TIN No.:*</span>',
+													'cols'=>'4',
+													'id'=>'tin',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->tin) !!}
 
-										{!! \App\Core\Helpers\__form2::textbox('email', [
-//												'label'=>'<span style="color: ' . (empty($data->email) ? 'red' : 'grey') . ';">Email:*</span>',
-												'label'=>'Email:*',
-												'cols'=>'4',
-												'type'=>'email',
-												'id'=>'email',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->email) !!}
+											{!! \App\Core\Helpers\__form2::textbox('contact_no', [
+													'label'=>'<span style="color: ' . (empty($data->contact_no) ? 'red' : 'grey') . ';">Contact No.:*</span>',
+													'cols'=>'4',
+													'class'=>'form-control-message',
+													'id'=>'contact_no',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->contact_no) !!}
 
-
-										{!! \App\Core\Helpers\__form2::textbox('address', [
-												'label'=>'<span style="color: ' . (empty($data->address) ? 'red' : 'grey') . ';">Address:*</span>',
-												'cols'=>'4',
-												'id'=>'adress',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->address) !!}
-
-										{!! \App\Core\Helpers\__form2::textbox('quantity_mt', [
-												'label'=>'<span style="color: ' . (empty($data->quantity_mt) ? 'red' : 'grey') . ';">Quantity in Mt:*</span>',
-												'cols'=>'4',
-												'id'=>'quantity_mt',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->quantity_mt) !!}
-
-										{!! \App\Core\Helpers\__form2::textbox('bill_landing_no', [
-												'label'=>'<span style="color: ' . (empty($data->bill_landing_no) ? 'red' : 'grey') . ';">Bill of Landing No.:*</span>',
-												'cols'=>'4',
-												'id'=>'bill_landing_no',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->bill_landing_no) !!}
-
-										{!! \App\Core\Helpers\__form2::textbox('country_origin', [
-												'label'=>'<span style="color: ' . (empty($data->country_origin) ? 'red' : 'grey') . ';">Country of Origin:*</span>',
-												'cols'=>'4',
-												'id'=>'country_origin',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->country_origin) !!}
-
-										{!! \App\Core\Helpers\__form2::textbox('prod_description', [
-												'label'=>'<span style="color: ' . (empty($data->prod_description) ? 'red' : 'grey') . ';">Product Description:*</span>',
-												'cols'=>'8',
-												'id'=>'prod_description',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->prod_description) !!}
-
-										{!! \App\Core\Helpers\__form2::textbox('port_discharge', [
-												'label'=>'<span style="color: ' . (empty($data->port_discharge) ? 'red' : 'grey') . ';">Port of Discharge:*</span>',
-												'cols'=>'4',
-												'id'=>'port_discharge',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->port_discharge) !!}
-
-										{!! \App\Core\Helpers\__form2::textbox('purpose_importation', [
-												'label'=>'<span style="color: ' . (empty($data->purpose_importation) ? 'red' : 'grey') . ';">Purpose of Importation:*</span>',
-												'cols'=>'8',
-												'id'=>'purpose_importation',
-												'placeholder' => '',
-												'required'=>'required',
-											], $data->purpose_importation) !!}
+											{!! \App\Core\Helpers\__form2::textbox('email', [
+	//												'label'=>'<span style="color: ' . (empty($data->email) ? 'red' : 'grey') . ';">Email:*</span>',
+													'label'=>'Email:*',
+													'cols'=>'4',
+													'type'=>'email',
+													'id'=>'email',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->email) !!}
 
 
+											{!! \App\Core\Helpers\__form2::textbox('address', [
+													'label'=>'<span style="color: ' . (empty($data->address) ? 'red' : 'grey') . ';">Address:*</span>',
+													'cols'=>'4',
+													'id'=>'adress',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->address) !!}
 
-{{--								<div class="col-sm-12" style="padding-bottom: 10px; margin-top: 20px">--}}
-{{--									<span class="pull-right" style="padding-right: 20px">--}}
-{{--										<button type="button" class="btn btn-success btn-lg btn-outline view_btn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal"><i class="fa fa-print"></i> Print Application Form</button>--}}
-{{--									</span>--}}
-{{--									<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline pull-right" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>--}}
-{{--								</div>--}}
+											{!! \App\Core\Helpers\__form2::textbox('quantity_mt', [
+													'label'=>'<span style="color: ' . (empty($data->quantity_mt) ? 'red' : 'grey') . ';">Quantity in Mt:*</span>',
+													'cols'=>'4',
+													'id'=>'quantity_mt',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->quantity_mt) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('bill_landing_no', [
+													'label'=>'<span style="color: ' . (empty($data->bill_landing_no) ? 'red' : 'grey') . ';">Bill of Landing No.:*</span>',
+													'cols'=>'4',
+													'id'=>'bill_landing_no',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->bill_landing_no) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('country_origin', [
+													'label'=>'<span style="color: ' . (empty($data->country_origin) ? 'red' : 'grey') . ';">Country of Origin:*</span>',
+													'cols'=>'4',
+													'id'=>'country_origin',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->country_origin) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('prod_description', [
+													'label'=>'<span style="color: ' . (empty($data->prod_description) ? 'red' : 'grey') . ';">Product Description:*</span>',
+													'cols'=>'8',
+													'id'=>'prod_description',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->prod_description) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('port_discharge', [
+													'label'=>'<span style="color: ' . (empty($data->port_discharge) ? 'red' : 'grey') . ';">Port of Discharge:*</span>',
+													'cols'=>'4',
+													'id'=>'port_discharge',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->port_discharge) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('purpose_importation', [
+													'label'=>'<span style="color: ' . (empty($data->purpose_importation) ? 'red' : 'grey') . ';">Purpose of Importation:*</span>',
+													'cols'=>'8',
+													'id'=>'purpose_importation',
+													'placeholder' => '',
+													'required'=>'required',
+												], $data->purpose_importation) !!}
 
 
-										<div class="col-md-12">
-											@php
-												$attachmentFields = [
-															'bill_landing_path' => 'Bill of Landing',
-															'commercial_invoice_path' => 'Commercial Invoice',
-															'packing_list_path' => 'Packing List',
-															'cert_origin_path' => 'Certificate of Origin',
-															'cert_analysis_path' => 'Certificate of Analysis',
-															'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
-															'important_declaration_path' => 'Important Declaration',
-															'application_form_path' => 'Application Form',
-															'affidavit_path' => 'Affidavit'
-																		 ];
-
-                                                                     $attachmentsCount = 0;
-                                                                foreach ($attachmentFields as $field => $label) {
-                                                                    if (!empty($data->$field) && $data->$field !== null) {
-                                                                        $attachmentsCount++;
-                                                                    }
-                                                                }
-
-											@endphp
 
 
-											<div class="panel panel-primary">
-												<div class="panel-heading">
-													<h4>REQUIRED ATTACHED DOCUMENTS &nbsp;&nbsp;<span><code>{{$attachmentsCount}}/9</code></span></h4>
-												</div>
-												<div class="panel-body">
-													<div class="row">
 
-														@php
+											<div class="col-md-12">
+												@php
+													$attachmentFields = [
+														'bill_landing_path' => 'Bill of Landing',
+														'commercial_invoice_path' => 'Commercial Invoice',
+														'packing_list_path' => 'Packing List',
+														'cert_origin_path' => 'Certificate of Origin',
+														'cert_analysis_path' => 'Certificate of Analysis',
+														'notarized_gmo_non_gmo_path' => 'Notarized GMO/Non-GMO',
+														'important_declaration_path' => 'Important Declaration',
+														'application_form_path' => 'Application Form',
+														'affidavit_path' => 'Affidavit'
+																	 ];
 
-															$files = [
-                                                                'application_form_path' => 'Application Form (Notarized)*',
-                                                                'affidavit_path' => 'Affidavit*',
-                                                                'bill_landing_path' => 'Bill of Landing*',
-                                                                'commercial_invoice_path' => 'Commercial Invoice*',
-                                                                'packing_list_path' => 'Packing List*',
-                                                                'cert_origin_path' => 'Certificate of Origin*',
-                                                                'cert_analysis_path' => 'Certificate of Analysis*',
-                                                                'notarized_gmo_non_gmo_path' => 'Notarized Declaration of GMO and Non-GMO*',
-                                                                'important_declaration_path' => 'Import Declaration (once available)',
-                                                            ];
+													 $attachmentsCount = 0;
+														foreach ($attachmentFields as $field => $label) {
+															if (!empty($data->$field) && $data->$field !== null) {
+																$attachmentsCount++;
+															}
+														}
 
-														 	$requiredFiles = array_keys(array_filter($files, function ($key) {
-																return $key !== 'important_declaration_path'; // Exclude important_declaration_path
-															}, ARRAY_FILTER_USE_KEY));
-														@endphp
+												@endphp
 
-														@foreach ($files as $columnName => $label)
+
+												<div class="panel panel-primary">
+													<div class="panel-heading">
+														<h4>REQUIRED ATTACHED DOCUMENTS &nbsp;&nbsp;<span><code>{{$attachmentsCount}}/9</code></span></h4>
+													</div>
+													<div class="panel-body">
+														<div class="row">
+
 															@php
-																$fileExists = !empty($data->$columnName); // Check if the column has a value
-                                                                $fileUrl = route('show_file_custom', [
-                                                                    'tableName' => 'imported_commodities',
-                                                                    'slug' => $data->slug,
-                                                                    'columnName' => $columnName
-                                                                ]);
 
-                                                                $fileName = $fileExists ? basename($data->$columnName) : ''; // Extract file name
+																$files = [
+																	'application_form_path' => 'Application Form (Notarized)*',
+																	'affidavit_path' => 'Affidavit*',
+																	'bill_landing_path' => 'Bill of Landing*',
+																	'commercial_invoice_path' => 'Commercial Invoice*',
+																	'packing_list_path' => 'Packing List*',
+																	'cert_origin_path' => 'Certificate of Origin*',
+																	'cert_analysis_path' => 'Certificate of Analysis*',
+																	'notarized_gmo_non_gmo_path' => 'Notarized Declaration of GMO and Non-GMO*',
+																	'important_declaration_path' => 'Import Declaration (once available)',
+																];
+
+																$requiredFiles = array_keys(array_filter($files, function ($key) {
+																	return $key !== 'important_declaration_path'; // Exclude important_declaration_path
+																}, ARRAY_FILTER_USE_KEY));
 															@endphp
 
-															<div class="col-md-4">
-																<div class="form-group">
-																	<label style="color: {{ $fileExists ? 'dark-grey' : 'red' }};">
-																		{{ $label }}
-																	</label>
-																	<div class="input-group input-group-sm">
-																		<input type="file" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}">
-																		@if($fileExists)
-																			<input type="text" style="width: 20%" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}" value="{{ $fileExists ? $fileName : '' }}" readonly>
-																			<button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#filePreviewModal" data-file-url="{{$fileUrl}}">
-																				File preview
-																			</button>
-																		@endif
+															@foreach ($files as $columnName => $label)
+																@php
+																	$fileExists = !empty($data->$columnName); // Check if the column has a value
+																	$fileUrl = route('show_file_custom', [
+																		'tableName' => 'imported_commodities',
+																		'slug' => $data->slug,
+																		'columnName' => $columnName
+																	]);
+
+																	$fileName = $fileExists ? basename($data->$columnName) : ''; // Extract file name
+																@endphp
+
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label style="color: {{ $fileExists ? 'dark-grey' : 'red' }};">
+																			{{ $label }}
+																		</label>
+																		<div class="input-group input-group-sm">
+																			<input type="file" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}">
+																			@if($fileExists)
+																				<input type="text" style="width: 20%" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}" value="{{ $fileExists ? $fileName : '' }}" readonly>
+																				<button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#filePreviewModal" data-file-url="{{$fileUrl}}">
+																					File preview
+																				</button>
+																			@endif
+																		</div>
 																	</div>
 																</div>
-															</div>
-														@endforeach
+															@endforeach
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<style>
-											#btnSubmitApplication {
-												cursor: pointer !important;
-												opacity: 1 !important;
-											}
+											<style>
+												#btnSubmitApplication {
+													cursor: pointer !important;
+													opacity: 1 !important;
+												}
 
-											#btnSubmitApplication:disabled {
-												cursor: not-allowed !important;
-												opacity: 0.5 !important;
-											}
-										</style>
+												#btnSubmitApplication:disabled {
+													cursor: not-allowed !important;
+													opacity: 0.5 !important;
+												}
+											</style>
 
-										<div class="col-md-12" align="right">
-											<div class="box-footer">
-												<button type="button" class="btn btn-success btn-lg btn-outline view_btn" id="printSaveBtn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
-												<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>
-												<span style="margin-right: 20px">
-													<button type="submit" id="btnSaveDraft" class="btn btn-lg btn-outline btn-primary"
-															@if($data->submission == 1) disabled style="cursor: not-allowed;" @endif>
-													Save as Draft
-												</button>
-												</span>
-												<span class="pull-right" style="padding-right: 20px">
-													<button id="btnSubmitApplication" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;"
-															@if($data->submission == 1) disabled @endif>
-														Submit Application <i class="fa fa-arrow-circle-right"></i>
+											<div class="col-md-12" align="right">
+												<div class="box-footer">
+													<button type="button" class="btn btn-success btn-lg btn-outline view_btn" id="printSaveBtn" data="{{$data->slug}}" data-toggle="modal" data-target="#view_modal" style="margin-right: 20px;"><i class="fa fa-print"></i> Print Application Form</button>
+													<a href="{{asset('/files/applications/Affidavit_of_GMO.pdf')}}" class="btn btn-info btn-lg btn-outline" target="_blank"  style="margin-right: 20px;"><i class="fa fa-print"></i> Print Affidavit Form</a>
+													<span style="margin-right: 20px">
+														<button type="submit" id="btnSaveDraft" class="btn btn-lg btn-outline btn-primary"
+																@if($data->submission == 1) disabled style="cursor: not-allowed;" @endif>
+														Save as Draft
 													</button>
-												</span>
+													</span>
+													<span class="pull-right" style="padding-right: 20px">
+														<button id="btnSubmitApplication" type="submit" class="btn btn-lg btn-outline btn-danger" style="margin-right: 20px;"
+																@if($data->submission == 1) disabled @endif>
+															Submit Application <i class="fa fa-arrow-circle-right"></i>
+														</button>
+													</span>
 
+												</div>
 											</div>
-										</div>
 
+										</div>
 									</div>
-								</div>
+									</form>
 							</div>
 						</div>
 
@@ -308,11 +303,10 @@
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 				</div>
-			</form>
+{{--			</form>--}}
+
 		</div>
 
 	</section>

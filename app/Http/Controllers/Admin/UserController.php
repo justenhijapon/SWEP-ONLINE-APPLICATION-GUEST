@@ -15,7 +15,6 @@ use Validator;
 class UserController extends Controller
 {
     protected $user_service;
-//    protected $user_service;
 
     public function __construct(UserService $user_service)
     {
@@ -52,17 +51,6 @@ class UserController extends Controller
                         </div>';
                 })
 
-//                <button type="button" class="btn btn-sm btn-danger delete_user_btn"
-//                                data-slug="' . $data->slug . '"
-//                                data-toggle="tooltip" title="Delete" data-placement="top">
-//                                <i class="fa fa-trash"></i>
-//                            </button>
-
-                //                          <button type="button" onclick="delete_data('.$slug.','.$destroy_route.')" data="'.$data->slug.'" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete">
-//                                    <i class="fa fa-trash"></i>
-//                            </button>
-
-
                 ->editColumn('is_active', function ($data) {
                     return $data->is_active == 1
                         ? '<center><span class="bg-green badge"><i class="fa fa-check"></i></span></center>'
@@ -79,6 +67,18 @@ class UserController extends Controller
                 ->editColumn('full_name', function ($data) {
                     return $data->last_name . ', ' . $data->first_name;
                 })
+
+                ->editColumn('business_name', function($data) {
+                    $full_address = $data->business_street . ', ' . $data->business_barangay . ', ' . $data->business_city;
+                    return '<p style="" class="no-margin">'.$data->business_name.'</p>
+                    <p style="font-size: smaller" class="no-margin">'.$full_address.'</p>';
+                })
+
+                ->editColumn('email', function($data) {
+                    return '<p style="color: #15c;" class="no-margin"><u>'.$data->email.'</u> </p>
+                            <p style="" class="no-margin">'.$data->phone.' </p>';
+                })
+
                 ->editColumn('last_activity', function ($data) {
                     if ($data->is_online) {
                         return '<span class="badge label-success">ONLINE</span>';
@@ -89,8 +89,8 @@ class UserController extends Controller
                         return '<span class="badge label-default">Active <br> <strong>' . $lastActivity . '</strong></span>';
                     }
                 })
-                ->rawColumns(['is_online', 'is_active', 'is_verified', 'icon', 'action']) // Enable HTML rendering
-                ->escapeColumns([]) // Don't escape special characters
+                ->rawColumns(['is_online', 'is_active', 'is_verified', 'icon', 'action'])
+                ->escapeColumns([])
                 ->setRowId('slug')
                 ->make(true);
         }

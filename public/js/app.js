@@ -222,25 +222,12 @@ function put_errors(target_form, response){
     });
 
     $.each(response.responseJSON.errors, function(i, item){
-        target = $('#'+target_form.attr('id')+" #fg-"+i);
+        target = $('#'+target_form.attr('id')+" ."+i);
         target.addClass('has-error');
-        target.append('<span class="help-block" style="margin-bottom:0px">'+item+'</span>');
+        target.append('<span class="help-block" style="margin-bottom:0px; color: red">'+item+'</span>');
     });
 
-     $.notify(
-        {
-            message: 'Please fill out the required fields.',
 
-        },
-        {   
-            type: 'warning',
-            z_index: 30000,
-            animate: {
-                enter: 'animate__animated animate__jackInTheBox',
-                exit: 'animated fadeOutUp'
-            },
-        }
-    );
 }
 
 function remove_errors(target_form){
@@ -267,7 +254,7 @@ function errored(target_form,response){
     }
     if(response.status == 500){
         console.log(response);
-        notify_custom(response.status+' | '+response.statusText+": "+response.responseJSON.message,'error')
+        notify_custom(response.status+' | '+response.statusText+": "+response.responseJSON.message,'error');
     }
     if(response.status == 404){
         console.log(response);

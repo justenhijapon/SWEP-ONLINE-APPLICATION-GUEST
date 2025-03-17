@@ -160,29 +160,6 @@
 
         })
 
-        {{--$("body").on("click",".approved", function () {--}}
-        {{--    tr_id = $(this).attr('data');--}}
-        {{--    uri  = "{{route('admin.preRegistration.approved', 'id')}}";--}}
-        {{--    uri = uri.replace('id',tr_id);--}}
-        {{--    $.ajax({--}}
-        {{--        url : uri,--}}
-        {{--        type: 'POST',--}}
-        {{--        headers: {--}}
-        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--        },--}}
-        {{--        success: function(response){--}}
-        {{--            swal({--}}
-        {{--                title: "Success!",--}}
-        {{--                text: "Successfully Approved.",--}}
-        {{--                type: "success"--}}
-        {{--            });--}}
-        {{--            preRegistrationTbl.draw(false);--}}
-        {{--        },--}}
-        {{--        error: function(response){--}}
-        {{--            console.log(res);--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--})--}}
 
         $("body").on("click", ".approved", function () {
             tr_id = $(this).attr('data');
@@ -215,7 +192,6 @@
         });
 
 
-
         $("body").on("click",".delete_btn", function(){
             btn = $(this);
             slug = btn.attr('data');
@@ -234,7 +210,6 @@
                     delete_item(uri,btn,preRegistrationTbl);
                 });
         })
-
 
     });
 </script>
