@@ -157,7 +157,7 @@
                                    ]) !!}
 
 									{!! \App\Core\Helpers\__form2::textbox('phone', [
-                                       'label'=>'Phone Number:*',
+                                       'label'=>'Contact Number:*',
                                        'cols'=>'4',
                                        'placeholder' => '',
                                    ]) !!}
@@ -224,7 +224,7 @@
 												<div class="row">
 													<div class="col-md-12 form-group">
 														<label>
-															I fully understand that I as Data Subject signifying my full consent to the disclosure, collection, use, and process of my personal information to the Sugar Regulatory Administration. My consent serves as a waiver of any privacy rights pertaining to the disclosure, collection, use and process of my personal information under the terms and condition of SRA Online Import Clearance Application and in accordance with the Republic Act No. 10173 or the Data Privacy Act of 2012 and its Implementing Rules and Regulations.
+															I fully understand that I as ("Data Subject") signifying my full consent to the disclosure, collection, use, and process of my personal information to the Sugar Regulatory Administration. My consent serves as a waiver of any privacy rights pertaining to the disclosure, collection, use and process of my personal information under the terms and condition of SRA Online Import Clearance Application and in accordance with the Republic Act No. 10173 or the Data Privacy Act of 2012 and its Implementing Rules and Regulations.
 														</label>
 													</div>
 													<div class="col-md-6 form-group">
