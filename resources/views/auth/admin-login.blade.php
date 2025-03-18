@@ -41,7 +41,7 @@
 
 	<div class="login-box">
 	  <div class="login-logo">
-	    <span style="font-size: 35px;">SWEP-ONLINE APPLICATION ADMIN LOGIN FORM</span>
+	    <span style="font-size: 35px;">SRA-ONLINE APPLICATION ADMIN LOGIN FORM</span>
 	  </div>
 
 		@if(Session::has('AUTH_AUTHENTICATED'))
@@ -76,10 +76,40 @@
 			{!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('LOGOUT_SUCCESS')) !!}
 		@endif
 
+{{--		@if ($errors->has('login'))--}}
+{{--			<div class="alert alert-danger">--}}
+{{--				<i class="icon fa fa-ban"></i> Oops! {{ $errors->first('login') }}--}}
+{{--			</div>--}}
+{{--		@endif--}}
+
 		@if ($errors->has('login'))
-			<div class="alert alert-danger">
-				<i class="icon fa fa-ban"></i> Oops! {{ $errors->first('login') }}
+			<div id="login-error" class="alert alert-danger">
+				{{ $errors->first('login') }}
+				<span id="countdown"></span>
 			</div>
+
+			@if (strpos($errors->first('login'), 'Try again in') !== false)
+				@php
+					preg_match('/(\d+) seconds/', $errors->first('login'), $matches);
+                    $remainingTime = isset($matches[1]) ? (int) $matches[1] : 60;
+				@endphp
+				<script>
+					let countdown = {{ $remainingTime }};
+					const countdownElement = document.getElementById('countdown');
+
+					function updateCountdown() {
+						if (countdown > 0) {
+							countdownElement.innerText = ` (${countdown} seconds remaining)`;
+							countdown--;
+							setTimeout(updateCountdown, 1000);
+						} else {
+							location.reload(); // Refresh page after timeout
+						}
+					}
+
+					updateCountdown();
+				</script>
+			@endif
 		@endif
 
 		<div class="login-box-body">
@@ -91,20 +121,26 @@
 
 			  	<div class="form-group {{ $errors->has('username') ? ' has-error' : '' }} has-feedback">
 			    	<input class="form-control is-invalid" name="username" id="username" placeholder="Username" type="text" value="{{ __sanitize::html_attribute_encode(old('username')) }}">
-			    	<span class="glyphicon glyphicon-envelope form-control-feedback"></span>		
+			    	<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					@if ($errors->has('username'))
 						<span class="help-block"> {{ $errors->first('username') }} </span>
 					@endif
 			  	</div>
 
-
-			  	<div class="form-group {{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
-			    	<input class="form-control" name="password" placeholder="Password" type="password">
-			    	<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				<div class="form-group {{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
+					<div class="input-group">
+						<input type="password" id="passwordID" name="password" class="form-control" placeholder="Enter password">
+							<span class="input-group-addon" style="padding: 0">
+								<button type="button" class="btn btn-light" style=" border: none; background: transparent;"
+										onclick="togglePassword()" aria-label="Toggle password visibility">
+									<i id="toggleIcon" class="fa fa-eye"></i>
+								</button>
+							</span>
+					</div>
 					@if ($errors->has('password'))
 						<span class="help-block">{{ $errors->first('password') }}</span>
 					@endif
-			  	</div>
+				</div>
 
 			    <div class="social-auth-links text-center">
 			      <button type="submit" class="btn btn-block btn-flat btn-success">LOGIN</button>
@@ -120,6 +156,22 @@
 
 	<script src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<script src="{{ asset('template/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+
+	<script>
+		function togglePassword() {
+			var passwordInput = document.getElementById("passwordID");
+			var toggleIcon = document.getElementById("toggleIcon");
+
+			if (passwordInput.type === "password") {
+				passwordInput.type = "text";
+				toggleIcon.classList.replace("fa-eye", "fa-eye-slash");
+			} else {
+				passwordInput.type = "password";
+				toggleIcon.classList.replace("fa-eye-slash", "fa-eye");
+			}
+		}
+	</script>
 
 </body>
 </html>

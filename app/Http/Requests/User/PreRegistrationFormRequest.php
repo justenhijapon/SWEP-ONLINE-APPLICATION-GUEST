@@ -37,6 +37,7 @@ class PreRegistrationFormRequest extends FormRequest{
             'business_street'=>'required|string|max:120',
             'business_barangay'=>'required|string|max:45',
             'business_city'=>'required|string|max:45',
+            'consent'=>'required',
         ];
 
 

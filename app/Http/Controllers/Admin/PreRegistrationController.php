@@ -110,6 +110,7 @@ class PreRegistrationController extends Controller
         $preReg->business_city = $request->business_city;
         $preReg->status = 'FOR APPROVAL';
         $preReg->is_verified = false;
+        $preReg->consent = $request->consent;
         $preReg->created_at = Carbon::now();
         $preReg->updated_at = Carbon::now();
         $preReg->save();
@@ -125,6 +126,7 @@ class PreRegistrationController extends Controller
         $appData->tin = $request->business_tin;
         $appData->address = $full_address;
         $appData->email = $request->email;
+        $appData->consent = $request->consent;
         $appData-> ip_created = $ipAddress;
 
         $appData->save();

@@ -22,16 +22,17 @@
 		{{--	background: url('{{asset('template/inspinia/img/landing/header_one_1_logo.png')}}') 50% 0 no-repeat;--}}
 		{{--}--}}
 		.landing-page .header-back.one {
-			background: url('{{asset('images/Banner/OnlineApplication-Banner.gif')}}') 50% 0 no-repeat;
+			background: url('{{asset('images/Banner/OnAp-Banner.gif')}}') 50% 0 no-repeat;
 		}
 		.landing-page .header-back.two {
-			background: url('{{asset('images/Banner/OnlineApplication-Banner.gif')}}') 50% 0 no-repeat;
+			background: url('{{asset('images/Banner/OnAp-Banner.gif')}}') 50% 0 no-repeat;
 		}
 
 		{{--.landing-page .header-back.two {--}}
 		{{--	background: url('{{asset('images/Banner/OnlineApplication-Banner.png')}}') 50% 0 no-repeat;--}}
 		{{--}--}}
 	</style>
+{{--	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>--}}
 </head>
 <body id="home" class="landing-page no-skin-config">
 <div class="navbar-wrapper">
@@ -160,12 +161,7 @@
                                        'cols'=>'4',
                                        'placeholder' => '',
                                    ]) !!}
-{{--										{!! __form::a_textbox( 4,'Last Name','lastName', 'text', 'Last Name','', '')!!}--}}
-{{--										{!! __form::a_textbox( 4,'First Name','firstName', 'text', 'First Name','', '')!!}--}}
-{{--										{!! __form::a_textbox( 4,'Middle Name','middleName', 'text', 'Middle Name','', '')!!}--}}
-{{--										{!! __form::a_select(4, 'Gender', 'gender', ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'], '', '') !!}--}}
-{{--										{!! __form::a_textbox( 4,'Birthday','birthday', 'date', 'Birthday','', '')!!}--}}
-{{--										{!! __form::a_textbox( 4,'Phone Number','phoneNumber', 'text', 'Phone Number','', '')!!}--}}
+
 									<div class="col-sm-12 m-t-lg">
 										<div class="panel panel-primary">
 											<div class="panel-heading">
@@ -177,24 +173,24 @@
 													{!! \App\Core\Helpers\__form2::textbox('street', [
 													   'label'=>'Street No./Lot No./Subd./Bldg.:*',
 													   'cols'=>'4',
+													   'class'=>'text-uppercase',
 													   'placeholder' => '',
 												   ]) !!}
 
 													{!! \App\Core\Helpers\__form2::textbox('barangay', [
 													   'label'=>'Barangay:*',
 													   'cols'=>'4',
+													   'class'=>'text-uppercase',
 													   'placeholder' => '',
 												   ]) !!}
 
 													{!! \App\Core\Helpers\__form2::textbox('city', [
 													   'label'=>'Municipality/City:*',
 													   'cols'=>'4',
+													   'class'=>'text-uppercase',
 													   'placeholder' => '',
 												   ]) !!}
 
-{{--													{!! __form::a_textbox( 4,'Street No./Lot No./Subd./Bldg.','street', 'text', 'Street','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'Barangay','barangay', 'text', 'Barangay','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'Municipality/City','city', 'text', 'Municipality/City','', '')!!}--}}
 												</div>
 											</div>
 										</div>
@@ -207,21 +203,41 @@
 											<div class="panel-body">
 												<div class="row">
 
-													{!! \App\Core\Helpers\__form2::textbox('business_name', ['label'=>'Business Name:*', 'cols'=>'12', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_name', ['label'=>'Business Name:*', 'cols'=>'12', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
 													{!! \App\Core\Helpers\__form2::textbox('business_tin', ['label'=>'TIN:*', 'cols'=>'4', 'placeholder' => '',]) !!}
 													{!! \App\Core\Helpers\__form2::textbox('business_phone', ['label'=>'Business Contact:*', 'cols'=>'4', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('position', ['label'=>'Position:*', 'cols'=>'4', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('business_street', ['label'=>'Street No./Lot No./Subd./Bldg.:*', 'cols'=>'4', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('business_barangay', ['label'=>'Barangay:*', 'cols'=>'4', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('business_city', ['label'=>'Municipality/City:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('position', ['label'=>'Position:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_street', ['label'=>'Street No./Lot No./Subd./Bldg.:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_barangay', ['label'=>'Barangay:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_city', ['label'=>'Municipality/City:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
 
-{{--													{!! __form::a_textbox( 12,'Business Name','businessName', 'text', 'Business Name','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'TIN','businessTin', 'text', 'TIN','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'Business Contact','businessPhone', 'text', 'Business Contact','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'Position','position', 'text', 'Position','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'Street No./Lot No./Subd./Bldg.','businessStreet', 'text', 'Street','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'Barangay','businessBarangay', 'text', 'Barangay','', '')!!}--}}
-{{--													{!! __form::a_textbox( 4,'Municipality/City','businessCity', 'text', 'Municipality/City','', '')!!}--}}
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-12 m-t-lg">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												Declaration of Consent
+											</div>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-12 form-group">
+														<label>
+															I fully understand that I as Data Subject signifying my full consent to the disclosure, collection, use, and process of my personal information to the Sugar Regulatory Administration. My consent serves as a waiver of any privacy rights pertaining to the disclosure, collection, use and process of my personal information under the terms and condition of SRA Online Import Clearance Application and in accordance with the Republic Act No. 10173 or the Data Privacy Act of 2012 and its Implementing Rules and Regulations.
+														</label>
+													</div>
+													<div class="col-md-6 form-group">
+														<label>
+{{--															<input type="hidden" name="consent" value="0">--}}
+															<input type="checkbox" id="consentCheckbox" name="consent" value="1" {{ old('consent') == 1 ? 'checked' : '' }} required>
+															I agree to declaration of consent
+														</label>
+
+													</div>
+													@if ($errors->has('consent'))
+														<span class="text-danger">{{ $errors->first('consent') }}</span>
+													@endif
 												</div>
 											</div>
 										</div>
@@ -233,7 +249,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">
-						<i class="fa fa-check"></i> Save
+						<i class="fa fa-check"></i> Submit
 					</button>
 				</div>
 			</div>
@@ -264,14 +280,17 @@
 								<label>Password</label>
 								<div class="input-group">
 									<input type="password" id="passwordID" name="password" class="form-control" placeholder="Password">
-									<button type="button" class="btn btn-outline-secondary" onclick="togglePasswordID()">
-										<i id="toggleIcon" class="fa fa-eye"></i>
-									</button>
+										<span class="input-group-addon" style="padding: 0">
+											<button type="button" class="btn btn-light" onclick="togglePasswordID()"  style=" border: none; background: transparent;">
+												<i id="toggleIcon" class="fa fa-eye"></i>
+											</button>
+										</span>
 								</div>
 								@if ($errors->has('password'))
 									<label class="error text-danger">{{$errors->first('password')}}</label>
 								@endif
 							</div>
+
 							<div class="col-sm-12 no-padding" style="overflow:auto;">
 								<button class="btn btn-sm btn-primary pull-right m-t-sm">
 									<strong>Log in</strong>
@@ -301,10 +320,11 @@
 	<div class="carousel-inner" role="listbox">
 		<div class="carousel-item active">
 			<div class="container">
-{{--				<div class="carousel-caption blank">--}}
-{{--					<h1>S R A<br/> Online Application</h1>--}}
-{{--					<p>Specifically designed for Regulatory Transactions.</p>--}}
-{{--				</div>--}}
+				<div class="col-md-12 carousel-caption blank" style="padding-top: 0 !important;">
+					<h3 style="text-align: center; font-family: sans-serif, Arial, Verdana; font-size: 48px; color: #195201; font-weight: bolder">SUGAR REGULATORY ADMINISTRATION</h3>
+					<h2 style="text-align: center; font-size: 42px; color: #195201; font-weight: normal">ONLINE APPLICATION</h2>
+					<h2 style="text-align: center; font-size: 42px; color: #195201; font-weight: normal">(CLEARANCE FOR IMPORTED COMMODITIES)</h2>
+				</div>
 			</div>
 			<!-- Set background for slide in css -->
 			<div class="header-back two"></div>
@@ -366,7 +386,8 @@
 	</div>
 </section>
 
-<section id="contact" class="gray-section contact">
+{{--<section id="contact" class="gray-section contact">--}}
+<section id="contact" class="gray-section">
 	<div class="container">
 		<div class="row m-b-lg">
 			<div class="col-lg-12 text-center">
@@ -470,6 +491,17 @@
 <script src="{{ asset('template/inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
+{{--<script>--}}
+{{--	var check = 1; // Example variable--}}
+{{--	let checkbox = document.getElementById("consentCheckbox");--}}
+
+{{--	if (check === 1) {--}}
+{{--		checkbox.checked = true;--}}
+{{--		checkbox.value = "1"; // Set value dynamically--}}
+{{--	}else {--}}
+{{--		checkbox.value = "0"; // Optional, but ensures correct value when unchecked--}}
+{{--	}--}}
+{{--</script>--}}
 <script>
 	document.getElementById("openRegisterModal").addEventListener("click", function(event) {
 		event.preventDefault(); // Prevent the default anchor behavior
@@ -548,8 +580,8 @@
 			success: function(response){
 				$("#pre_registration_form").trigger("reset");
 				swal({
-					title: "Success!",
-					text: "Successfully Registered.",
+					title: "Submission Success!",
+					text: "Please be advised that we have received your account registration hence, it needs approval by the Authorized Regulation Officer.  Please be patient.",
 					type: "success"
 				});
 			},

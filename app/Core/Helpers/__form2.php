@@ -445,9 +445,11 @@ class __form2
             <input class="form-control ' . $n->class . '" ' . $id . ' ' . $tab_index . ' name="' . $name . $ext . '" 
                 type="password" value="' . $value . '" placeholder="' . $n->placeholder . '" ' . $n->extra_attr . ' 
                 autocomplete="' . $n->autocomplete . '" ' . $r_o . ' ' . $n->required . ' ' . $disabled . '>
-            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword(\'' . $name . '\')">
-                <i id="toggleIcon-' . $name . '" class="fa fa-eye"></i>
-            </button>
+                <span class="input-group-addon" style="padding: 0">
+                    <button type="button" class="btn btn-light" onclick="togglePassword(\'' . $name . '\')">
+                        <i id="toggleIcon-' . $name . '" class="fa fa-eye"></i>
+                    </button>
+                </span>
         </div>';
 
         if ($input_only) {

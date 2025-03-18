@@ -155,107 +155,107 @@
         </section>
 @endsection
 @section('scripts')
-    <script>
-        {{--var paidPercent = ({{$opPaid->count()}} / {{$op->count()}}) * 100;--}}
-        {{--var unpaidPercent = ({{$opUnpaid->count()}} / {{$op->count()}}) * 100;--}}
-        var receivedApplication = ({{$receivedApplication->count()}});
-        var draftApplicant = ({{$draftApplicant->count()}});
-        var revokedApplication = ({{$revokedApplication->count()}});
-        $(function () {
+{{--    <script>--}}
+{{--        --}}{{--var paidPercent = ({{$opPaid->count()}} / {{$op->count()}}) * 100;--}}
+{{--        --}}{{--var unpaidPercent = ({{$opUnpaid->count()}} / {{$op->count()}}) * 100;--}}
+{{--        var receivedApplication = ({{$receivedApplication->count()}});--}}
+{{--        var draftApplicant = ({{$draftApplicant->count()}});--}}
+{{--        var revokedApplication = ({{$revokedApplication->count()}});--}}
+{{--        $(function () {--}}
 
-    //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieChart       = new Chart(pieChartCanvas)
-    var PieData        = [
-      // {
-      //   value    : Math.round((paidPercent + Number.EPSILON) * 100) / 100,
-      //   color    : '#00a65a',
-      //   highlight: '#00a65a',
-      //   label    : 'PAID'
-      // },
-      // {
-      //   value    : Math.round((unpaidPercent + Number.EPSILON) * 100) / 100,
-      //   color    : '#f39c12',
-      //   highlight: '#f39c12',
-      //   label    : 'UNPAID'
-      // }
+{{--    //---------------}}
+{{--    //- PIE CHART ---}}
+{{--    //---------------}}
+{{--    // Get context with jQuery - using jQuery's .get() method.--}}
+{{--    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')--}}
+{{--    var pieChart       = new Chart(pieChartCanvas)--}}
+{{--    var PieData        = [--}}
+{{--      // {--}}
+{{--      //   value    : Math.round((paidPercent + Number.EPSILON) * 100) / 100,--}}
+{{--      //   color    : '#00a65a',--}}
+{{--      //   highlight: '#00a65a',--}}
+{{--      //   label    : 'PAID'--}}
+{{--      // },--}}
+{{--      // {--}}
+{{--      //   value    : Math.round((unpaidPercent + Number.EPSILON) * 100) / 100,--}}
+{{--      //   color    : '#f39c12',--}}
+{{--      //   highlight: '#f39c12',--}}
+{{--      //   label    : 'UNPAID'--}}
+{{--      // }--}}
 
-        {
-            value    : Math.round((receivedApplication + Number.EPSILON) * 100) / 100,
-            color    : '#00FFFF',
-            highlight: '#00FFFF',
-            label    : 'Complete Application'
-        },
+{{--        {--}}
+{{--            value    : Math.round((receivedApplication + Number.EPSILON) * 100) / 100,--}}
+{{--            color    : '#00FFFF',--}}
+{{--            highlight: '#00FFFF',--}}
+{{--            label    : 'Complete Application'--}}
+{{--        },--}}
 
-        {
-            value    : Math.round((draftApplicant + Number.EPSILON) * 100) / 100,
-            color    : '#00a65a',
-            highlight: '#00a65a',
-            label    : 'Draft Application'
-        },
+{{--        {--}}
+{{--            value    : Math.round((draftApplicant + Number.EPSILON) * 100) / 100,--}}
+{{--            color    : '#00a65a',--}}
+{{--            highlight: '#00a65a',--}}
+{{--            label    : 'Draft Application'--}}
+{{--        },--}}
 
-        {
-            value    : Math.round((revokedApplication + Number.EPSILON) * 100) / 100,
-            color    : '#f39c12',
-            highlight: '#f39c12',
-            label    : 'Revoked Application'
-        }
-    ]
-    var pieOptions     = {
-      //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke    : true,
-      //String - The colour of each segment stroke
-      segmentStrokeColor   : '#fff',
-      //Number - The width of each segment stroke
-      segmentStrokeWidth   : 2,
-      //Number - The percentage of the chart that we cut out of the middle
-      percentageInnerCutout: 50, // This is 0 for Pie charts
-      //Number - Amount of animation steps
-      animationSteps       : 100,
-      //String - Animation easing effect
-      animationEasing      : 'easeOutBounce',
-      //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate        : true,
-      //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale         : false,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive           : true,
-      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio  : true,
-      //String - A legend template
-      legendTemplate       : '<ul></ul>'
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions)
+{{--        {--}}
+{{--            value    : Math.round((revokedApplication + Number.EPSILON) * 100) / 100,--}}
+{{--            color    : '#f39c12',--}}
+{{--            highlight: '#f39c12',--}}
+{{--            label    : 'Revoked Application'--}}
+{{--        }--}}
+{{--    ]--}}
+{{--    var pieOptions     = {--}}
+{{--      //Boolean - Whether we should show a stroke on each segment--}}
+{{--      segmentShowStroke    : true,--}}
+{{--      //String - The colour of each segment stroke--}}
+{{--      segmentStrokeColor   : '#fff',--}}
+{{--      //Number - The width of each segment stroke--}}
+{{--      segmentStrokeWidth   : 2,--}}
+{{--      //Number - The percentage of the chart that we cut out of the middle--}}
+{{--      percentageInnerCutout: 50, // This is 0 for Pie charts--}}
+{{--      //Number - Amount of animation steps--}}
+{{--      animationSteps       : 100,--}}
+{{--      //String - Animation easing effect--}}
+{{--      animationEasing      : 'easeOutBounce',--}}
+{{--      //Boolean - Whether we animate the rotation of the Doughnut--}}
+{{--      animateRotate        : true,--}}
+{{--      //Boolean - Whether we animate scaling the Doughnut from the centre--}}
+{{--      animateScale         : false,--}}
+{{--      //Boolean - whether to make the chart responsive to window resizing--}}
+{{--      responsive           : true,--}}
+{{--      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container--}}
+{{--      maintainAspectRatio  : true,--}}
+{{--      //String - A legend template--}}
+{{--      legendTemplate       : '<ul></ul>'--}}
+{{--    }--}}
+{{--    //Create pie or douhnut chart--}}
+{{--    // You can switch between pie and douhnut using the method below.--}}
+{{--    pieChart.Doughnut(PieData, pieOptions)--}}
 
-  })
-        $("body").on('click', '#btnPrint', function() {
-            var printRoute = "{{route('printTransactionReport')}}";
-            var newPrintRoute = printRoute + "?from=" + $("#from").val() + "&to=" + $("#to").val();
-            $("#printIframe").attr('src', newPrintRoute);
-            setTimeout(printIframe, 500);
-        })
+{{--  })--}}
+{{--        $("body").on('click', '#btnPrint', function() {--}}
+{{--            var printRoute = "{{route('printTransactionReport')}}";--}}
+{{--            var newPrintRoute = printRoute + "?from=" + $("#from").val() + "&to=" + $("#to").val();--}}
+{{--            $("#printIframe").attr('src', newPrintRoute);--}}
+{{--            setTimeout(printIframe, 500);--}}
+{{--        })--}}
 
-        $("body").on('click', '#btnPrintDaily', function() {
-            var printRoute = "{{route('printTransactionReportDaily')}}";
-            var newPrintRoute = printRoute + "?daily=" + $("#daily").val();
-            $("#printIframe").attr('src', newPrintRoute);
-            setTimeout(printIframe, 500);
-        })
+{{--        $("body").on('click', '#btnPrintDaily', function() {--}}
+{{--            var printRoute = "{{route('printTransactionReportDaily')}}";--}}
+{{--            var newPrintRoute = printRoute + "?daily=" + $("#daily").val();--}}
+{{--            $("#printIframe").attr('src', newPrintRoute);--}}
+{{--            setTimeout(printIframe, 500);--}}
+{{--        })--}}
 
-        $("body").on('click', '#btnPrintClient', function() {
-            var printRoute = "{{route('printTransactionReportClient')}}";
-            var newPrintRoute = printRoute + "?client=" + $("#client").val();
-            $("#printIframe").attr('src', newPrintRoute);
-            setTimeout(printIframe, 500);
-        })
+{{--        $("body").on('click', '#btnPrintClient', function() {--}}
+{{--            var printRoute = "{{route('printTransactionReportClient')}}";--}}
+{{--            var newPrintRoute = printRoute + "?client=" + $("#client").val();--}}
+{{--            $("#printIframe").attr('src', newPrintRoute);--}}
+{{--            setTimeout(printIframe, 500);--}}
+{{--        })--}}
 
-        function printIframe(){
-            $("#printIframe").get(0).contentWindow.print();
-        }
-</script>
+{{--        function printIframe(){--}}
+{{--            $("#printIframe").get(0).contentWindow.print();--}}
+{{--        }--}}
+{{--</script>--}}
 @endsection

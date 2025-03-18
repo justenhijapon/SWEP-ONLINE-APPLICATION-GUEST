@@ -19,37 +19,39 @@ class HomeController extends Controller
 
     public function index()
     {
-        $draftApplicant = User\ImportedCommodities::where('received', '0')->where('revoked', '0');
-        $receivedApplication = User\ImportedCommodities::where('received', '1');
-        $revokedApplication = User\ImportedCommodities::where('revoked', '1');
-        $totalApplication = User\ImportedCommodities::get();
-        $op = OrderOfPayments::get();
-        $opPaid = OrderOfPayments::where('status', 'PAID')->get();
-        $opUnpaid = OrderOfPayments::where('status', '<>', 'PAID')->get();
+        $applications = User\ImportedCommodities::all();
 
-        $client_db = User::get();
-        $client = [];
-        if(!empty($client_db)){
-            foreach($client_db as $client_db){
-                $client[$client_db->slug] = [
-                    'slug' => $client_db->slug,
-                    'last_name' => $client_db->last_name,
-                    'first_name' => $client_db->first_name,
-                    'middle_name' => $client_db->middle_name,
-                    'business_name' => $client_db->business_name,
-                ];
-            }
-        }
+        $draftApplicant = $applications->where('received', '0')->where('revoked', '0');
+        $receivedApplication = $applications->where('received', '1');
+        $revokedApplication = $applications->where('revoked', '1');
+//        $totalApplication = $applications->get();
+//        $op = OrderOfPayments::get();
+//        $opPaid = OrderOfPayments::where('status', 'PAID')->get();
+//        $opUnpaid = OrderOfPayments::where('status', '<>', 'PAID')->get();
+
+//        $client_db = User::get();
+//        $client = [];
+//        if(!empty($client_db)){
+//            foreach($client_db as $client_db){
+//                $client[$client_db->slug] = [
+//                    'slug' => $client_db->slug,
+//                    'last_name' => $client_db->last_name,
+//                    'first_name' => $client_db->first_name,
+//                    'middle_name' => $client_db->middle_name,
+//                    'business_name' => $client_db->business_name,
+//                ];
+//            }
+//        }
 
         return view('admin.home.index')->with([
-                'op' => $op,
-                'opPaid' => $opPaid,
-                'opUnpaid' => $opUnpaid,
-                'client' => $client,
+//                'op' => $op,
+//                'opPaid' => $opPaid,
+//                'opUnpaid' => $opUnpaid,
+//                'client' => $client,
                 'draftApplicant' => $draftApplicant,
                 'receivedApplication' => $receivedApplication,
                 'revokedApplication' => $revokedApplication,
-                'totalApplication' => $totalApplication,
+                'totalApplication' => $applications,
                 ]);
     }
 
