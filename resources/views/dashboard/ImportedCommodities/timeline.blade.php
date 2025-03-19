@@ -93,8 +93,8 @@
                         </small>
                     </div>
                     <div class="col-7 content">
-                        <p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Approve' : $data->received }}</strong></p>
-                        <small>Your application has been received. To proceed, please visit our office and settle the payment at your earliest convenience.</small>
+                        <p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Approved' : $data->received }}</strong></p>
+                        <small>Your application has been validated and approved.  Print the attached Order of Payment (download) and settle the payment immediately at SRA Main Office, North Avenue, Diliman, Quezon City.</small>
                     </div>
                 </div>
             </div>
