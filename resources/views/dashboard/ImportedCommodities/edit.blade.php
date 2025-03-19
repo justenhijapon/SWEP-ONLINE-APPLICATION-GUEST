@@ -506,8 +506,8 @@
 					success: function (res) {
 						if (isFinalSubmission) {
 							swal({
-								title: "Application successfully submitted!",
-								text: "Thank you for your submission.  Rest assure that we will process your application immediately.",
+								title: "Acknowledged",
+								text: "Rest assured that we will process your application immediately.",
 								type: "success",
 								button: "OK"
 							}, function() {
