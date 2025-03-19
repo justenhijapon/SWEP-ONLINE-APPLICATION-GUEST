@@ -93,7 +93,7 @@
                         </small>
                     </div>
                     <div class="col-7 content">
-                        <p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Received' : $data->received }}</strong></p>
+                        <p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Approve' : $data->received }}</strong></p>
                         <small>Your application has been received. To proceed, please visit our office and settle the payment at your earliest convenience.</small>
                     </div>
                 </div>
@@ -134,16 +134,16 @@
                             </div>
                             <div class="col-7 content">
                                 <p class="m-b-xs">
-                                    <strong class="badge label-{{ $event['type'] == 'Revoked' ? 'danger' : ($event['type'] == 'Submitted' ? 'success' : 'warning') }}">
+                                    <strong class="badge label-{{ $event['type'] == 'Take Back' ? 'danger' : ($event['type'] == 'Submitted' ? 'success' : 'warning') }}">
                                         {{ $event['type'] }}
                                     </strong>
                                 </p>
                                 <small>
                                     @if($event['type'] == 'Submitted')
                                         Application submitted successfully.
-                                    @elseif($event['type'] == 'Revoked')
-                                        Your application has been revoked. Please review the remarks below, make the necessary updates, and resubmit your application.<br>
-                                        <strong>Remarks:</strong> <code>{{ $event['data']->remarks ?? 'No remarks provided' }}</code>
+                                    @elseif($event['type'] == 'Take Back')
+{{--                                        Your application has been Take Back. Please review the remarks below, make the necessary updates, and resubmit your application.<br>--}}
+                                        <strong>Remarks:</strong> {{ $event['data']->remarks ?? 'No remarks provided' }}
                                     @else
                                         Your application was resubmitted successfully.
                                     @endif

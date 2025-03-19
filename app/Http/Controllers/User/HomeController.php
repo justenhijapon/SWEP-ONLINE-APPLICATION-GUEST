@@ -41,7 +41,7 @@ class HomeController extends Controller
 
         foreach ($revokedAttempts as $revoked) {
             $timeline[] = [
-                'type' => 'Revoked',
+                'type' => 'Take Back',
                 'data' => $revoked
             ];
         }

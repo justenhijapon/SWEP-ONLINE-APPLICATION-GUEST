@@ -294,7 +294,7 @@
 						<div class="col-md-3">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
-									<h4 align="center">APPLICATION STATUS</h4>
+									<h3 align="center">STATUS OF APPLICATION</h3>
 								</div>
 								<div class="panel-body" style="padding-top: 2px">
 									<div class="row">

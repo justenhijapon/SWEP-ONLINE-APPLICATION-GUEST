@@ -114,7 +114,7 @@
         $(document).on("click", ".revoked_btn", function () {
             var slug = $(this).attr("data"); // Get the slug from the button
 
-            if (confirm("Are you sure you want to revoke this record?")) {
+            if (confirm("Are you sure you want to take back this record?")) {
                 $.ajax({
                     url: "/update-status", // Update with your route
                     type: "POST",
@@ -304,7 +304,7 @@
                 // SweetAlert Confirmation
                 swal({
                     title: "Are you sure?",
-                    text: "Are you sure you want to revoke this application?",
+                    text: "Are you sure you want to take back this application?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",

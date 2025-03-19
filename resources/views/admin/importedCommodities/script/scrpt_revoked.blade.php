@@ -45,7 +45,7 @@
     $(document).on("click", ".revoked_btn", function () {
         var slug = $(this).attr("data"); // Get the slug from the button
 
-        if (confirm("Are you sure you want to revoke this record?")) {
+        if (confirm("Are you sure you want to take back this record?")) {
             $.ajax({
                 url: "/update-status", // Update with your route
                 type: "POST",
@@ -165,7 +165,7 @@ $('body').on('click', '.RevokeButton', function () {
         // Prompt for remarks before confirmation
         swal({
             title: "Are you sure?",
-            text: "Please enter a reason for revoking this application:",
+            text: "Please enter a reason for take back this application:",
             type: "input",  // Use input type
             showCancelButton: true,
             closeOnConfirm: false,
