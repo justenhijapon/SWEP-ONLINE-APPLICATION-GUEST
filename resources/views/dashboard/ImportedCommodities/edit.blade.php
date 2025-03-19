@@ -173,7 +173,7 @@
 											<div class="col-md-12">
 												@php
 													$attachmentFields = [
-														'bill_landing_path' => 'Bill of Landing',
+														'bill_landing_path' => 'Bill of Lading',
 														'commercial_invoice_path' => 'Commercial Invoice',
 														'packing_list_path' => 'Packing List',
 														'cert_origin_path' => 'Certificate of Origin',
@@ -206,7 +206,7 @@
 																$files = [
 																	'application_form_path' => 'Application Form (Notarized)*',
 																	'affidavit_path' => 'Affidavit*',
-																	'bill_landing_path' => 'Bill of Landing*',
+																	'bill_landing_path' => 'Bill of Lading*',
 																	'commercial_invoice_path' => 'Commercial Invoice*',
 																	'packing_list_path' => 'Packing List*',
 																	'cert_origin_path' => 'Certificate of Origin*',
@@ -238,7 +238,7 @@
 																			{{ $label }}
 																		</label>
 																		<div class="input-group input-group-sm">
-																			<input type="file" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}">
+																			<input type="file" class="form-control" name="{{$columnName}}" id="img_url_{{$label}}">
 																			@if($fileExists)
 																				<input type="text" style="width: 20%" class="form-control" name="{{$columnName}}" id="img_url_{{$columnName}}" value="{{ $fileExists ? $fileName : '' }}" readonly>
 																				<button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#filePreviewModal" data-file-url="{{$fileUrl}}">
