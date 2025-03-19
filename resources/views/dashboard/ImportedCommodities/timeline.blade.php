@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="col-7 content">
                                     <p class="m-b-xs"><strong class="badge label-info">Processing</strong></p>
-                                    <small>Your application is being reviewed. Expect a response within 3 working days.</small>
+                                    <small>Your application is being reviewed and processed.</small>
                                 </div>
                             </div>
                         </div>
