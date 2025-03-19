@@ -507,7 +507,7 @@
 						if (isFinalSubmission) {
 							swal({
 								title: "Application successfully submitted!",
-								text: "Thank you for your submission! We will review your application, and you can expect a response within 3 working days.",
+								text: "Thank you for your submission.  Rest assure that we will process your application immediately.",
 								type: "success",
 								button: "OK"
 							}, function() {
