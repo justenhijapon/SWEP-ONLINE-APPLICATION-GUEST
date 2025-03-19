@@ -452,28 +452,28 @@
 </section>
 
 <!--MODAL-->
-<div class="modal inmodal" id="verifyTransactionModal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content animated bounceInRight">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<i class="fa fa-laptop modal-icon"></i>
-				<h4 class="modal-title">ONLINE VERIFICATION</h4>
-				<small class="font-bold">Please provide the transaction id that you want to verify.</small>
-			</div>
-			<div class="modal-body">
-				<form action="{{route('verifyTransaction')}}" method="GET" target="_blank">
-					@csrf
-					<div class="form-group mb-4">
-						<input name="transactionID" id="transactionID" type="text" class="form-control text-center" placeholder="Enter Transaction ID">
-					</div>
+{{--<div class="modal inmodal" id="verifyTransactionModal" tabindex="-1" role="dialog" aria-hidden="true">--}}
+{{--	<div class="modal-dialog">--}}
+{{--		<div class="modal-content animated bounceInRight">--}}
+{{--			<div class="modal-header">--}}
+{{--				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>--}}
+{{--				<i class="fa fa-laptop modal-icon"></i>--}}
+{{--				<h4 class="modal-title">ONLINE VERIFICATION</h4>--}}
+{{--				<small class="font-bold">Please provide the transaction id that you want to verify.</small>--}}
+{{--			</div>--}}
+{{--			<div class="modal-body">--}}
+{{--				<form action="{{route('verifyTransaction')}}" method="GET" target="_blank">--}}
+{{--					@csrf--}}
+{{--					<div class="form-group mb-4">--}}
+{{--						<input name="transactionID" id="transactionID" type="text" class="form-control text-center" placeholder="Enter Transaction ID">--}}
+{{--					</div>--}}
 
-					<button id="searchTransaction" name="searchTransaction" type="submit" class="btn btn-info btn-rounded btn-block btn-outline"><i class="fa fa-search"></i> Search</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+{{--					<button id="searchTransaction" name="searchTransaction" type="submit" class="btn btn-info btn-rounded btn-block btn-outline"><i class="fa fa-search"></i> Search</button>--}}
+{{--				</form>--}}
+{{--			</div>--}}
+{{--		</div>--}}
+{{--	</div>--}}
+{{--</div>--}}
 
 
 

@@ -41,7 +41,7 @@
 
 	<div class="login-box">
 	  <div class="login-logo">
-	    <span style="font-size: 35px;">SRA-ONLINE APPLICATION ADMIN LOGIN FORM</span>
+	    <span style="font-size: 20px;">SRA-ONLINE APPLICATION ADMIN LOGIN FORM</span>
 	  </div>
 
 		@if(Session::has('AUTH_AUTHENTICATED'))

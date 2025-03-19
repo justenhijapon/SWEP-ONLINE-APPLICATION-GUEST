@@ -28,7 +28,7 @@ class AdminLoginController extends Controller
 
         if (\Cache::has($key) && \Cache::get($key) >= 5) {
             $remainingTime = $expiresAt ? max(0, $expiresAt - now()->timestamp) : 60;
-            return back()->withErrors(['login' => "Too many login attempts. Try again in 1 min."]);
+            return back()->withErrors(['login' => "Too many login attempts. Try again in"]);
         }
 
         $credentials = $request->only('username', 'password');
