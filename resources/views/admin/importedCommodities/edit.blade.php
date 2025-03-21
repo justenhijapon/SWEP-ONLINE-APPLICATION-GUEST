@@ -15,7 +15,7 @@
                        id="receivedBtn"
                        class="btn {{ $data->revoked == 1 ? 'btn-danger' : ($data->received == 1 ? 'btn-success' : 'btn-info') }} btn-md"
                    {{ $data->revoked == 1 || $data->received == 1 ? 'disabled' : '' }}>
-                   {{ $data->revoked == 1 ? 'Take Back' : ($data->received == 1 ? 'Approve' : 'Mark as Received') }}
+                   {{ $data->revoked == 1 ? 'Take Back' : ($data->received == 1 ? 'Approved' : 'Mark as Approved') }}
                </button>
 
           </div>

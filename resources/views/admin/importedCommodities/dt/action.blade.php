@@ -29,19 +29,44 @@
 </style>
 
 <div class="btn-group d-flex flex-wrap w-auto">
-    <button type="button" data="{{ $data->slug }}" class="btn btn-info btn-sm edit_btn mr-1 w-auto"
-            data-toggle="modal" data-target="#edit_modal" title="Receive" style="width: 40px; padding: 5px">
-        Receive
-    </button>
-{{--    @if($data->received != 0)--}}
+{{--    <button type="button" data="{{ $data->slug }}" class="btn btn-info btn-sm edit_btn mr-1 w-auto"--}}
+{{--            data-toggle="modal" data-target="#edit_modal" title="Receive" style="width: 40px; padding: 5px">--}}
+{{--        Receive--}}
+{{--    </button>--}}
 
-    <button data="{{ $data->slug }}" id="revokedButton_{{ $data->slug }}"  data-toggle="tooltip" title="Revoke"
-            class="RevokeButton btn btn-sm btn-warning {{ $data->revoked == 1 ? 'btn-danger' : 'btn-success' }} mr-1 w-auto">
-        {{ $data->revoked == 1 ? 'take backed' : 'take back' }}
-    </button>
+{{--    <button data="{{ $data->slug }}" id="revokedButton_{{ $data->slug }}"  data-toggle="tooltip" title="Revoke"--}}
+{{--            class="RevokeButton btn btn-sm btn-warning {{ $data->revoked == 1 ? 'btn-danger' : 'btn-success' }} mr-1 w-auto">--}}
+{{--        {{ $data->revoked == 1 ? 'take backed' : 'take back' }}--}}
+{{--    </button>--}}
 
-{{--    @endif--}}
+    <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-default dropdown-toggle w-auto" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" title="">
+            <span class="caret"></span> Action
+        </button>
 
+        <ul class="dropdown-menu">
+
+            <li>
+                <button type="button" data="{{ $data->slug }}" class="btn btn-warning order_payment_btn mr-1 w-auto"
+                        data-toggle="modal" data-target="#OrderPayment_form" title="">
+                    Order of Payment
+                </button>
+            </li>
+            <li>
+                <button type="button" data="{{ $data->slug }}" class="btn btn-info edit_btn mr-1 w-auto"
+                        data-toggle="modal" data-target="#edit_modal" title="">
+                    Approve
+                </button>
+            </li>
+            <li class="">
+                <button data="{{ $data->slug }}" id="revokedButton_{{ $data->slug }}"  data-toggle="tooltip" title=""
+                        class="RevokeButton btn btn-outline-warning {{ $data->revoked == 1 ? 'btn-danger' : 'btn-success' }} mr-1 w-auto">
+                    {{ $data->revoked == 1 ? 'take backed' : 'take back' }}
+                </button>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <div class="btn-group btn-group-sm">

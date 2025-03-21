@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ApplicationFormRequest;
 use App\Http\Requests\Admin\TransactionTypeRequest;
+use App\Models\Admin\OrderOfPayment;
 use App\Models\User\ICRevoked;
 use App\Models\User\ICSubmitted;
 use App\Models\User\ImportedCommodities;
@@ -13,6 +14,8 @@ use App\Swep\Repositories\Admin\ImportedCommoditiesRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DataTables;
+use Illuminate\Support\Facades\Log;
+
 class ImportedCommoditiesController extends Controller
 {
 
@@ -173,6 +176,63 @@ class ImportedCommoditiesController extends Controller
         return response()->json(['slug' => $app_data->slug]);
     }
 
+    public function orderPayment($slug)
+    {
+        $data = OrderOfPayment::where('slug', $slug)->first();
+
+        if (!$data) {
+            return response()->json(['error' => 'Order of Payment not found'], 404);
+        }
+
+        return view('admin.importedCommodities.orderOfPayment', compact('data'));
+    }
+
+//    public function updateOrderPayment(Request $request, $slug) {
+//        $app_data = OrderOfPayment::where('slug', $slug)->firstOrFail();
+////        $app_data = OrderOfPayment::where('slug', $slug)->first();
+//        $app_data->reference_no = $request->reference_no;
+//        $app_data->fullname = $request->fullname;
+//        $app_data->company = $request->company;
+//        $app_data->amount = $request->amount;
+//        $app_data->amount_in_word = $request->amount_in_word;
+//        $app_data->lkg_bags = $request->lkg_bags;
+//        $app_data->metric_tons = $request->metric_tons;
+//        $app_data->boc_entry_no = $request->boc_entry_no;
+//        $app_data->boc_entry_note = $request->boc_entry_note;
+//        $app_data->certified_correct = $request->certified_correct;
+//        dd($slug);
+//        $app_data->save();
+//        return response()->json(['slug' => $app_data->slug]);
+//    }
+
+
+
+    public function updateOrderPayment(Request $request, $slug) {
+        Log::info('Received Slug:', ['slug' => $slug]);
+
+        $app_data = OrderOfPayment::where('slug', $slug)->first();
+
+        if (!$app_data) {
+            Log::error('OrderOfPayment not found', ['slug' => $slug]);
+            return response()->json(['error' => 'Order not found.'], 404);
+        }
+
+        $app_data->reference_no = $request->reference_no;
+        $app_data->fullname = $request->fullname;
+        $app_data->company = $request->company;
+        $app_data->amount = $request->amount;
+        $app_data->amount_in_word = $request->amount_in_word;
+        $app_data->lkg_bags = $request->lkg_bags;
+        $app_data->metric_tons = $request->metric_tons;
+        $app_data->boc_entry_no = $request->boc_entry_no;
+        $app_data->boc_entry_note = $request->boc_entry_note;
+        $app_data->certified_correct = $request->certified_correct;
+        $app_data->save();
+
+        return response()->json(['slug' => $app_data->slug]);
+    }
+
+
     public function revokedUpdate($slug, Request $request)
     {
         $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
@@ -213,6 +273,13 @@ class ImportedCommoditiesController extends Controller
     {
         $data = ImportedCommodities::where('slug', '=', $slug)->first();
         return view('admin.importedCommodities.show', compact('data'));
+    }
+
+
+    public function orderOfPayment($slug)
+    {
+        $data = ImportedCommodities::where('slug', '=', $slug)->first();
+        return view('admin.importedCommodities.edit', compact('data'));
     }
 
 //    public function destroy($slug) {

@@ -21,6 +21,9 @@ class ImportedCommodities extends Model
     public function revokedCount(){
         return $this->belongsTo('App\Models\User\ICRevoked','slug','slug');
     }
+    public function orderOfPayment(){
+        return $this->belongsTo('App\Models\Admin\OrderOfPayment','slug','slug');
+    }
 //
 //    public function user(){
 //        return $this->belongsTo('App\Models\User','user_created','slug');

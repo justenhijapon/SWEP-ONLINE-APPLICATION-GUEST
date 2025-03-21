@@ -28,7 +28,7 @@
 @if($data->received != 0)
     <hr style="margin: 0; padding: 0;">
         <p style="font-size: small" class="no-margin badge label-success"> <i class="fa fa-check-circle"></i>
-            {{ $data->received == 1 ? 'Approve' : $data->received }}
+            {{ $data->received == 1 ? 'Approved' : $data->received }}
         </p>
         <small class="no-margin text-muted">
             {{ str_replace([' minutes', ' minute'], [' mins.', ' min.'], \Carbon\Carbon::parse($data->received_date)->diffForHumans()) }}

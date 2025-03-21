@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\PreRegistrationFormRequest;
+use App\Models\Admin\OrderOfPayment;
 use App\Models\User;
 use App\Models\User\PreRegistrationModel;
 use App\Swep\Repositories\Admin\PreRegistrationRepository;
@@ -13,6 +14,8 @@ use Carbon\Carbon;
 use DataTables;
 use Illuminate\Http\Request;
 use Hash;
+use Illuminate\Support\Str;
+use phpseclib3\Crypt\Random;
 use Validator;
 
 class PreRegistrationController extends Controller
@@ -128,8 +131,17 @@ class PreRegistrationController extends Controller
         $appData->email = $request->email;
         $appData->consent = $request->consent;
         $appData-> ip_created = $ipAddress;
-
         $appData->save();
+
+        $OP = new OrderOfPayment();
+        $OP->slug = $appData->slug;
+//        $OP->slug = Str::random(15);
+        $OP->fullname = $fullname;
+        $OP->position = $request->business_name;
+        $OP->company = $request->position;
+        $OP->tin = $appData->tin;
+//        dd($OP);
+        $OP->save();
 
 
     }

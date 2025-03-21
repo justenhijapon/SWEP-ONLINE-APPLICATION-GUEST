@@ -47,6 +47,7 @@
 
 @section('modals')
     {!! __html::blank_modal('edit_modal', '', 'style="width: 45%"') !!}
+    {!! __html::blank_modal('OrderPayment_form', '', 'style="width: 45%"') !!}
     {!! __html::blank_modal('showApplicationFile_modal', '', 'style="width: 60%"') !!}
 
     <div id="filePreviewModal" class="modal fade" tabindex="-1" role="dialog">
@@ -227,6 +228,8 @@
                 })
             })
 
+
+
             @if(\Illuminate\Support\Facades\Request::has('success_message'))
                 notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');
                 window.history.pushState({},document.title,'/admin/importedCommodities')
@@ -271,6 +274,67 @@
                 });
             });
 
+            $("body").on("click",".order_payment_btn", function(){
+                btn = $(this);
+                slug = btn.attr('data');
+                uri = "{{route('admin.importedCommodities.orderOfPayment','slug')}}";
+                uri = uri.replace('slug',slug);
+                loading_modal(btn);
+                $.ajax({
+                    url : uri,
+                    type: 'GET',
+                    success:function(response){
+                        populate_modal(btn,response);
+                    },
+                    error: function(response){
+                        errored_modal(btn,response);
+                    }
+                })
+            })
+
+
+        $("body").on('submit', "#OrderPayment_form", function (e) {
+                e.preventDefault(); // Prevent default form submission
+                var form = $(this);
+                var formdata = form.serialize();
+                var slug = form.attr('data');
+                var uri = "{{ route('admin.importedCommodities.updateOrderPayment', 'slug') }}";
+                uri = uri.replace('slug', slug);
+
+                // Proceed with the AJAX request directly
+                // loading_btn(form);
+                $.ajax({
+                    url: uri,
+                    data: formdata,
+                    type: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+
+
+                    success: function (res) {
+                        setTimeout(function () {
+                            window.location.href = "/admin/importedCommodities?success_message=Data successfully save!";
+                        });
+                    },
+
+                    // success: function (res) {
+                    //     succeed(form, false, true);
+                    //     applicationTbl.ajax.reload(null, false); // Reload DataTable without resetting pagination
+                    //
+                    //     // Update the URL dynamically without reloading the page
+                    //     var newUrl = "/admin/importedCommodities?success_message=Data successfully save!";
+                    //     window.history.pushState({ path: newUrl }, '', newUrl);
+                    //
+                    //     // Display success notification
+                    //     notify('Data successfully save!', 'success');
+                    // },
+                    error: function (response) {
+                        errored(form, response);
+                        // console.log(response);
+                    }
+                });
+            });
 
         });
     </script>
