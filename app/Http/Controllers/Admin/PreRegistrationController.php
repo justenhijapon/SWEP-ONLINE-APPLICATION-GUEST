@@ -88,7 +88,7 @@ class PreRegistrationController extends Controller
 
     public function storePreRegistration(PreRegistrationFormRequest $request)
     {
-        $appData = new User\ImportedCommodities();
+
         $preReg = new PreRegistrationModel();
         $ipAddress = $request->ip();
         $preReg->slug = $this->new_slug();
@@ -118,6 +118,7 @@ class PreRegistrationController extends Controller
         $preReg->updated_at = Carbon::now();
         $preReg->save();
 
+        $appData = new User\ImportedCommodities();
         $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
         $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
         $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
@@ -135,12 +136,11 @@ class PreRegistrationController extends Controller
 
         $OP = new OrderOfPayment();
         $OP->slug = $appData->slug;
-//        $OP->slug = Str::random(15);
         $OP->fullname = $fullname;
         $OP->position = $request->business_name;
         $OP->company = $request->position;
         $OP->tin = $appData->tin;
-//        dd($OP);
+
         $OP->save();
 
 

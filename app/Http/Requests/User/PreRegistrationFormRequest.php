@@ -17,7 +17,6 @@ class PreRegistrationFormRequest extends FormRequest{
 
             'password'=>'required|string|min:6|max:45|same:password_confirmation',
             'password_confirmation'=>'required|string|min:6|max:45|same:password',
-
             'last_name'=>'required|string|max:45',
             'first_name'=>'required|string|max:45',
             'middle_name'=>'required|string|max:45',
@@ -28,8 +27,6 @@ class PreRegistrationFormRequest extends FormRequest{
             'street' => 'required|string|max:120',
             'barangay' => 'required|string|max:45',
             'city'=>'required|string|max:45',
-//            'region'=>'required|string|max:45',
-//            'province'=>'required|string|max:45',
             'business_name'=>'required|string|max:120',
             'business_tin'=>'required|regex:/^[\d\s\+\-()]+$/',
             'business_phone'=>'required|regex:/^[\d\s\+\-()]+$/',

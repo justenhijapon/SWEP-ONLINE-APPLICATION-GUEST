@@ -13,18 +13,21 @@ class OrderOfPayment extends Model
 
     protected $attributes = [
 
-        'reference_no' => '',
+        'slug' => null,
+        'ic_slug' => null,
+        'reference_no' => null,
         'fullname' => null,
         'company' => null,
         'position' => null,
         'tin' => null,
-        'amount' => '',
-        'amount_in_word' => '',
-        'lkg_bags' => '',
-        'metric_tons' => '',
-        'boc_entry_no' => '',
-        'boc_entry_note' => '',
-        'certified_correct' => '',
+        'contact' => null,
+        'amount' => null,
+        'amount_in_word' => null,
+        'lkg_bags' => null,
+        'metric_tons' => null,
+        'boc_entry_no' => null,
+        'boc_entry_note' => null,
+        'certified_correct' => null,
 
     ];
 
