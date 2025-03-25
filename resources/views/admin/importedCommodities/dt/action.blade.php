@@ -48,10 +48,10 @@
         <ul class="dropdown-menu">
 
             <li>
-{{--                <a href="{{ route('admin.ImportedCommodities.printOrderOfPayment', $data->slug) }}" class="btn btn-warning order_payment_btn mr-1 w-auto"--}}
-{{--                   target="_blank" rel="noopener noreferrer">--}}
-{{--                    View Order of Payment--}}
-{{--                </a>--}}
+                <a href="{{ route('admin.importedCommodities.printOrderOfPayment', $data->slug) }}" class="btn btn-warning order_payment_btn mr-1 w-auto"
+                   target="_blank" rel="noopener noreferrer">
+                    View Order of Payment
+                </a>
             </li>
 
             <li>
