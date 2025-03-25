@@ -140,7 +140,6 @@ class PreRegistrationController extends Controller
         $OP->position = $request->business_name;
         $OP->company = $request->position;
         $OP->tin = $appData->tin;
-
         $OP->save();
 
 

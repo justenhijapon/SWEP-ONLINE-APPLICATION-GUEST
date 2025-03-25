@@ -3,6 +3,17 @@
 @section('modal-header')
     <div>
         <code>{{$data->slug}}</code> | Order of Payment
+        <span>
+{{--            <a href="printable/printOrderOfPayment.blade.php{{$data->slug}}"  class="btn-outline-info">Print Preview</a>--}}
+
+{{--<a href="{{ route('ImportedCommodities.printable.printOrderOfPayment', ['transactionId' => $data->slug]) }}" class="btn-outline-info">--}}
+{{--    Print Preview--}}
+{{--</a>--}}
+             <a href="{{ route('admin.ImportedCommodities.printOrderOfPayment', $data->slug) }}" class="btn btn-info order_payment_btn mr-1 w-auto"
+                target="_blank" rel="noopener noreferrer">
+                    View Order of Payment
+                </a>
+        </span>
     </div>
 
 @endsection

@@ -127,7 +127,7 @@
 												], $data->quantity_mt) !!}
 
 											{!! \App\Core\Helpers\__form2::textbox('bill_landing_no', [
-													'label'=>'<span style="color: ' . (empty($data->bill_landing_no) ? 'red' : 'grey') . ';">Bill of Landing No.:*</span>',
+													'label'=>'<span style="color: ' . (empty($data->bill_landing_no) ? 'red' : 'grey') . ';">Bill of Lading No.:*</span>',
 													'cols'=>'4',
 													'id'=>'bill_landing_no',
 													'placeholder' => '',

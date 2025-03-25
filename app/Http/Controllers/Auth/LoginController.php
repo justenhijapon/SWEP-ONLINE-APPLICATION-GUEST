@@ -91,7 +91,7 @@ class LoginController extends Controller{
         if (!User::whereRaw('LOWER(email) = ?', [$email])->exists()) {
             // Check if user exists in the pre-registration table
             if (PreRegistrationModel::whereRaw('LOWER(email) = ?', [$email])->exists()) {
-                return back()->withErrors(['email' => 'Your pre-registration is for approval of the admin.']);
+                return back()->withErrors(['email' => 'Your pre-registration is awaiting approval by the Authorized Regulation Officer.']);
             }
         }
 
