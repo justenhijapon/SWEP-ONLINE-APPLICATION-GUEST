@@ -87,7 +87,7 @@ Route::group(['as' => 'auth.'], function () {
         Route::post('/update-status', [ApplicationController::class, 'updateStatus'])->name('update.status');
         Route::resource('/application', 'Admin\ApplicationController');
 
-        Route::get('ImportedCommodities/{slug}/printOrderOfPayment', 'admin\ImportedCommoditiesController@printOrderOfPayment')->name('ImportedCommodities.printOrderOfPayment');
+        Route::get('ImportedCommodities/{slug}/printOrderOfPayment', 'Admin\ImportedCommoditiesController@printOrderOfPayment')->name('ImportedCommodities.printOrderOfPayment');
 //        Route::get('ImportedCommodities/printOrderOfPayment', [\App\Http\Controllers\Admin\ImportedCommoditiesController::class, 'printOrderOfPayment'])
 //            ->name('ImportedCommodities.printable.printOrderOfPayment');
 
