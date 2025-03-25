@@ -282,19 +282,12 @@ class ImportedCommoditiesController extends Controller
         return view('admin.importedCommodities.edit', compact('data'));
     }
 
-//    public function printOrderOfPayment(Request $request){
-//        $data = ImportedCommodities::query()->where('slug',$request->transactionId)->first();
-//
-//        return view('admin.ImportedCommodities.printable.printOrderOfPayment')->with([
-//            'data'=>$data
-//        ]);
-//    }
 
     public function printOrderOfPayment($slug)
     {
         $data = OrderOfPayment::query()->where('slug','=', $slug)->first();
 
-        return view('admin.ImportedCommodities.printOrderOfPayment', compact('data'));
+        return view('admin.importedCommodities.printOrderOfPayment', compact('data'));
     }
 
 
