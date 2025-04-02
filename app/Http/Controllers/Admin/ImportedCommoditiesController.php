@@ -224,6 +224,7 @@ class ImportedCommoditiesController extends Controller
         $app_data->boc_entry_note = $request->boc_entry_note;
         $app_data->certified_correct = $request->certified_correct;
         $app_data->approved_by = $request->approved_by;
+        $app_data->date = $request->date;
         $app_data->verify = true;
         $app_data->save();
 
