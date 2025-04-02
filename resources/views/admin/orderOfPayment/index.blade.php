@@ -3,11 +3,11 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Application List
+           Order of Payment List
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Application</li>
+            <li><a href="/admin/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Order of Payment</li>
         </ol>
     </section>
 
@@ -27,7 +27,7 @@
                             <th width="10%">Reference No.</th>
 {{--                            <th width="10%">Application Type</th>--}}
                             <th width="10%">Name|Details</th>
-                            <th width="20%">Product Description</th>
+                            <th width="20%">Business Name</th>
                             <th width="20%">Purpose of Importation</th>
                             <th width="10%">Application Status</th>
                             <th width="20%" class="action">Action</th>
@@ -42,13 +42,12 @@
         </div>
     </section>
 
-
 @endsection
 
 @section('modals')
     {!! __html::blank_modal('edit_modal', '', 'style="width: 45%"') !!}
-    {!! __html::blank_modal('OrderPayment_form', '', 'style="width: 45%"') !!}
     {!! __html::blank_modal('showApplicationFile_modal', '', 'style="width: 60%"') !!}
+    {!! __html::blank_modal('OrderPayment_form', '', 'style="width: 45%"') !!}
 
     <div id="filePreviewModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -108,22 +107,83 @@
 
 @section('scripts')
 
-    @include('admin.importedCommodities.script.scrpt_revoked')
+
+
+    <script>
+        function printPreview(event, element) {
+            event.preventDefault(); // Prevent default link behavior
+
+            var printWindow = window.open(element.href, '_blank', 'width=1100,height=600');
+
+            if (printWindow) {
+                printWindow.focus(); // Bring the window to the front
+                printWindow.onload = function () {
+                    setTimeout(function () {
+                        printWindow.print();
+                    }, 500); // Slight delay to allow full rendering
+                };
+            }
+        }
+    </script>
+
     <script>
         $(document).on('click', '.prevent-close', function(event) {
             event.stopPropagation(); // Prevent dropdown from closing
         });
     </script>
-
     <script>
-        $(document).ready(function () {
-            // Assume receivedValue is retrieved from your backend
-            var receivedValue = 1; // Replace this with the actual value from your database
+        $(document).on("click", ".revoked_btn", function () {
+            var slug = $(this).attr("data"); // Get the slug from the button
 
-            if (receivedValue === 1) {
-                $("#receivedBtn").removeClass("btn-info").addClass("btn-success").prop("disabled", true);
+            if (confirm("Are you sure you want to revoke this record?")) {
+                $.ajax({
+                    url: "/update-status", // Update with your route
+                    type: "POST",
+                    data: {
+                        slug: slug,
+                        status: 0, // Update received value to 0
+                        _token: "{{ csrf_token() }}" // Laravel CSRF token
+                    },
+                    success: function (response) {
+                        succeed(form, true, true); // Call the success function
+
+                        // Refresh DataTables without reloading the page
+                        $('#yourDataTableID').DataTable().ajax.reload();
+                    },
+                    error: function () {
+                        alert("Something went wrong.");
+                    }
+                });
             }
         });
+
+    </script>
+    <script>
+        // $(document).ready(function () {
+        //     // Assume receivedValue is retrieved from your backend
+        //     var receivedValue = 1; // Replace this with the actual value from your database
+        //
+        //     if (receivedValue === 1) {
+        //         $("#receivedBtn").removeClass("btn-info").addClass("btn-success").prop("disabled", true);
+        //     }
+        // });
+        $(document).ready(function () {
+            var receivedValue = {{ $data->received ?? 0 }}; // Fetch from backend
+            var revokedValue = {{ $data->revoked ?? 0 }}; // Fetch from backend
+
+            if (revokedValue === 1) {
+                $("#receivedBtn").removeClass("btn-info btn-success")
+                    .addClass("btn-danger")
+                    .text("Revoked")
+                    .prop("disabled", true);
+            } else if (receivedValue === 1) {
+                $("#receivedBtn").removeClass("btn-info")
+                    .addClass("btn-success")
+                    .text("Received")
+                    .prop("disabled", true);
+            }
+        });
+
     </script>
     <script type="text/javascript">
         $(document).on('click', '.view-file-link', function (e) {
@@ -136,17 +196,17 @@
 
         $(document).ready(function(){
             active = '';
-            applicationTbl =  $("#applicationTable").DataTable({
+            orderOfPayment_tbl =  $("#applicationTable").DataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax" : '{{ route("admin.importedCommodities.index") }}',
+                "ajax" : '{{ route("admin.orderOfPayment.index") }}',
                 "columns": [
                     { "data": "slug"},
+                    { "data": "fullname"},
                     // { "data": "application_type"},
-                    { "data": "name"},
-                    { "data": "prod_description"},
-                    { "data": "purpose_importation"},
-                    { "data": "status"},
+                    { "data": "company"},
+                    { "data": "slug"},
+                    { "data": "slug"},
                     { "data": "action" }
                 ],
                 "buttons": [
@@ -170,7 +230,7 @@
                     $('#tbl_loader').fadeOut(function(){
                         $("#applicationTableContainer").fadeIn();
                     });
-                    dt_press_enter('#applicationTable_filter', applicationTbl);
+                    dt_press_enter('#applicationTable_filter', orderOfPayment_tbl);
                 },
                 "language":
                     {
@@ -185,99 +245,10 @@
                 }
             });
 
-            $("body").on("click",".showApplicationFile_btn", function(){
-                var btn = $(this);
-                var slug = btn.attr("data");
-                loading_modal(btn);
-                uri = "{{ route('admin.importedCommodities.attachments.showApplicationFile','slug') }}";
-                uri = uri.replace('slug',slug);
-                $.ajax({
-                    url : uri,
-                    type: 'GET',
-                    success: function(response){
-                        populate_modal(btn, response);
-                    },
-                    error: function(response){
-
-                    }
-                });
-            });
-
-            $("body").on("click", ".view-file", function() {
-                var fileUrl = $(this).data("url"); // Fetch the file URL from the clicked element
-                $("#fileViewer").attr("src", fileUrl); // Set the iframe source dynamically
-                $("#viewFileModal").modal("show"); // Show the modal
-            });
-
-
-            $("body").on("click",".edit_btn", function(){
-                btn = $(this);
-                slug = btn.attr('data');
-                uri = "{{route('admin.importedCommodities.edit','slug')}}";
-                uri = uri.replace('slug',slug);
-                loading_modal(btn);
-                $.ajax({
-                    url : uri,
-                    type: 'GET',
-                    success:function(response){
-                        populate_modal(btn,response);
-                    },
-                    error: function(response){
-                        errored_modal(btn,response);
-                    }
-                })
-            })
-
-
-
-            @if(\Illuminate\Support\Facades\Request::has('success_message'))
-                notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');
-                window.history.pushState({},document.title,'/admin/importedCommodities')
-            @endif
-
-            $("body").on('submit', "#edit_form", function (e) {
-                e.preventDefault(); // Prevent default form submission
-                var form = $(this);
-                var formdata = form.serialize();
-                var slug = form.attr('data');
-                var uri = "{{ route('admin.importedCommodities.update', 'slug') }}";
-                uri = uri.replace('slug', slug);
-                swal({
-                        title: "Are you sure?",
-                        text: "Make sure all details in the application are accurate and all required attachments are valid before proceeding.",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, receive it!",
-                        cancelButtonText: "Cancel",
-                        closeOnConfirm: false
-                    }, function (isConfirm) {
-                    if (isConfirm) {
-                        // Proceed with the AJAX request
-                        loading_btn(form);
-                        $.ajax({
-                            url: uri,
-                            data: formdata,
-                            type: 'PATCH',
-                            success: function (res) {
-                                setTimeout(function () {
-                                    window.location.href = "/admin/importedCommodities?success_message=Application Received!";
-                                });
-                            },
-                            error: function (response) {
-                                errored(form, response);
-                                console.log(response);
-                            }
-                        });
-                    }
-                });
-            });
-
             $("body").on("click",".order_payment_btn", function(){
                 btn = $(this);
                 slug = btn.attr('data');
-                uri = "{{route('admin.importedCommodities.orderOfPayment','slug')}}";
+                uri = "{{route('admin.orderOfPayment.edit','slug')}}";
                 uri = uri.replace('slug',slug);
                 loading_modal(btn);
                 $.ajax({
@@ -292,14 +263,13 @@
                 })
             })
 
-
-
-
         });
+
+
     </script>
-    <script>
-        $('#edit_modal').on('hidden.bs.modal', function () {
-            $('.btn-group .btn').css('width', 'auto'); // Reset width when modal closes
-        });
-    </script>
+{{--    <script>--}}
+{{--        $('#edit_modal').on('hidden.bs.modal', function () {--}}
+{{--            $('.btn-group .btn').css('width', 'auto'); // Reset width when modal closes--}}
+{{--        });--}}
+{{--    </script>--}}
 @endsection

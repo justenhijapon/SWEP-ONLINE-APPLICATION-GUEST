@@ -2,7 +2,7 @@
 
 namespace App\Swep\Repositories\Admin;
 
-use App\Models\User\OrderOfPayments;
+use App\Models\Admin\OrderOfPayment;
 use App\Swep\BaseClasses\Admin\BaseRepository;
 
 use App\Swep\Interfaces\Admin\OrderOfPaymentInterface;
@@ -11,21 +11,27 @@ use Auth;
 class OrderOfPaymentRepository extends BaseRepository implements OrderOfPaymentInterface {
 
 
-    protected $op;
+    protected $orderOfPayment;
 
 
-    public function __construct(OrderOfPayments $op){
+    public function __construct(OrderOfPayment $orderOfPayment){
         parent::__construct();
-        $this->op = $op;
+        $this->orderOfPayment = $orderOfPayment;
     }
 
     public function fetch($slug){
 
     }
 
+//    public function fetchTable($data){
+//        $get = $this->orderOfPayment->with('slug');
+//        return $get;
+//    }
+
     public function fetchTable($data){
-        $get = $this->op->with('user');
-        return $get;
+        return $this->orderOfPayment
+            ->where('verify', 1)
+            ->orderBy('updated_at', 'desc');
     }
 
     public function store($request){
@@ -37,18 +43,18 @@ class OrderOfPaymentRepository extends BaseRepository implements OrderOfPaymentI
     }
 
     public function paid($id, $orNumber){
-        $op = OrderOfPayments::where('slug',$id)->first();
-        $op->status = "PAID";
-        $op->or_number = $orNumber;
-        $op->update();
-        return $op;
+        $orderOfPayment = OrderOfPayment::where('slug',$id)->first();
+        $orderOfPayment->status = "PAID";
+        $orderOfPayment->or_number = $orNumber;
+        $orderOfPayment->update();
+        return $orderOfPayment;
     }
 
     public function approved($id){
-        $op = OrderOfPayments::where('slug',$id)->first();
-        $op->status = "APPROVED";
-        $op->update();
-        return $op;
+        $orderOfPayment = OrderOfPayment::where('slug',$id)->first();
+        $orderOfPayment->status = "APPROVED";
+        $orderOfPayment->update();
+        return $orderOfPayment;
     }
 
     public function destroy($slug){

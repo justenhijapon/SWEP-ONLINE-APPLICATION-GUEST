@@ -166,48 +166,48 @@
             }
 
 
-            $("body").on("click", ".edit_btn", function () {
-                btn = $(this);
-                slug = btn.attr('data');
-                uri = "{{route('dashboard.ImportedCommodities.edit','slug')}}";
-                uri = uri.replace('slug', slug);
-                loading_modal(btn);
-                $.ajax({
-                    url: uri,
-                    type: 'GET',
-                    success: function (response) {
-                        populate_modal(btn, response);
+            {{--$("body").on("click", ".edit_btn", function () {--}}
+            {{--    btn = $(this);--}}
+            {{--    slug = btn.attr('data');--}}
+            {{--    uri = "{{route('dashboard.ImportedCommodities.edit','slug')}}";--}}
+            {{--    uri = uri.replace('slug', slug);--}}
+            {{--    loading_modal(btn);--}}
+            {{--    $.ajax({--}}
+            {{--        url: uri,--}}
+            {{--        type: 'GET',--}}
+            {{--        success: function (response) {--}}
+            {{--            populate_modal(btn, response);--}}
 
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
-                })
+            {{--        },--}}
+            {{--        error: function (response) {--}}
+            {{--            console.log(response);--}}
+            {{--        }--}}
+            {{--    })--}}
 
-            });
+            {{--});--}}
 
-        {{--    $('body').on('submit', "#edit_form", function (e) {--}}
-        {{--        e.preventDefault();--}}
-        {{--        form = $(this);--}}
-        {{--        slug = form.attr('data');--}}
-        {{--        formdata = form.serialize();--}}
-        {{--        uri = "{{route('dashboard.ImportedCommodities.update','slug')}}";--}}
-        {{--        uri = uri.replace('slug', slug);--}}
-        {{--        loading_btn(form);--}}
-        {{--        $.ajax({--}}
-        {{--            url: uri,--}}
-        {{--            data: formdata,--}}
-        {{--            type: 'PATCH',--}}
-        {{--            success: function (response) {--}}
-        {{--                succeed(form, true, true);--}}
-        {{--                active = response.slug;--}}
-        {{--                temp_tbl.draw();--}}
-        {{--            },--}}
-        {{--            error: function (response) {--}}
-        {{--                errored(form, response);--}}
-        {{--            }--}}
-        {{--        })--}}
-        {{--    });--}}
+            {{--$('body').on('submit', "#edit_form", function (e) {--}}
+            {{--    e.preventDefault();--}}
+            {{--    form = $(this);--}}
+            {{--    slug = form.attr('data');--}}
+            {{--    formdata = form.serialize();--}}
+            {{--    uri = "{{route('dashboard.ImportedCommodities.update','slug')}}";--}}
+            {{--    uri = uri.replace('slug', slug);--}}
+            {{--    loading_btn(form);--}}
+            {{--    $.ajax({--}}
+            {{--        url: uri,--}}
+            {{--        data: formdata,--}}
+            {{--        type: 'PATCH',--}}
+            {{--        success: function (response) {--}}
+            {{--            succeed(form, true, true);--}}
+            {{--            active = response.slug;--}}
+            {{--            temp_tbl.draw();--}}
+            {{--        },--}}
+            {{--        error: function (response) {--}}
+            {{--            errored(form, response);--}}
+            {{--        }--}}
+            {{--    })--}}
+            {{--});--}}
 
         {{--    $("#img_url").fileinput({--}}
         {{--        theme: "fa",--}}

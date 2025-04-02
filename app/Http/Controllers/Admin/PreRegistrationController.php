@@ -137,8 +137,8 @@ class PreRegistrationController extends Controller
         $OP = new OrderOfPayment();
         $OP->slug = $appData->slug;
         $OP->fullname = $fullname;
-        $OP->position = $request->business_name;
-        $OP->company = $request->position;
+        $OP->position = $request->position;
+        $OP->company = $request->business_name;
         $OP->tin = $appData->tin;
         $OP->save();
 

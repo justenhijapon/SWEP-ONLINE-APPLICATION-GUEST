@@ -1,25 +1,11 @@
 @php
-    $random = Str::random();
+$random = Str::random();
 @endphp
-
 @extends('admin-layouts.modal-content', ['form_id'=> 'OrderPayment_form_'.$random, 'slug'=>$data->slug])
 
 @section('modal-header')
     <div>
         <code>{{$data->slug}}</code> | Order of Payment
-        <span class="pull-right" style="padding-right: 30px">
-{{--             <a href="{{ route('admin.importedCommodities.printOrderOfPayment', $data->slug) }}" class="btn btn-info order_payment_btn mr-1 w-auto"--}}
-{{--                target="_blank" rel="noopener noreferrer" >--}}
-{{--                    Print--}}
-{{--            </a>--}}
-
-            <a href="{{ route('admin.importedCommodities.printOrderOfPayment', $data->slug) }}"
-               class="btn btn-info order_payment_btn mr-1 w-auto"
-               onclick="printOrderPayment(event, this)" >
-               <li class="fa fa-print"></li> Print
-            </a>
-
-        </span>
     </div>
 
     <!-- Hidden container to hold the fetched print content -->
@@ -47,7 +33,6 @@
             'label'=>'Reference No. STD:',
             'cols'=>'6',
             'class'=>'text-uppercase',
-            'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
         ], $data->reference_no) !!}
@@ -56,7 +41,7 @@
         {!! \App\Core\Helpers\__form2::textbox('date', [
            'label'=>'Date:',
            'cols'=>'6',
-           'type' => 'date',
+           'type'=>'date',
            'required'=>'required',
        ], $data->date) !!}
 
@@ -66,7 +51,6 @@
             'label'=>'To:',
             'cols'=>'6',
             'class'=>'text-uppercase',
-            'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
         ], $data->fullname) !!}
@@ -75,7 +59,7 @@
         {!! \App\Core\Helpers\__form2::textbox('company', [
             'label'=>'Company:',
             'cols'=>'6',
-            'id'=>'slug',
+
             'placeholder' => '',
             'required'=>'required',
         ], $data->company) !!}
@@ -84,7 +68,7 @@
 {{--        {!! \App\Core\Helpers\__form2::textbox('amount_in_word', [--}}
 {{--            'label'=>'Amount in word:',--}}
 {{--            'cols'=>'6',--}}
-{{--            'id'=>'slug',--}}
+{{--           --}}
 {{--            'placeholder' => '',--}}
 {{--//            'required'=>'required',--}}
 {{--        ], $data->amount_in_word) !!}--}}
@@ -92,7 +76,6 @@
         {!! \App\Core\Helpers\__form2::textbox('lkg_bags', [
             'label'=>'Lkg-Bags:',
             'cols'=>'6',
-            'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
         ], $data->lkg_bags) !!}
@@ -100,7 +83,6 @@
         {!! \App\Core\Helpers\__form2::textbox('metric_tons', [
             'label'=>'Metric Tons:',
             'cols'=>'6',
-            'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
         ], $data->metric_tons) !!}
@@ -108,7 +90,6 @@
         {!! \App\Core\Helpers\__form2::textbox('boc_entry_no', [
             'label'=>'BOC Entry No.:',
             'cols'=>'6',
-            'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
         ], $data->boc_entry_no) !!}
@@ -116,7 +97,6 @@
         {!! \App\Core\Helpers\__form2::textbox('amount', [
            'label'=>'Amount:',
            'cols'=>'6',
-           'id'=>'slug',
            'placeholder' => '',
             'required'=>'required',
        ], $data->amount) !!}
@@ -124,7 +104,6 @@
         {!! \App\Core\Helpers\__form2::textbox('certified_correct', [
             'label'=>'Certified Correct:',
             'cols'=>'6',
-            'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
         ], $data->certified_correct) !!}
@@ -132,7 +111,6 @@
         {!! \App\Core\Helpers\__form2::textbox('approved_by', [
             'label'=>'Approved By:',
             'cols'=>'6',
-            'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
         ], $data->approved_by) !!}
@@ -152,7 +130,6 @@
 
 
     <script>
-
         function printOrderPayment(event, element) {
             event.preventDefault(); // Prevent default link behavior
 
@@ -174,54 +151,29 @@
             form = $(this);
             slug = form.attr('data');
             formdata = form.serialize();
-            uri = "{{route('admin.importedCommodities.updateOrderPayment','slug')}}";
+            uri = "{{route('admin.orderOfPayment.update','slug')}}";
             uri = uri.replace('slug', slug);
 
             loading_btn(form);
             $.ajax({
                 url: uri,
                 data: formdata,
-                type: 'POST',
+                type: 'PATCH',
                 headers: {
                     "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
                 success: function (response) {
                     succeed(form, true, true);
                     active = response.slug;
-                    applicationTbl.draw();
+                    orderOfPayment_tbl.draw();
                 },
                 error: function (response) {
                     errored(form, response);
                 }
             })
         });
-
-        {{--$("body").on('submit', "#OrderPayment_form", function (e) {--}}
-        {{--    e.preventDefault(); // Prevent default form submission--}}
-        {{--    var form = $(this);--}}
-        {{--    var formdata = form.serialize();--}}
-        {{--    var slug = form.attr('data');--}}
-        {{--    var uri = "{{ route('admin.importedCommodities.updateOrderPayment', 'slug') }}";--}}
-        {{--    uri = uri.replace('slug', slug);--}}
-        {{--    $.ajax({--}}
-        {{--        url: uri,--}}
-        {{--        data: formdata,--}}
-        {{--        type: 'POST',--}}
-        {{--        headers: {--}}
-        {{--            "X-CSRF-TOKEN": "{{ csrf_token() }}"--}}
-        {{--        },--}}
-        {{--        success: function (res) {--}}
-        {{--            setTimeout(function () {--}}
-        {{--                window.location.href = "/admin/importedCommodities?success_message=Data successfully save!";--}}
-        {{--            });--}}
-        {{--        },--}}
-        {{--        error: function (response) {--}}
-        {{--            errored(form, response);--}}
-        {{--            // console.log(response);--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--});--}}
     </script>
+
 
 @endsection
 

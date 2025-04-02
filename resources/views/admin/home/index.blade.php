@@ -45,7 +45,7 @@
                         <div class="inner">
                             <h3>{{$revokedApplication->count()}}</h3>
 
-                            <p>Revoked Application</p>
+                            <p>Take Back Application</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>

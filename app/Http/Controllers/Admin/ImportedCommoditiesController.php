@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ApplicationFormRequest;
+use App\Http\Requests\Admin\OrderOfPaymentFormRequest;
 use App\Http\Requests\Admin\TransactionTypeRequest;
 use App\Models\Admin\OrderOfPayment;
 use App\Models\User\ICRevoked;
@@ -61,7 +62,7 @@ class ImportedCommoditiesController extends Controller
                 })
 
                 ->filterColumn('name', function($query, $keyword) {
-                    $query->whereRaw("CONCAT(imported_commodoties.name, ' ', company.name) LIKE ?", ["%{$keyword}%"]);
+                    $query->whereRaw("CONCAT(name, ' ', company, '', email) LIKE ?", ["%{$keyword}%"]);
                 })
 
                 ->rawColumns(['slug', 'importedCommodities_type', 'action'])
@@ -108,6 +109,11 @@ class ImportedCommoditiesController extends Controller
                     return view('admin.importedCommodities.dt-revoked.action')->with(['data' => $data]);
                 })
 
+
+                ->filterColumn('name', function($query, $keyword) {
+                    $query->whereRaw("CONCAT(name, ' ', company, '', email) LIKE ?", ["%{$keyword}%"]);
+                })
+
                 ->rawColumns(['slug', 'importedCommodities_type', 'action'])
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -152,6 +158,10 @@ class ImportedCommoditiesController extends Controller
                     return view('admin.importedCommodities.dt-approved.action')->with(['data' => $data]);
                 })
 
+                ->filterColumn('name', function($query, $keyword) {
+                    $query->whereRaw("CONCAT(name, ' ', company, '', email) LIKE ?", ["%{$keyword}%"]);
+                })
+
                 ->rawColumns(['slug', 'importedCommodities_type', 'action'])
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -173,6 +183,11 @@ class ImportedCommoditiesController extends Controller
         $app_data->received_date = now();
         $app_data->revoked = 0;
         $app_data->save();
+
+        $op = OrderOfPayment::where('slug', '=', $slug)->first();
+        $op->approve = true;
+        $op->save();
+
         return response()->json(['slug' => $app_data->slug]);
     }
 
@@ -187,29 +202,10 @@ class ImportedCommoditiesController extends Controller
         return view('admin.importedCommodities.orderOfPayment', compact('data'));
     }
 
-//    public function updateOrderPayment(Request $request, $slug) {
-//        $app_data = OrderOfPayment::where('slug', $slug)->firstOrFail();
-////        $app_data = OrderOfPayment::where('slug', $slug)->first();
-//        $app_data->reference_no = $request->reference_no;
-//        $app_data->fullname = $request->fullname;
-//        $app_data->company = $request->company;
-//        $app_data->amount = $request->amount;
-//        $app_data->amount_in_word = $request->amount_in_word;
-//        $app_data->lkg_bags = $request->lkg_bags;
-//        $app_data->metric_tons = $request->metric_tons;
-//        $app_data->boc_entry_no = $request->boc_entry_no;
-//        $app_data->boc_entry_note = $request->boc_entry_note;
-//        $app_data->certified_correct = $request->certified_correct;
-//        dd($slug);
-//        $app_data->save();
-//        return response()->json(['slug' => $app_data->slug]);
-//    }
-
-
 
     public function updateOrderPayment(Request $request, $slug) {
-        Log::info('Received Slug:', ['slug' => $slug]);
-
+//        Log::info('Received Slug:', ['slug' => $slug]);
+//dd($slug);
         $app_data = OrderOfPayment::where('slug', $slug)->first();
 
         if (!$app_data) {
@@ -221,12 +217,14 @@ class ImportedCommoditiesController extends Controller
         $app_data->fullname = $request->fullname;
         $app_data->company = $request->company;
         $app_data->amount = $request->amount;
-        $app_data->amount_in_word = $request->amount_in_word;
+//        $app_data->amount_in_word = $request->amount_in_word;
         $app_data->lkg_bags = $request->lkg_bags;
         $app_data->metric_tons = $request->metric_tons;
         $app_data->boc_entry_no = $request->boc_entry_no;
         $app_data->boc_entry_note = $request->boc_entry_note;
         $app_data->certified_correct = $request->certified_correct;
+        $app_data->approved_by = $request->approved_by;
+        $app_data->verify = true;
         $app_data->save();
 
         return response()->json(['slug' => $app_data->slug]);

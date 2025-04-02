@@ -121,7 +121,7 @@
 
 			  	<div class="form-group {{ $errors->has('username') ? ' has-error' : '' }} has-feedback">
 			    	<input class="form-control is-invalid" name="username" id="username" placeholder="Username" type="text" value="{{ __sanitize::html_attribute_encode(old('username')) }}">
-			    	<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+			    	<span class="glyphicon glyphicon-user form-control-feedback"></span>
 					@if ($errors->has('username'))
 						<span class="help-block"> {{ $errors->first('username') }} </span>
 					@endif
