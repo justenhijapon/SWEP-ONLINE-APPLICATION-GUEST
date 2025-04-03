@@ -151,7 +151,7 @@ class ImportedCommoditiesController extends Controller
         }
 
         // Load the PDF view
-        $pdf = Pdf::loadView('dashboard.importedCommodities.printOrderOfPayment', compact('data'))
+        $pdf = Pdf::loadView('dashboard.ImportedCommodities.printOrderOfPayment', compact('data'))
             ->setPaper('A4', 'portrait'); // Set page size and orientation
 
         // Return as a downloadable file
