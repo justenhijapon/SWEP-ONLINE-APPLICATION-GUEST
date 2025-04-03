@@ -73,7 +73,7 @@
     </style>
 </head>
     <body>
-        <div class="container">
+        <div class="">
             <div class="content">
                 <div style="break-after: page">
                     <table>
@@ -452,8 +452,8 @@
                                <h4 style="margin: 0">
                                    BUDGET & TREASURY DIVISION
                                </h4>
-                               <img src="{{asset('images/output/SRA_DA_logo_400X400.png')}}" style="width: 150px">
-{{--                               <img src="{{ public_path('images/output/SRA_DA_logo_400X400.png') }}" style="width: 150px">--}}
+{{--                               <img src="{{asset('images/output/SRA_DA_logo_400X400.png')}}" style="width: 150px">--}}
+                               <img src="{{ public_path('images/output/SRA_DA_logo_400X400.png') }}" style="width: 150px">
                            </td>
                         </tr>
                         <tr>

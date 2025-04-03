@@ -5,20 +5,21 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "laravel/framework": "^10.0",
         "php": "^8.1",
         "ext-curl": "*",
         "appstract/laravel-opcache": "^2.0",
+        "barryvdh/laravel-dompdf": "^3.1",
+        "guzzlehttp/guzzle": "^7.0.1",
         "jacobbennett/pjax": "~1.0",
         "kartik-v/bootstrap-fileinput": "dev-master",
+        "laravel/framework": "^10.0",
         "laravel/helpers": "^1.5",
         "laravel/tinker": "^2.0",
+        "laravel/ui": "^4.0",
         "laravelcollective/html": "^6.0",
         "predis/predis": "^1.1",
         "yajra/laravel-datatables": "^10.3.1",
-        "yajra/laravel-datatables-html": "^10",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/ui": "^4.0"
+        "yajra/laravel-datatables-html": "^10"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

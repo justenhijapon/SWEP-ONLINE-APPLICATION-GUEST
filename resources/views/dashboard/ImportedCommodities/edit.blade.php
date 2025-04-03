@@ -593,6 +593,12 @@
 			{{--	})--}}
 			{{--})--}}
 
+			$("body").on('click', '.download_OP_btn', function () {
+				let slug = $(this).attr('data-slug'); // Get slug from the button attribute
+				let downloadRoute = "{{ route('downloadOrderOfPayment', ':slug') }}".replace(':slug', slug);
+				window.location.href = downloadRoute; // Trigger the file download
+			});
+
 
 			$("body").on('click', '.print_btn', function () {
 				tr_id = $(this).attr('data');
@@ -602,9 +608,19 @@
 				setTimeout(printIframe, 500);
 			})
 
+			{{--$("body").on('click', '.print_OP_btn', function () {--}}
+			{{--	let slug = $(this).attr('data-slug'); // Ensure button has 'data-slug' attribute--}}
+			{{--	let printRoute = "{{ route('printOrderOfPayment', ':slug') }}".replace(':slug', slug);--}}
+			{{--	$("#printIframe").attr('src', printRoute);--}}
+			{{--	setTimeout(printIframe, 500);--}}
+			{{--});--}}
+
 			function printIframe() {
 				$("#printIframe").get(0).contentWindow.print();
 			}
+
+
+
 
 
 		})

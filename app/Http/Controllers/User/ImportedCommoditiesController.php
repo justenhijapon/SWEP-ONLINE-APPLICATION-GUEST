@@ -4,9 +4,11 @@
 namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\ImportedCommodities\ImportedCommoditiesFormRequest;
+use App\Models\Admin\OrderOfPayment;
 use App\Models\User;
 use App\Models\User\ICSubmitted;
 use App\Models\User\ImportedCommodities;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -127,6 +129,33 @@ class ImportedCommoditiesController extends Controller
         return view('dashboard.ImportedCommodities.printIC')->with([
             'data'=>$data
         ]);
+    }
+
+//    public function printOrderOfPayment(Request $request, $slug)
+//    {
+//        $data = OrderOfPayment::where('slug', $slug)->first();
+//
+//        if (!$data) {
+//            abort(404, 'Order of Payment not found');
+//        }
+//
+//        return view('admin.importedCommodities.printOrderOfPayment', compact('data'));
+//    }
+
+    public function printOrderOfPayment(Request $request, $slug)
+    {
+        $data = OrderOfPayment::where('slug', $slug)->first();
+
+        if (!$data) {
+            abort(404, 'Order of Payment not found');
+        }
+
+        // Load the PDF view
+        $pdf = Pdf::loadView('dashboard.importedCommodities.printOrderOfPayment', compact('data'))
+            ->setPaper('A4', 'portrait'); // Set page size and orientation
+
+        // Return as a downloadable file
+        return $pdf->download('Order_of_Payment_'.$data->slug.'.pdf');
     }
 
 

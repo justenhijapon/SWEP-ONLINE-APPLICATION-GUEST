@@ -112,6 +112,13 @@ Route::group(['as' => 'auth.'], function () {
     Route::post('/ImportedCommodities/attachment/','User\ImportedCommoditiesController@edit')->name('ImportedCommodities.attachment');
     Route::get('ImportedCommodities/attachment', 'User\ImportedCommoditiesController@attachment')->name('ImportedCommodities.attachment');
     Route::get('printTransactionIc', 'User\ImportedCommoditiesController@printTransactionIc')->name('printTransactionIc');
+//    Route::get('printOrderOfPayment', 'User\ImportedCommoditiesController@printOrderOfPayment')->name('printOrderOfPayment');
+
+//Route::get('printOrderOfPayment/{slug}', 'User\ImportedCommoditiesController@printOrderOfPayment')->name('printOrderOfPayment');
+
+Route::get('downloadOrderOfPayment/{slug}', 'User\ImportedCommoditiesController@printOrderOfPayment')->name('downloadOrderOfPayment');
+
+
 
 //Route::post('/ImportedCommodities/applicationForm','User\ImportedCommoditiesController@applicationForm')->name('applicationForm');
 

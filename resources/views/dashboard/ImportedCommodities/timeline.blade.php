@@ -95,6 +95,21 @@
                     <div class="col-7 content">
                         <p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Approved' : $data->received }}</strong></p>
                         <small>Your application has been validated and approved.  Print the attached Order of Payment (download) and settle the payment immediately at SRA Main Office, North Avenue, Diliman, Quezon City.</small>
+
+                        @php
+                            $OP = \App\Models\Admin\OrderOfPayment::where('slug', $data->slug)->first();
+                        @endphp
+
+                        @if($OP->verify == 1)
+
+                            <p>
+                                <a href="javascript:void(0);" class="download_OP_btn" data-slug="{{ $data->slug }}">
+                                    <li class="fa fa-file-pdf-o"></li> Download Order of Payment
+                                </a>
+                            </p>
+                        @endif
+{{--                        {{dd($OP->verify)}}--}}
+
                     </div>
                 </div>
             </div>
