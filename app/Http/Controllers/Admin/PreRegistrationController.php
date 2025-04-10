@@ -193,7 +193,7 @@ class PreRegistrationController extends Controller
             $preReg->is_verified = true;
             $preReg->save();
 
-            // Send the confirmation email
+
             Mail::to($user->email)->send(new PreRegistrationApproved($user));
 
             DB::commit();
