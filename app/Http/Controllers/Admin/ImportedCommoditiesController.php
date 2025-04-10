@@ -174,7 +174,8 @@ class ImportedCommoditiesController extends Controller
     public function edit($slug)
     {
         $data = ImportedCommodities::where('slug', '=', $slug)->first();
-        return view('admin.importedCommodities.edit', compact('data'));
+        $dataOP = OrderOfPayment::where('slug', '=', $slug)->first();
+        return view('admin.importedCommodities.edit', compact('data', 'dataOP'));
     }
 
     public function update(Request $request, $slug) {

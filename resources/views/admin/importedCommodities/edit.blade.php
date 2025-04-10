@@ -11,16 +11,30 @@
 {{--                       {{ $data->received == 1 ? 'Received' : 'Mark as Received' }}--}}
 {{--               </button>--}}
 
-               <button type="submit"
-                       id="receivedBtn"
-                       class="btn {{ $data->revoked == 1 ? 'btn-danger' : ($data->received == 1 ? 'btn-success' : 'btn-info') }} btn-md"
-                   {{ $data->revoked == 1 || $data->received == 1 ? 'disabled' : '' }}>
+{{--               <button type="submit"--}}
+{{--                       id="receivedBtn"--}}
+{{--                       class="btn {{ $data->revoked == 1 ? 'btn-danger' : ($data->received == 1 ? 'btn-success' : 'btn-info') }} btn-md"--}}
+{{--                   {{ $data->revoked == 1 || $data->received == 1 ? 'disabled' : '' }}>--}}
+{{--                   {{ $data->revoked == 1 ? 'Take Back' : ($data->received == 1 ? 'Approved' : 'Mark as Approved') }}--}}
+{{--               </button>--}}
+
+             <button type="submit"
+                     id="receivedBtn"
+                     class="btn mr-1 w-auto {{ $data->revoked == 1 ? 'btn-danger' : ($data->received == 1 ? 'btn-success' : 'btn-info') }} btn-md"
+                     {{ $data->revoked == 1 || $data->received == 1 || $dataOP->verify == 0 ? 'disabled' : '' }}
+                     @if($data->revoked == 1 || $data->received == 1 || $dataOP->verify == 0)
+                          data-toggle="tooltip" data-placement="bottom" title="Update the Order of Payment First"
+                   @endif>
                    {{ $data->revoked == 1 ? 'Take Back' : ($data->received == 1 ? 'Approved' : 'Mark as Approved') }}
                </button>
 
           </div>
-
      </span>
+@if($dataOP->verify = 0)
+
+          <br>
+          <span class="pull-right"><code><small>Update the Order of Payment First</small></code></span>
+@endif
 
 @endsection
 

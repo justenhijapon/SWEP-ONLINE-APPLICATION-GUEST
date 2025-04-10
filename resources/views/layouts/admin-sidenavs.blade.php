@@ -30,6 +30,14 @@
                     <span class="nav-label">Home</span>
                 </a>
             </li>
+
+{{--            <li>--}}
+{{--                <a href="{{route('dashboard.home')}}">--}}
+{{--                <a href="">--}}
+{{--                    <i class="fa fa-user"></i>--}}
+{{--                    <span class="nav-label">Profile</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
             @if(count($global_user_menus) > 0)
                 @foreach($global_user_menus as $key => $label)
                     @foreach($label as $menu)

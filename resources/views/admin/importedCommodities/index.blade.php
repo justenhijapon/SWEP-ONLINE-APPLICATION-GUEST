@@ -116,13 +116,29 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            // Assume receivedValue is retrieved from your backend
-            var receivedValue = 1; // Replace this with the actual value from your database
+        // $(document).ready(function () {
+        //     // Assume receivedValue is retrieved from your backend
+        //     var receivedValue = 1; // Replace this with the actual value from your database
+        //
+        //     if (receivedValue === 1) {
+        //         $("#receivedBtn").removeClass("btn-info").addClass("btn-success").prop("disabled", true);
+        //     }
+        // });
 
-            if (receivedValue === 1) {
-                $("#receivedBtn").removeClass("btn-info").addClass("btn-success").prop("disabled", true);
+        $(document).ready(function () {
+            var receivedValue = {{ $data->received ?? 0 }};
+            var verifyValue = {{ $dataOP->verify ?? 0 }};
+
+            if (verifyValue === 0) {
+                $("#receivedBtn").prop("disabled", true);
+            } else if (verifyValue === 1) {
+                $("#receivedBtn").prop("disabled", false);
+
+                // $('[data-toggle="tooltip"]').tooltip();
             }
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
     <script type="text/javascript">

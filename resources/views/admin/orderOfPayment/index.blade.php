@@ -107,8 +107,6 @@
 
 @section('scripts')
 
-
-
     <script>
         function printPreview(event, element) {
             event.preventDefault(); // Prevent default link behavior

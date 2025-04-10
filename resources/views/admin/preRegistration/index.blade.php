@@ -162,9 +162,17 @@
 
 
         $("body").on("click", ".approved", function () {
+            let button = $(this);
             tr_id = $(this).attr('data');
             uri = "{{route('admin.preRegistration.approved', 'id')}}";
             uri = uri.replace('id', tr_id);
+
+            // Save original button content
+            let originalHtml = button.html();
+
+            // Show loading spinner
+            button.html('<span class="fa fa-circle-o-notch fa-spin" role="status" aria-hidden="true"></span> Approving...');
+            button.prop('disabled', true);
 
             $.ajax({
                 url: uri,
@@ -187,6 +195,10 @@
                 },
                 error: function (response) {
                     console.log(response);
+
+                    // Revert button on error
+                    button.html(originalHtml);
+                    button.prop('disabled', false);
                 }
             });
         });

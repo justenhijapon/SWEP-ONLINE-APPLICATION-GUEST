@@ -3,8 +3,8 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        {!! __form::a_textbox( 6,'Username','username', 'text', 'Username',$preReg->username, 'readonly')!!}
-        {!! __form::a_textbox( 6,'Password','password', 'text', 'Password',$preReg->password, 'readonly')!!}
+{{--        {!! __form::a_textbox( 6,'Username','username', 'text', 'Username',$preReg->username, 'readonly')!!}--}}
+{{--        {!! __form::a_textbox( 6,'Password','password', 'text', 'Password',$preReg->password, 'readonly')!!}--}}
         {!! __form::a_textbox( 4,'Last Name','lastName', 'text', 'Last Name',$preReg->last_name, 'readonly')!!}
         {!! __form::a_textbox( 4,'First Name','firstName', 'text', 'First Name',$preReg->first_name, 'readonly')!!}
         {!! __form::a_textbox( 4,'Middle Name','middleName', 'text', 'Middle Name',$preReg->middle_name, 'readonly')!!}
