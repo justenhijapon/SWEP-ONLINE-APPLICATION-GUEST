@@ -40,168 +40,216 @@
     }
 
 
+
+    .swal2-title-lg {
+        font-size: 2.5rem !important;
+    }
+
+    .swal2-html-lg {
+        font-size: 1.8rem !important;
+    }
+
+    .swal2-input-lg {
+        font-size: 1.8rem !important;
+        padding: 1rem !important;
+        min-height: 100px !important;
+    }
+
+    .swal2-confirm-lg, .swal2-cancel-lg {
+        font-size: 1.8rem !important;
+        padding: 0.75rem 1.5rem !important;
+    }
+
+
 </style>
 <script>
-    $(document).on("click", ".revoked_btn", function () {
-        var slug = $(this).attr("data"); // Get the slug from the button
 
-        if (confirm("Are you sure you want to take back this record?")) {
-            $.ajax({
-                url: "/update-status", // Update with your route
-                type: "POST",
-                data: {
-                    slug: slug,
-                    status: 0, // Update received value to 0
-                    _token: "{{ csrf_token() }}" // Laravel CSRF token
-                },
-                success: function (response) {
-                    succeed(form, true, true); // Call the success function
-
-                    // Refresh DataTables without reloading the page
-                    $('#yourDataTableID').DataTable().ajax.reload();
-                },
-                error: function () {
-                    alert("Something went wrong.");
-                }
-            });
-        }
-    });
-
-</script>
-<script type="text/javascript">
-    {{--$('body').on('click', '.RevokeButton', function () {--}}
-    {{--    let button = $(this);--}}
-    {{--    let slug = button.attr('data');--}}
-    {{--    let url = '{{ route('admin.importedCommodities.revokedUpdate', 'slug') }}'.replace('slug', slug);--}}
-
-    {{--    // Show SweetAlert2 modal with textarea input--}}
-    {{--    Swal.fire({--}}
-    {{--        title: "Are you sure?",--}}
-    {{--        html: "<strong>Please enter a reason for revoking this application:</strong>", // Use HTML for bold text--}}
-    {{--        input: "textarea", // Change to textarea--}}
-    {{--        inputPlaceholder: "Enter remarks here...",--}}
-    {{--        icon: "warning", // Add warning icon--}}
-    {{--        showCancelButton: true,--}}
-    {{--        confirmButtonText: "Revoke",--}}
-    {{--        cancelButtonText: "Cancel",--}}
-    {{--        width: "500px", // Increase modal width--}}
-    {{--        customClass: {--}}
-    {{--            popup: 'swal2-extra-large-popup',--}}
-    {{--            title: 'swal2-extra-large-title',--}}
-    {{--            htmlContainer: 'swal2-extra-large-content',--}}
-    {{--            input: 'swal2-extra-large-textarea' // Custom class for textarea styling--}}
-    {{--        },--}}
-    {{--        inputAttributes: {--}}
-    {{--            'rows': 5, // Set textarea size--}}
-    {{--            'style': 'resize: vertical;' // Allow vertical resizing--}}
-    {{--        },--}}
-    {{--        inputValidator: (value) => {--}}
-    {{--            if (!value.trim()) {--}}
-    {{--                return "Remarks are required!";--}}
-    {{--            }--}}
-    {{--        }--}}
-    {{--    }).then((result) => {--}}
-    {{--        if (result.isConfirmed) {--}}
-    {{--            let remarks = result.value;--}}
-
-    {{--            // Proceed with revocation if confirmed--}}
-    {{--            $.ajax({--}}
-    {{--                url: url,--}}
-    {{--                type: 'POST',--}}
-    {{--                data: {--}}
-    {{--                    revoked: 'true', // Always set revoked to true--}}
-    {{--                    remarks: remarks // Send remarks--}}
-    {{--                },--}}
-    {{--                headers: {--}}
-    {{--                    {!! __html::token_header() !!}--}}
-    {{--                },--}}
-    {{--                success: function (response) {--}}
-    {{--                    applicationTbl.draw();--}}
-    {{--                    console.log(response);--}}
-
-    {{--                    // Update button class and text--}}
-    {{--                    button.removeClass('btn-success').addClass('btn-danger').text('Revoked');--}}
-
-    {{--                    // Show success message with large size--}}
-    {{--                    Swal.fire({--}}
-    {{--                        title: "Revoked!",--}}
-    {{--                        text: "The application has been successfully revoked.",--}}
-    {{--                        icon: "success",--}}
-    {{--                        width: "600px",--}}
-    {{--                        customClass: {--}}
-    {{--                            popup: 'swal2-extra-large-popup',--}}
-    {{--                            title: 'swal2-extra-large-title',--}}
-    {{--                            content: 'swal2-extra-large-content',--}}
-    {{--                        }--}}
-    {{--                    });--}}
-    {{--                },--}}
-    {{--                error: function (response) {--}}
-    {{--                    console.log(response);--}}
-    {{--                    Swal.fire({--}}
-    {{--                        title: "Error!",--}}
-    {{--                        text: "Something went wrong while revoking the application.",--}}
-    {{--                        icon: "error",--}}
-    {{--                        width: "600px",--}}
-    {{--                        customClass: {--}}
-    {{--                            popup: 'swal2-extra-large-popup',--}}
-    {{--                            title: 'swal2-extra-large-title',--}}
-    {{--                            content: 'swal2-extra-large-content',--}}
-    {{--                        }--}}
-    {{--                    });--}}
-    {{--                }--}}
-    {{--            });--}}
-    {{--        }--}}
-    {{--    });--}}
-    {{--});--}}
-
-</script>
-
-<script type="text/javascript">
-$('body').on('click', '.RevokeButton', function () {
+    $('body').on('click', '.RevokeButton', function () {
         let button = $(this);
+        let originalText = button.html(); // Save original button content
         let slug = button.attr('data');
         let url = '{{ route('admin.importedCommodities.revokedUpdate', 'slug') }}'.replace('slug', slug);
 
-        // Prompt for remarks before confirmation
-        swal({
+        Swal.fire({
             title: "Are you sure?",
-            text: "Please enter a reason for take back this application:",
-            type: "input",  // Use input type
-            showCancelButton: true,
-            closeOnConfirm: false,
+            html: "<strong>Please enter a reason for taking back this application:</strong>",
+            input: 'textarea',
             inputPlaceholder: "Enter remarks here...",
-        }, function (remarks) {
-            if (remarks === false) return false;  // If cancelled, do nothing
-            if (remarks.trim() === "") {
-                swal.showInputError("Remarks are required!");
-                return false;
-            }
-
-            // Proceed with revocation if confirmed
-            $.ajax({
-                url: url,
-                data: {
-                    revoked: 'true', // Always set revoked to true
-                    remarks: remarks, // Send remarks
-                },
-                type: 'POST',
-                headers: {
-                    {!! __html::token_header() !!}
-                },
-                success: function (response) {
-                    applicationTbl.draw();
-                    console.log(response);
-
-                    // Update button class and text
-                    button.removeClass('btn-success').addClass('btn-danger').text('Revoked');
-
-                    // Show success message
-                    swal("Revoked!", "The application has been successfully revoked.", "success");
-                },
-                error: function (response) {
-                    console.log(response);
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Revoke it!',
+            cancelButtonText: 'Cancel',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Remarks are required!';
                 }
-            });
+            },
+            width: '700px',
+            customClass: {
+                title: 'swal2-title-lg',
+                htmlContainer: 'swal2-html-lg',
+                input: 'swal2-input-lg',
+                confirmButton: 'swal2-confirm-lg',
+                cancelButton: 'swal2-cancel-lg'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let remarks = result.value;
+
+                // Show loading state on the button
+                button.prop('disabled', true).html('<i class="fa fa-circle-o-notch fa-spin"></i> Submitting...');
+
+                // Proceed with revocation
+                $.ajax({
+                    url: url,
+                    data: {
+                        revoked: 'true',
+                        remarks: remarks,
+                    },
+                    type: 'POST',
+                    headers: {
+                        {!! __html::token_header() !!}
+                    },
+                    success: function (response) {
+                        applicationTbl.draw();
+
+                        // Update button to revoked state
+                        button.removeClass('btn-success').addClass('btn-danger').html('Revoked');
+
+                        // Enhanced success notification
+                        Swal.fire({
+                            title: 'Revoked!',
+                            text: 'The application has been successfully taken back.',
+                            icon: 'success',
+                            width: '500px',
+                            customClass: {
+                                title: 'swal2-title-lg',
+                                htmlContainer: 'swal2-html-lg',
+                                confirmButton: 'swal2-confirm-lg'
+                            }
+                        });
+                    },
+                    error: function (response) {
+                        console.log(response);
+                        button.prop('disabled', false).html(originalText);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something went wrong while taking back the application.',
+                            icon: 'error',
+                            width: '600px',
+                            customClass: {
+                                title: 'swal2-title-lg',
+                                htmlContainer: 'swal2-html-lg',
+                                confirmButton: 'swal2-confirm-lg'
+                            }
+                        });
+                    }
+                });
+            }
         });
     });
+
+</script>
+
+
+<script type="text/javascript">
+    {{--$('body').on('click', '.RevokeButton', function () {--}}
+    {{--    let button = $(this);--}}
+    {{--    let originalText = button.html(); // Save original button content--}}
+    {{--    let slug = button.attr('data');--}}
+    {{--    let url = '{{ route('admin.importedCommodities.revokedUpdate', 'slug') }}'.replace('slug', slug);--}}
+
+    {{--    // Prompt for remarks before confirmation--}}
+    {{--    swal({--}}
+    {{--        title: "Are you sure?",--}}
+    {{--        text: "Please enter a reason for taking back this application:",--}}
+    {{--        type: "input",--}}
+    {{--        showCancelButton: true,--}}
+    {{--        closeOnConfirm: false,--}}
+    {{--        inputPlaceholder: "Enter remarks here...",--}}
+    {{--    }, function (remarks) {--}}
+    {{--        if (remarks === false) return false;--}}
+    {{--        if (remarks.trim() === "") {--}}
+    {{--            swal.showInputError("Remarks are required!");--}}
+    {{--            return false;--}}
+    {{--        }--}}
+
+    {{--        // Show loading state on the button--}}
+    {{--        button.prop('disabled', true).html('<i class="fa fa-circle-o-notch fa-spin"></i> Submitting...');--}}
+
+    {{--        // Proceed with revocation if confirmed--}}
+    {{--        $.ajax({--}}
+    {{--            url: url,--}}
+    {{--            data: {--}}
+    {{--                revoked: 'true',--}}
+    {{--                remarks: remarks,--}}
+    {{--            },--}}
+    {{--            type: 'POST',--}}
+    {{--            headers: {--}}
+    {{--                {!! __html::token_header() !!}--}}
+    {{--            },--}}
+    {{--            success: function (response) {--}}
+    {{--                applicationTbl.draw();--}}
+
+    {{--                // Update button to revoked state--}}
+    {{--                button.removeClass('btn-success').addClass('btn-danger').html('Revoked');--}}
+
+    {{--                swal("Revoked!", "The application has been successfully take back.", "success");--}}
+    {{--            },--}}
+    {{--            error: function (response) {--}}
+    {{--                console.log(response);--}}
+    {{--                // Restore button if error occurs--}}
+    {{--                button.prop('disabled', false).html(originalText);--}}
+    {{--                swal("Error!", "Something went wrong while take back.", "error");--}}
+    {{--            }--}}
+    {{--        });--}}
+    {{--    });--}}
+    {{--});--}}
+
+    {{--$('body').on('click', '.RevokeButton', function () {--}}
+{{--        let button = $(this);--}}
+{{--        let slug = button.attr('data');--}}
+{{--        let url = '{{ route('admin.importedCommodities.revokedUpdate', 'slug') }}'.replace('slug', slug);--}}
+
+{{--        // Prompt for remarks before confirmation--}}
+{{--        swal({--}}
+{{--            title: "Are you sure?",--}}
+{{--            text: "Please enter a reason for take back this application:",--}}
+{{--            type: "input",  // Use input type--}}
+{{--            showCancelButton: true,--}}
+{{--            closeOnConfirm: false,--}}
+{{--            inputPlaceholder: "Enter remarks here...",--}}
+{{--        }, function (remarks) {--}}
+{{--            if (remarks === false) return false;  // If cancelled, do nothing--}}
+{{--            if (remarks.trim() === "") {--}}
+{{--                swal.showInputError("Remarks are required!");--}}
+{{--                return false;--}}
+{{--            }--}}
+
+{{--            // Proceed with revocation if confirmed--}}
+{{--            $.ajax({--}}
+{{--                url: url,--}}
+{{--                data: {--}}
+{{--                    revoked: 'true', // Always set revoked to true--}}
+{{--                    remarks: remarks, // Send remarks--}}
+{{--                },--}}
+{{--                type: 'POST',--}}
+{{--                headers: {--}}
+{{--                    {!! __html::token_header() !!}--}}
+{{--                },--}}
+{{--                success: function (response) {--}}
+{{--                    applicationTbl.draw();--}}
+{{--                    console.log(response);--}}
+
+{{--                    // Update button class and text--}}
+{{--                    button.removeClass('btn-success').addClass('btn-danger').text('Revoked');--}}
+
+{{--                    // Show success message--}}
+{{--                    swal("Revoked!", "The application has been successfully revoked.", "success");--}}
+{{--                },--}}
+{{--                error: function (response) {--}}
+{{--                    console.log(response);--}}
+{{--                }--}}
+{{--            });--}}
+{{--        });--}}
+{{--    });--}}
 </script>

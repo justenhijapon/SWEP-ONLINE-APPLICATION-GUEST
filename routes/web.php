@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminsController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\ImportedCommoditiesController;
+use App\Jobs\TestQueueJob;
 use App\Models\User;
 
 Route::group(['as' => 'auth.'], function () {
@@ -177,3 +178,7 @@ Route::get('/receive', function(){
 	return view('test.receive');
 });
 
+Route::get('admin/test-queue', function () {
+    TestQueueJob::dispatch()->delay(now()->addSeconds(10));
+    return '✅ Job dispatched!';
+});

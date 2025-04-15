@@ -100,15 +100,17 @@
                             $OP = \App\Models\Admin\OrderOfPayment::where('slug', $data->slug)->first();
                         @endphp
 
-                        @if($OP->verify == 1)
+                        @if($OP && $OP->verify == 1)
 
                             <p>
                                 <a href="javascript:void(0);" class="download_OP_btn" data-slug="{{ $data->slug }}">
                                     <li class="fa fa-file-pdf-o"></li> Download Order of Payment
                                 </a>
                             </p>
+
+                        @else
+                                <p>No order of payment found.</p>
                         @endif
-{{--                        {{dd($OP->verify)}}--}}
 
                     </div>
                 </div>

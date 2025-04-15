@@ -25,7 +25,7 @@
                      @if($data->revoked == 1 || $data->received == 1 || $dataOP->verify == 0)
                           data-toggle="tooltip" data-placement="bottom" title="Update the Order of Payment First"
                    @endif>
-                   {{ $data->revoked == 1 ? 'Take Back' : ($data->received == 1 ? 'Approved' : 'Mark as Approved') }}
+                   {{ $data->revoked == 1 ? 'Take Backed' : ($data->received == 1 ? 'Approved' : 'Mark as Approved') }}
                </button>
 
           </div>
@@ -87,7 +87,7 @@
      </style>
      <div class="row">
           <div class="col-md-12">
-               <div style="height: 800px; width: 820px; overflow: auto; border: 2px solid #e1edf7; padding-left: 20px; padding-bottom: 20px">
+               <div style="height: 800px; width: 100%; overflow: auto; border: 2px solid #e1edf7; padding-left: 20px; padding-bottom: 20px">
                     <table class="" style="margin-top: 20px;">
                          <tr>
                               <td style="padding-bottom: 30px">Date: {{ \Carbon\Carbon::parse($data->date)->format('F d, Y') }}</td>
@@ -267,10 +267,130 @@
 
 @endsection
 
+<style>
+     .swal2-button-custom {
+          font-size: 1.3rem !important;
+          padding: 10px 10px !important;
+          border: none;
+          border-radius: 5px;
+     }
 
+     .confirm-custom {
+          background-color: #007bff !important; /* Bootstrap Primary */
+          color: #fff !important;
+     }
+
+     .cancel-custom {
+          background-color: #dc3545 !important; /* Bootstrap Danger */
+          color: #fff !important;
+     }
+
+     .success-custom {
+          background-color: #28a745 !important; /* Bootstrap Success */
+          color: #fff !important;
+     }
+</style>
 
 @section('scripts')
 
+<script>
+     $("body").on('submit', "#edit_form", function (e) {
+          e.preventDefault(); // Prevent default form submission
 
+          var form = $(this);
+          var formdata = form.serialize();
+          var slug = form.attr('data');
+          var uri = "{{ route('admin.importedCommodities.update', 'slug') }}".replace('slug', slug);
+
+          Swal.fire({
+               title: "<strong style='font-size: 2.5rem;'>Are you sure?</strong>",
+               html: "<div style='font-size: 1.8rem;'>Make sure all details in the application are accurate and all required attachments are valid before proceeding.</div>",
+               icon: "warning",
+               width: 600,
+               showCancelButton: true,
+               customClass: {
+                    confirmButton: 'swal2-confirm swal2-button-custom confirm-custom',
+                    cancelButton: 'swal2-cancel swal2-button-custom cancel-custom'
+               },
+               buttonsStyling: false, // Required for customClass to apply
+               confirmButtonText: "Yes, Approve it!",
+               cancelButtonText: "Cancel"
+          }).then((result) => {
+               if (result.isConfirmed) {
+                    loading_btn(form); // Custom loading state
+                    $.ajax({
+                         url: uri,
+                         data: formdata,
+                         type: 'PATCH',
+                         success: function (res) {
+                              Swal.fire({
+                                   title: "<strong style='font-size: 2.5rem;'>Success!</strong>",
+                                   html: "<div style='font-size: 1.8rem;'>Application has been Approved.</div>",
+                                   icon: "success",
+                                   width: 450,
+                                   confirmButtonText: "OK",
+                                   customClass: {
+                                        confirmButton: 'swal2-button-custom success-custom'
+                                   },
+                                   buttonsStyling: false
+                              }).then(() => {
+                                   window.location.href = "/admin/importedCommodities?success_message=Application Approved!";
+                              });
+                         },
+                         error: function (response) {
+                              errored(form, response); // Custom error handler
+                              console.log(response);
+                         }
+                    });
+               }
+          });
+     });
+
+
+
+     {{--     @if(\Illuminate\Support\Facades\Request::has('success_message'))--}}
+{{--     notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');--}}
+{{--     window.history.pushState({},document.title,'/admin/importedCommodities')--}}
+{{--     @endif--}}
+
+     {{--$("body").on('submit', "#edit_form", function (e) {--}}
+     {{--     e.preventDefault(); // Prevent default form submission--}}
+     {{--     var form = $(this);--}}
+     {{--     var formdata = form.serialize();--}}
+     {{--     var slug = form.attr('data');--}}
+     {{--     var uri = "{{ route('admin.importedCommodities.update', 'slug') }}";--}}
+     {{--     uri = uri.replace('slug', slug);--}}
+     {{--     swal({--}}
+     {{--          title: "Are you sure?",--}}
+     {{--          text: "Make sure all details in the application are accurate and all required attachments are valid before proceeding.",--}}
+     {{--          type: "warning",--}}
+     {{--          showCancelButton: true,--}}
+     {{--          confirmButtonColor: "#3085d6",--}}
+     {{--          cancelButtonColor: "#d33",--}}
+     {{--          confirmButtonText: "Yes, receive it!",--}}
+     {{--          cancelButtonText: "Cancel",--}}
+     {{--          closeOnConfirm: false--}}
+     {{--     }, function (isConfirm) {--}}
+     {{--          if (isConfirm) {--}}
+     {{--               // Proceed with the AJAX request--}}
+     {{--               loading_btn(form);--}}
+     {{--               $.ajax({--}}
+     {{--                    url: uri,--}}
+     {{--                    data: formdata,--}}
+     {{--                    type: 'PATCH',--}}
+     {{--                    success: function (res) {--}}
+     {{--                         setTimeout(function () {--}}
+     {{--                              window.location.href = "/admin/importedCommodities?success_message=Application Received!";--}}
+     {{--                         });--}}
+     {{--                    },--}}
+     {{--                    error: function (response) {--}}
+     {{--                         errored(form, response);--}}
+     {{--                         console.log(response);--}}
+     {{--                    }--}}
+     {{--               });--}}
+     {{--          }--}}
+     {{--     });--}}
+     {{--});--}}
+</script>
 
 @endsection

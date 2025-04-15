@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\ApplicationFormRequest;
 use App\Http\Requests\Admin\OrderOfPaymentFormRequest;
 use App\Http\Requests\Admin\TransactionTypeRequest;
+use App\Jobs\TestQueueJob;
+use App\Mail\ApplicationApproved;
+use App\Mail\ApplicationTakeBacked;
 use App\Models\Admin\OrderOfPayment;
 use App\Models\User\ICRevoked;
 use App\Models\User\ICSubmitted;
@@ -12,10 +15,12 @@ use App\Models\User\ImportedCommodities;
 use App\Models\User\TransactionType;
 use App\Swep\Repositories\Admin\ImportedCommoditiesRepository;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DataTables;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ImportedCommoditiesController extends Controller
 {
@@ -189,7 +194,14 @@ class ImportedCommoditiesController extends Controller
         $op->approve = true;
         $op->save();
 
-        return response()->json(['slug' => $app_data->slug]);
+        // 🔔 Send email directly to applicant (from ImportedCommodities model)
+        if (!empty($app_data->email)) {
+            Mail::to($app_data->email)->send(new ApplicationApproved($app_data));
+        }
+
+        return response()->json(['success' => true, 'message' => 'Application has been approved and applicant notified.']);
+
+//        return response()->json(['slug' => $app_data->slug]);
     }
 
     public function orderPayment($slug)
@@ -229,6 +241,7 @@ class ImportedCommoditiesController extends Controller
         $app_data->verify = true;
         $app_data->save();
 
+
         return response()->json(['slug' => $app_data->slug]);
     }
 
@@ -250,21 +263,61 @@ class ImportedCommoditiesController extends Controller
         $ic_revoked->user_created = $data->user_created;
         $ic_revoked->submission_date = now();
         $ic_revoked->ip_created = $ipAddress;
-
-        // Save the remarks
-        $ic_revoked->remarks = $request->input('remarks'); // Store remarks from the request
-
-
+        $ic_revoked->remarks = $request->input('remarks');
         $ic_revoked->save();
-        return response()->json(['success' => true, 'message' => 'Application revoked successfully']);
 
-//        return response()->json([
-//            'slug' => $data->slug,
-//            'revoked' => $data->revoked,
-//            'revoked_date' => $data->revoked_date,
-//            'received' => $data->received
-//        ]);
+
+        // 🔔 Send email directly to applicant (from ImportedCommodities model)
+        if (!empty($data->email)) {
+            Mail::to($data->email)->send(new ApplicationTakeBacked($data));
+        }
+
+//
+//        if (!empty($data->email)) {
+////            $delay = Carbon::now()->addMinutes(5); // Set delay time as needed
+////            Mail::to($data->email)->later($delay, new ApplicationTakeBacked($data));
+//            Mail::to($data->email)->queue(
+//                (new ApplicationTakeBacked($data))->delay(now()->addMinutes(1))
+//            );
+//        }
+
+
+        return response()->json(['success' => true, 'message' => 'Application has been taken back and applicant notified.']);
     }
+
+
+//    public function revokedUpdate($slug, Request $request)
+//    {
+//        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
+//
+//        // Always set revoked to 1 and received to 0
+//        $data->revoked = 1;
+//        $data->received = 0;
+//        $data->submission = 0;
+//        $data->revoked_date = now(); // Always update revoked_date
+//        $data->update();
+//
+//        $ic_revoked = new ICRevoked();
+//        $ipAddress = $request->ip();
+//        $ic_revoked->slug = $data->slug;
+//        $ic_revoked->user_created = $data->user_created;
+//        $ic_revoked->submission_date = now();
+//        $ic_revoked->ip_created = $ipAddress;
+//
+//        // Save the remarks
+//        $ic_revoked->remarks = $request->input('remarks'); // Store remarks from the request
+//
+//
+//        $ic_revoked->save();
+//        return response()->json(['success' => true, 'message' => 'Application revoked successfully']);
+//
+////        return response()->json([
+////            'slug' => $data->slug,
+////            'revoked' => $data->revoked,
+////            'revoked_date' => $data->revoked_date,
+////            'received' => $data->received
+////        ]);
+//    }
 
 
 
@@ -307,4 +360,11 @@ class ImportedCommoditiesController extends Controller
 //        $transaction_type->expedite_fee = $request->expediteFee;
 //        $transaction_type->save();
 //    }
+
+    public function testQueue()
+    {
+        TestQueueJob::dispatch()->delay(now()->addSeconds(10));
+        return 'Job dispatched!';
+    }
+
 }

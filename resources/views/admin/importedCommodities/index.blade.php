@@ -246,49 +246,7 @@
 
 
 
-            @if(\Illuminate\Support\Facades\Request::has('success_message'))
-                notify('{{\Illuminate\Support\Facades\Request::get('success_message')}}', 'success');
-                window.history.pushState({},document.title,'/admin/importedCommodities')
-            @endif
 
-            $("body").on('submit', "#edit_form", function (e) {
-                e.preventDefault(); // Prevent default form submission
-                var form = $(this);
-                var formdata = form.serialize();
-                var slug = form.attr('data');
-                var uri = "{{ route('admin.importedCommodities.update', 'slug') }}";
-                uri = uri.replace('slug', slug);
-                swal({
-                        title: "Are you sure?",
-                        text: "Make sure all details in the application are accurate and all required attachments are valid before proceeding.",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, receive it!",
-                        cancelButtonText: "Cancel",
-                        closeOnConfirm: false
-                    }, function (isConfirm) {
-                    if (isConfirm) {
-                        // Proceed with the AJAX request
-                        loading_btn(form);
-                        $.ajax({
-                            url: uri,
-                            data: formdata,
-                            type: 'PATCH',
-                            success: function (res) {
-                                setTimeout(function () {
-                                    window.location.href = "/admin/importedCommodities?success_message=Application Received!";
-                                });
-                            },
-                            error: function (response) {
-                                errored(form, response);
-                                console.log(response);
-                            }
-                        });
-                    }
-                });
-            });
 
             $("body").on("click",".order_payment_btn", function(){
                 btn = $(this);

@@ -59,6 +59,37 @@
 @endsection
 
 @section('scripts')
+
+    <style>
+        .swal2-title-lg {
+            font-size: 2.5rem !important;
+        }
+
+        .swal2-text-lg {
+            font-size: 1.8rem !important;
+        }
+
+        .swal2-popup-lg {
+            padding: 2.8em !important;
+        }
+
+        .swal-wide {
+            width: 450px !important;
+        }
+
+        .swal-title-large {
+            font-size: 2.8rem !important;
+        }
+
+        .swal-text-large {
+            font-size: 1.8rem !important;
+        }
+
+        .swal-button-large {
+            font-size: 1.5rem !important;
+            padding: 10px 20px !important;
+        }
+    </style>
 <script type="text/javascript">
     $(document).ready(function(){
         active = '';
@@ -160,12 +191,10 @@
 
         })
 
-
         $("body").on("click", ".approved", function () {
             let button = $(this);
-            tr_id = $(this).attr('data');
-            uri = "{{route('admin.preRegistration.approved', 'id')}}";
-            uri = uri.replace('id', tr_id);
+            let tr_id = button.attr('data');
+            let uri = "{{route('admin.preRegistration.approved', 'id')}}".replace('id', tr_id);
 
             // Save original button content
             let originalHtml = button.html();
@@ -181,47 +210,134 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
-                    swal({
-                        title: "Success!",
-                        text: "Successfully Approved.",
-                        type: "success"
-                    }, function () {
-                        // Hide the modal
-                        $(".modal").modal("hide");
-
-                        // Reload the page
-                        location.reload();
+                    preRegistrationTbl.draw();
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Successfully Approved.',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            title: 'swal2-title-lg',
+                            popup: 'swal2-popup-lg',
+                            htmlContainer: 'swal2-text-lg'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $(".modal").modal("hide");
+                            // location.reload();
+                        }
                     });
                 },
                 error: function (response) {
                     console.log(response);
-
-                    // Revert button on error
                     button.html(originalHtml);
                     button.prop('disabled', false);
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong while approving.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+
+        $("body").on("click", ".delete_btn", function () {
+            const btn = $(this);
+            const slug = btn.attr('data');
+            let uri = "{{ route('admin.preRegistration.destroy', 'slug') }}";
+            uri = uri.replace('slug', slug);
+
+            Swal.fire({
+                title: 'Delete Applicant?',
+                text: 'Are you sure to DELETE this record?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Yes, DELETE it!',
+                customClass: {
+                    popup: 'swal-wide',
+                    title: 'swal-title-large',
+                    htmlContainer: 'swal-text-large',
+                    confirmButton: 'swal-button-large',
+                    cancelButton: 'swal-button-large'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    delete_item(uri, btn, preRegistrationTbl);
                 }
             });
         });
 
 
-        $("body").on("click",".delete_btn", function(){
-            btn = $(this);
-            slug = btn.attr('data');
-            uri = "{{route('admin.preRegistration.destroy','slug')}}";
-            uri = uri.replace('slug',slug);
-            swal({
-                    title: "Delete Transaction Type?",
-                    text: "Are you sure to DELETE this record?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, DELETE it!",
-                    closeOnConfirm: false
-                },
-                function () {
-                    delete_item(uri,btn,preRegistrationTbl);
-                });
-        })
+
+
+
+    {{--$("body").on("click", ".approved", function () {--}}
+        {{--    let button = $(this);--}}
+        {{--    tr_id = $(this).attr('data');--}}
+        {{--    uri = "{{route('admin.preRegistration.approved', 'id')}}";--}}
+        {{--    uri = uri.replace('id', tr_id);--}}
+
+        {{--    // Save original button content--}}
+        {{--    let originalHtml = button.html();--}}
+
+        {{--    // Show loading spinner--}}
+        {{--    button.html('<span class="fa fa-circle-o-notch fa-spin" role="status" aria-hidden="true"></span> Approving...');--}}
+        {{--    button.prop('disabled', true);--}}
+
+        {{--    $.ajax({--}}
+        {{--        url: uri,--}}
+        {{--        type: 'POST',--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        },--}}
+        {{--        success: function (response) {--}}
+        {{--            swal({--}}
+        {{--                title: "Success!",--}}
+        {{--                text: "Successfully Approved.",--}}
+        {{--                type: "success"--}}
+        {{--            }, function () {--}}
+        {{--                // Hide the modal--}}
+        {{--                $(".modal").modal("hide");--}}
+
+        {{--                // Reload the page--}}
+        {{--                // location.reload();--}}
+        {{--            });--}}
+        {{--        },--}}
+        {{--        error: function (response) {--}}
+        {{--            console.log(response);--}}
+
+        {{--            // Revert button on error--}}
+        {{--            button.html(originalHtml);--}}
+        {{--            button.prop('disabled', false);--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--});--}}
+
+
+        {{--$("body").on("click",".delete_btn", function(){--}}
+        {{--    btn = $(this);--}}
+        {{--    slug = btn.attr('data');--}}
+        {{--    uri = "{{route('admin.preRegistration.destroy','slug')}}";--}}
+        {{--    uri = uri.replace('slug',slug);--}}
+        {{--    swal({--}}
+        {{--            title: "Delete Transaction Type?",--}}
+        {{--            text: "Are you sure to DELETE this record?",--}}
+        {{--            type: "warning",--}}
+        {{--            showCancelButton: true,--}}
+        {{--            confirmButtonColor: "#DD6B55",--}}
+        {{--            confirmButtonText: "Yes, DELETE it!",--}}
+        {{--            closeOnConfirm: false--}}
+        {{--        },--}}
+        {{--        function () {--}}
+        {{--            delete_item(uri,btn,preRegistrationTbl);--}}
+        {{--        });--}}
+        {{--})--}}
+
+
 
     });
 </script>

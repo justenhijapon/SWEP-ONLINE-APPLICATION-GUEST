@@ -69,7 +69,7 @@
             <li class="">
                 <button data="{{ $data->slug }}" id="revokedButton_{{ $data->slug }}"  data-toggle="tooltip" title=""
                         class="RevokeButton btn btn-outline-warning {{ $data->revoked == 1 ? 'btn-danger' : 'btn-success' }} mr-1 w-auto">
-                    {{ $data->revoked == 1 ? 'take backed' : 'take back' }}
+                    {{ $data->revoked == 1 ? 'Take Backed' : 'Take Back' }}
                 </button>
             </li>
         </ul>

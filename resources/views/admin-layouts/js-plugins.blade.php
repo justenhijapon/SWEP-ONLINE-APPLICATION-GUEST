@@ -50,4 +50,4 @@
 <script src="{{ asset('template/bower_components/chart.js/Chart.js') }}"></script>
 
 <script src="{{ asset('template/inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
-{{--<script src="{{ asset('template/inspinia/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>--}}
+<script src="{{ asset('template/inspinia/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>

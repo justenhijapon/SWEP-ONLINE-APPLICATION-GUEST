@@ -131,14 +131,14 @@
                                    ]) !!}
 
 									{!! \App\Core\Helpers\__form2::textbox('first_name', [
-                                       'label'=>'Middle Name:*',
+                                       'label'=>'First Name:*',
                                        'cols'=>'4',
 									   'class'=>'text-uppercase',
                                        'placeholder' => '',
                                    ]) !!}
 
 									{!! \App\Core\Helpers\__form2::textbox('middle_name', [
-                                       'label'=>'First Name:*',
+                                       'label'=>'Middle Name:*',
                                        'cols'=>'4',
 									   'class'=>'text-uppercase',
                                        'placeholder' => '',
