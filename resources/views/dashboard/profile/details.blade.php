@@ -14,10 +14,119 @@
 
       <div class="box box-default">
         <div class="box-body box-profile">
-          <img class="profile-user-img img-responsive img-circle" src="{{asset('images/avatar.jpeg')}}" alt="User profile picture">
 
-          <h3 class="profile-username text-center">{{ Auth::check() ? Auth::user()->fullname : '' }}</h3>
+{{--          <form action="{{ route('dashboard.profile.upload') }}" method="POST" enctype="multipart/form-data">--}}
+{{--            @csrf--}}
+{{--            <div class="text-center mb-3">--}}
+{{--              <img id="preview" class="profile-user-img img-responsive img-circle" width="100" height="100"--}}
+{{--                   src="{{ Auth::user()->user_profile_path ? url('show_file_custom_user/users/'. Auth::user()->slug. '/user_profile_path') : asset('images/avatar.jpeg') }}"--}}
+{{--                   alt="User profile picture">--}}
+{{--            </div>--}}
 
+{{--            <div class="form-group text-center">--}}
+{{--              <input type="file" name="profile_picture" accept="image/*" onchange="previewImage(event)" class="form-control-file mb-2">--}}
+{{--              <button type="submit" class="btn btn-primary">Upload</button>--}}
+{{--            </div>--}}
+
+{{--          </form>--}}
+
+
+
+          <style>
+            .upload-box {
+              border: 2px dashed #007bff;
+              width: 200px;
+              height: 200px;
+              border-radius: 10px;
+              overflow: hidden;
+              position: relative;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              cursor: pointer;
+              background-color: #fff;
+              color: #007bff;
+              font-family: sans-serif;
+            }
+
+            .upload-placeholder {
+              z-index: 1;
+              text-align: center;
+            }
+
+            .upload-icon {
+              font-size: 2rem;
+              line-height: 1;
+            }
+
+            .upload-box img {
+              position: absolute;
+              inset: 0; /* shorthand for top/right/bottom/left: 0 */
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              object-position: center;
+              border-radius: 10px;
+            }
+
+            .upload-box::after {
+              content: "Click or Drag to Upload";
+              position: absolute;
+              inset: 0;
+              background: rgba(0, 123, 255, 0.7); /* translucent blue */
+              color: white;
+              font-weight: bold;
+              font-size: 14px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              opacity: 0;
+              transition: opacity 0.3s ease;
+              border-radius: 10px;
+              pointer-events: none;
+              padding: 10px;
+            }
+
+            .upload-box:hover::after {
+              opacity: 1;
+            }
+
+          </style>
+
+
+
+          {{--          <img class="profile-user-img img-responsive img-circle" width="100" src="{{asset('images/avatar.jpeg')}}" alt="User profile picture">--}}
+
+          {{--            <img class="profile-user-img img-responsive img-circle" width="100" src="{{ asset('images/avatar.jpeg') }}" alt="User profile picture">--}}
+          {{--            <img id="preview" class="profile-user-img img-responsive img-circle" width="100" height="100"--}}
+          {{--                 src="{{ Auth::user()->user_profile_path ? url('show_file_custom_user/users/'. Auth::user()->slug. '/user_profile_path') : asset('images/avatar.jpeg') }}"--}}
+          {{--                 alt="User profile picture">--}}
+
+          <div class="text-center" style="margin-left: 25%">
+            <form action="{{ route('dashboard.profile.upload') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+
+              <label for="profile_picture" class="upload-box">
+                <input type="file" id="profile_picture" name="profile_picture" accept="image/*" hidden onchange="previewImage(event)">
+                <div id="uploadPreview" class="upload-placeholder">
+                  @if(Auth::user()->user_profile_path)
+                    <img src="{{ url('show_file_custom_user/users/' . Auth::user()->slug . '/user_profile_path') }}" alt="Current Profile Picture">
+                  @else
+                    <div class="upload-icon">+</div>
+                    <div>Upload</div>
+                  @endif
+                </div>
+              </label>
+            </form>
+          </div>
+
+
+          <h3 class="profile-username text-center" style="margin-bottom: 0">
+            {{ Auth::user()->first_name }}
+            {{ Auth::user()->middle_name ? strtoupper(substr(Auth::user()->middle_name, 0, 1)) . '.' : '' }}
+            {{ Auth::user()->last_name }}
+          </h3>
           <p class="text-muted text-center">{{ Auth::check() ? Auth::user()->position : '' }}</p>
 
         </div>
@@ -36,13 +145,13 @@
         <div class="box-body">
 
           <strong><i class="fa fa-user margin-r-5"></i> Firstname</strong>
-          <p class="text-muted">{{ Auth::user()->firstname }}</p>
+          <p class="text-muted">{{ Auth::user()->first_name }}</p>
 
           <strong><i class="fa fa-user margin-r-5"></i> Middlename</strong>
-          <p class="text-muted">{{ Auth::user()->middlename }}</p>
+          <p class="text-muted">{{ Auth::user()->middle_name }}</p>
 
           <strong><i class="fa fa-user margin-r-5"></i> Lastname</strong>
-          <p class="text-muted">{{ Auth::user()->lastname }}</p>
+          <p class="text-muted">{{ Auth::user()->last_name }}</p>
 
           <strong><i class="fa fa-male margin-r-5"></i> Position</strong>
           <p class="text-muted">{{ Auth::user()->position }}</p>
@@ -66,21 +175,23 @@
             <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#username_bar">
               <h4 class="box-title">
                 <span>
-                  Username
+                  Email
                 </span>
               </h4>
             </div>
-            <div id="username_bar" class="panel-collapse collapse {{ $errors->has('username') ? 'in' : '' }}">
+            <div id="username_bar" class="panel-collapse collapse {{ $errors->has('email') ? 'in' : '' }}">
               <div class="box-body">
 
                 <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_username', Auth::user()->slug) }}">
 
                   @csrf
 
+                  @method('PATCH')
+
                   <input name="_method" value="PATCH" type="hidden">
 
                   {!! __form::textbox_inline(
-                      'username', 'text', 'Username', 'Username', old('username') ? old('username') : Auth::user()->username, $errors->has('username') || Session::has('PROFILE_USERNAME_EXIST'), $errors->first('username'), ''
+                      'email', 'text', 'Email', 'Email', old('email') ? old('email') : Auth::user()->email, $errors->has('email') || Session::has('PROFILE_USERNAME_EXIST'), $errors->first('email'), ''
                   ) !!}
 
                   <div class="form-group">
@@ -116,6 +227,7 @@
                 <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_password', Auth::user()->slug) }}">
 
                   @csrf
+                  @method('PATCH')
 
                   <input name="_method" value="PATCH" type="hidden">
 
@@ -146,38 +258,38 @@
 
           {{-- COLOR SETTINGS --}}
 
-          <div class="panel box box-default">
-            <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#color_scheme_bar">
-              <h4 class="box-title">
-                <span>
-                  Color Scheme
-                </span>
-              </h4>
-            </div>
-            <div id="color_scheme_bar" class="panel-collapse collapse {{ $errors->has('color') ? 'in' : '' }}">
-              <div class="box-body">
+{{--          <div class="panel box box-default">--}}
+{{--            <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#color_scheme_bar">--}}
+{{--              <h4 class="box-title">--}}
+{{--                <span>--}}
+{{--                  Color Scheme--}}
+{{--                </span>--}}
+{{--              </h4>--}}
+{{--            </div>--}}
+{{--            <div id="color_scheme_bar" class="panel-collapse collapse {{ $errors->has('color') ? 'in' : '' }}">--}}
+{{--              <div class="box-body">--}}
 
-                <form id="profile_update_account_color" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_color', Auth::user()->slug) }}">
+{{--                <form id="profile_update_account_color" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_color', Auth::user()->slug) }}">--}}
 
-                  @csrf
+{{--                  @csrf--}}
 
-                  <input name="_method" value="PATCH" type="hidden">
+{{--                  <input name="_method" value="PATCH" type="hidden">--}}
 
-                  {!! __form::select_static(
-                    '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, __static::user_colors(), $errors->has('color'), $errors->first('color'), '', ''
-                  ) !!}
+{{--                  {!! __form::select_static(--}}
+{{--                    '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, __static::user_colors(), $errors->has('color'), $errors->first('color'), '', ''--}}
+{{--                  ) !!}--}}
 
-                  <div class="form-group">
-                    <div style="margin-top:24px;" class="col-sm-8">
-                      <button type="submit" class="btn btn-default">Save Changes</button>
-                    </div>
-                  </div>
+{{--                  <div class="form-group">--}}
+{{--                    <div style="margin-top:24px;" class="col-sm-8">--}}
+{{--                      <button type="submit" class="btn btn-default">Save Changes</button>--}}
+{{--                    </div>--}}
+{{--                  </div>--}}
 
-                </form>
+{{--                </form>--}}
 
-              </div>
-            </div>
-          </div>
+{{--              </div>--}}
+{{--            </div>--}}
+{{--          </div>--}}
 
 
           {{-- Activity --}}
@@ -186,15 +298,15 @@
           <hr>
 
           <strong><i class="fa fa-clock-o "></i> Last Login Time</strong>
-          <p class="text-muted">{{ __dataType::date_parse(Auth::user()->last_login_time, 'M d, Y h:i A') }}</p>
+          <p class="text-muted">{{ __dataType::date_parse(Auth::user()->last_activity, 'M d, Y h:i A') }}</p>
       
-          <strong><i class="fa  fa-desktop margin-r-5"></i> Last Login Machine</strong>
-          <p class="text-muted">{{ Auth::user()->last_login_machine }}</p>
-         
+{{--          <strong><i class="fa  fa-desktop margin-r-5"></i> Last Login Machine</strong>--}}
+{{--          <p class="text-muted">{{ Auth::user()->last_login_machine }}</p>--}}
 
           <strong><i class="fa  fa-asterisk margin-r-5"></i> Last Login Local IP</strong>
           <p class="text-muted">{{ Auth::user()->last_login_ip }}</p>
 
+      </div>
       </div>
 
     </div>
@@ -206,11 +318,73 @@
 @endsection
 
 
-
-
-
-
 @section('scripts')
+
+  <script>
+    function previewImage(event) {
+      const fileInput = event.target;
+      const previewBox = document.getElementById('uploadPreview');
+
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          previewBox.innerHTML = `<img src="${e.target.result}" alt="New Profile Preview">`;
+
+          // Auto-submit the form after preview loads
+          setTimeout(() => {
+            fileInput.closest('form').submit();
+          }, 200); // slight delay to ensure preview renders first
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+      }
+    }
+  </script>
+
+
+  {{--  <script>--}}
+{{--    function previewImage(event) {--}}
+{{--      const fileInput = event.target;--}}
+{{--      const previewBox = document.getElementById('uploadPreview');--}}
+
+{{--      if (fileInput.files && fileInput.files[0]) {--}}
+{{--        const reader = new FileReader();--}}
+
+{{--        reader.onload = function (e) {--}}
+{{--          previewBox.innerHTML = `<img src="${e.target.result}" alt="New Profile Preview">`;--}}
+{{--        };--}}
+
+{{--        reader.readAsDataURL(fileInput.files[0]);--}}
+{{--      }--}}
+{{--    }--}}
+{{--  </script>--}}
+
+  <script>
+    Dropzone.options.profileDropzone = {
+      paramName: "profile_picture",
+      maxFilesize: 2, // MB
+      maxFiles: 1,
+      acceptedFiles: 'image/*',
+      dictDefaultMessage: "Drag & drop your profile picture here or click to upload.",
+      init: function () {
+        this.on("success", function (file, response) {
+          // Optionally reload image preview
+          location.reload();
+        });
+      }
+    };
+  </script>
+
+{{--  <script>--}}
+{{--    function previewImage(event) {--}}
+{{--      const reader = new FileReader();--}}
+{{--      reader.onload = function() {--}}
+{{--        document.getElementById('preview').src = reader.result;--}}
+{{--      };--}}
+{{--      reader.readAsDataURL(event.target.files[0]);--}}
+{{--    }--}}
+{{--  </script>--}}
 
   <script type="text/javascript">
     

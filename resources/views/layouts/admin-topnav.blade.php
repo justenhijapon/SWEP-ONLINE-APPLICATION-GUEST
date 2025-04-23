@@ -8,8 +8,8 @@
 {{--    </form>--}}
   </div>
   <ul class="nav navbar-top-links">
-    <li style="padding: 8px; text-align: center">
-      <span class="m-r-sm text-muted welcome-message"><h4 class="no-margin">Welcome to SRA Web Portal - Online Application</h4></span>
+    <li style="padding: 8px; text-align: center;">
+      <span class="m-r-sm text-muted welcome-message"><h2 style="horiz-align: center; margin-top: 5px; margin-bottom: 0;"><strong style="margin: 0">Welcome to SRA Web Portal - Online Application</strong></h2></span>
     </li>
   </ul>
   <ul class="nav navbar-top-links navbar-right">

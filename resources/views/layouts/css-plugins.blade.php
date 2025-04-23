@@ -29,6 +29,8 @@
 
 <link href="{{asset('template/inspinia/css/plugins/switchery/switchery.css')}}" rel="stylesheet">
 
+
+
 {{-- <link type="text/css" rel="stylesheet" href="{{ asset('css/app_star.css') }}">
 Charts
 <link rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">

@@ -57,6 +57,8 @@
 <script src="{{asset('template/inspinia/js/plugins/wow/wow.min.js')}}"></script>
 
 
+
+
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 {{--<script type="text/javascript" src="{{ asset('js/app_star.js') }}"></script>--}}
 {{-- Datatables --}}

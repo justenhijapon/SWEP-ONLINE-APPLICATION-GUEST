@@ -3,7 +3,16 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <img alt="image" style="margin-left: 25%;" class="rounded-circle" width="80" src="{{asset('images/avatar.jpeg')}}"/><br>
+{{--                    <img alt="image" style="margin-left: 25%;" class="rounded-circle" width="80" height="80" src="{{ Auth::user()->user_profile_path ? url('show_file_custom_user/users/'. Auth::user()->slug. '/user_profile_path') : asset('images/avatar.jpeg') }}"/><br>--}}
+                   <div style="text-align: center">
+                       <img alt="image" loading="lazy" style=" border: 1px solid rgb(47, 64, 80);
+                                    border-radius: 4px;
+                                    padding: 5px;
+                                    width: 150px;
+                                    height: 150px;
+                                    margin-right: 5px;" class="image-clean" width="80" src="{{ Auth::user()->user_profile_path ? url('show_file_custom_user/users/'. Auth::user()->slug. '/user_profile_path') : asset('images/avatar.jpeg') }}"/>
+                   </div>
+                    <br>
 
 {{--                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">--}}
                         <span class="text-muted m-t-sm font-bold" style="font-size: medium; margin-left: 15%" >{{Auth::guard('web')->user()->first_name}} {{Auth::guard('web')->user()->last_name}}</span>
@@ -37,6 +46,7 @@
 {{--                    <i class="fa fa-user"></i>--}}
 {{--                    <span class="nav-label">Profile</span>--}}
 {{--                </a>--}}
+
 {{--            </li>--}}
             @if(count($global_user_menus) > 0)
                 @foreach($global_user_menus as $key => $label)

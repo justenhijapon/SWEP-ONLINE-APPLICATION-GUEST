@@ -92,6 +92,7 @@
 	        		{!! __form::a_textbox( 12,'Label','menu_label', 'text', 'Sidebar group','', '')!!}
 	        		{!! __form::a_select(6, 'Is nav', 'menu_is_nav', ['Yes' => 1, 'No' => 0], '', '') !!}
 	        		{!! __form::a_select(6, 'Is dropdown', 'menu_is_dropdown', ['Yes' => 1, 'No' => 0], '', '') !!}
+	        		{!! __form::a_select(12, 'Belongs to', 'menu_belongs_to', ['Admin' => 'admin', 'User' => 'user'], '', '') !!}
 				</div>
       		</div>
 			<div class="modal-footer">

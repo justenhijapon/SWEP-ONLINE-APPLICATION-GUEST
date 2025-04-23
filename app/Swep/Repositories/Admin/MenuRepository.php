@@ -51,6 +51,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu->icon = $request->menu_icon;
         $menu->is_nav = $request->menu_is_nav;
         $menu->is_dropdown = $request->menu_is_dropdown;
+        $menu->belongs_to = $request->menu_belongs_to;
         $menu->created_at = $this->carbon->now();
         $menu->updated_at = $this->carbon->now();
         $menu->ip_created = request()->ip();
@@ -80,7 +81,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu->label = $request->menu_label;
         $menu->is_nav = $request->menu_is_nav;
         $menu->is_dropdown = $request->menu_is_dropdown;
-    
+        $menu->belongs_to = $request->menu_belongs_to;
         $menu->updated_at = $this->carbon->now();
         $menu->ip_updated = request()->ip();
         $menu->user_updated = $this->auth->guard('admin')->user()->slug;

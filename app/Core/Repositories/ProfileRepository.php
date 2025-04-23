@@ -31,7 +31,7 @@ class ProfileRepository extends BaseRepository implements ProfileInterface {
     public function updateUsername($request, $slug){
 
         $user = $this->user_repo->findBySlug($slug);
-        $user->username = $request->username;
+        $user->email = $request->email;
         $user->is_online = 0;
         $user->save();
 

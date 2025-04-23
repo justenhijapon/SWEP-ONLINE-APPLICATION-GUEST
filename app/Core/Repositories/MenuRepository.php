@@ -87,7 +87,10 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu->updated_at = $this->carbon->now();
         $menu->ip_updated = request()->ip();
         $menu->user_updated = $this->auth->user()->user_id;
+        $menu->belongs_to = $request->belongs_to;
+//        dd($menu->save());
         $menu->save();
+
 
         $menu->submenu()->delete();
         

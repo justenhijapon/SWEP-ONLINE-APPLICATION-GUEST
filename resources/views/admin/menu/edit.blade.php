@@ -12,6 +12,7 @@
 		{!! __form::a_textbox( 12,'Label','menu_label', 'text', 'Sidebar group',$menu->label, '')!!}
 		{!! __form::a_select(6, 'Is nav', 'menu_is_nav', ['Yes' => 1, 'No' => 0], $menu->is_nav, '') !!}
 		{!! __form::a_select(6, 'Is dropdown', 'menu_is_dropdown', ['Yes' => 1, 'No' => 0], $menu->is_dropdown, '') !!}
+		{!! __form::a_select(12, 'Belongs to', 'menu_belongs_to', ['Admin' => 'admin', 'User' => 'user'], $menu->belongs_to, '') !!}
 	</div>
 @endsection
 

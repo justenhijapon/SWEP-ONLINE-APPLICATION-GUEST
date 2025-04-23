@@ -37,10 +37,14 @@ Route::group(['as' => 'auth.'], function () {
 		Route::resource('users', 'UserController');
 		/** PROFILE **/
 		Route::get('/profile', 'ProfileController@details')->name('profile.details');
+
 		Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
 		Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
 		Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
-		/** MENU **/
+        Route::post('/profile/upload', 'ProfileController@upload')->name('profile.upload');
+//        Route::post('/profile/upload', [ProfileController::class, 'upload'])->name('profile.upload');
+
+        /** MENU **/
 
         Route::resource('std/premix','PremixController',[
             'as' => 'std'
@@ -142,7 +146,7 @@ Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admi
 
 //    Route::get('show_file_custom/{tableName}/{slug}/{columnName}','Admin\HomeController@showFileCustom')->name('show_file_custom');
 
-    Route::get('show_file_custom/{tableName}/{slug}/{columnName}', 'Admin\HomeController@showFileCustom')->name('show_file_custom');
+//    Route::get('show_file_custom/{tableName}/{slug}/{columnName}', 'Admin\HomeController@showFileCustom')->name('show_file_custom');
     Route::get('show_file_custom_user/{tableName}/{slug}/{columnName}', 'User\HomeController@showFileCustom')->name('show_file_custom');
 
 Route::patch('/dashboard/ImportedCommodities/{slug}', [ImportedCommoditiesController::class, 'update'])

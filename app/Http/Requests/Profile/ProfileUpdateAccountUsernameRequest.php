@@ -22,7 +22,7 @@ class ProfileUpdateAccountUsernameRequest extends FormRequest{
     	
         return [
 
-            'username' => 'required|max:45|string|unique:users,username',
+            'email' => 'required|max:45|string|unique:users,email',
 
         ];
 
