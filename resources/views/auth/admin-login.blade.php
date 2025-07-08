@@ -129,7 +129,7 @@
 
 				<div class="form-group {{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
 					<div class="input-group">
-						<input type="password" id="passwordID" name="password" class="form-control" placeholder="Enter password">
+						<input type="password" id="passwordID" name="password" class="form-control" placeholder="Enter password" autocomplete="off">
 							<span class="input-group-addon" style="padding: 0">
 								<button type="button" class="btn btn-light" style=" border: none; background: transparent;"
 										onclick="togglePassword()" aria-label="Toggle password visibility">

@@ -30,7 +30,7 @@
 						<div class="col-md-9">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
-									<h4>Application For Clearance for the Release of Imported Commodities under Tariff Heading 1702 (Other Sugars) and 1704 (Sugar Confectionery)</h4>
+									<h4>Application For Clearance for the Release of Other Sugar Commodity</h4>
 								</div>
 									<form id="importedCommoditiesForm" method="POST" autocomplete="off" enctype="multipart/form-data">
 										<div class="panel-body">
@@ -58,12 +58,108 @@
 												</div>
 											</div>
 
+											{!! \App\Core\Helpers\__form2::textbox('company', [
+												'label'=>'<span style="color: ' . (empty($data->company) ? 'red' : 'grey') . ';">Company (Consignee) Name:*</span>',
+												'cols'=>'4',
+												'id'=>'company',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->company) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('tin', [
+												'label'=>'<span style="color: ' . (empty($data->tin) ? 'red' : 'grey') . ';">TIN:*</span>',
+												'cols'=>'4',
+												'id'=>'tin',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->tin) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('address', [
+												'label'=>'<span style="color: ' . (empty($data->address) ? 'red' : 'grey') . ';">Business Address:*</span>',
+												'cols'=>'4',
+												'id'=>'address',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->address) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('commodity', [
+												'label'=>'<span style="color: ' . (empty($data->commodity) ? 'red' : 'grey') . ';">Commodity:*</span>',
+												'cols'=>'4',
+												'id'=>'commodity',
+												'placeholder' => '',
+												'required'=>'required',
+											],$data->commodity) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('h_s_code', [
+												'label'=>'<span style="color: ' . (empty($data->h_s_code) ? 'red' : 'grey') . ';">H.S. Code:*</span>',
+												'cols'=>'4',
+												'id'=>'h_s_code',
+												'placeholder' => '',
+												'required'=>'required',
+											],$data->h_s_code) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('volume', [
+												'label'=>'<span style="color: ' . (empty($data->volume) ? 'red' : 'grey') . ';">Volume (Net Weight in Kilograms):*</span>',
+												'cols'=>'4',
+												'id'=>'volume',
+												'placeholder' => '',
+												'required'=>'required',
+											],$data->volume) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('quantity_mt', [
+												'label'=>'<span style="color: ' . (empty($data->quantity_mt) ? 'red' : 'grey') . ';">Quantity:*</span>',
+												'cols'=>'4',
+												'id'=>'quantity_mt',
+												'placeholder' => '',
+												'required'=>'required',
+											],$data->quantity_mt) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('packaging', [
+												'label'=>'<span style="color: ' . (empty($data->packaging) ? 'red' : 'grey') . ';">Packaging (Ex: Can, Drum, Bag, Carton, Etc.):*</span>',
+												'cols'=>'4',
+												'id'=>'packaging',
+												'placeholder' => '',
+												'required'=>'required',
+											],$data->packaging) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('bill_landing_no', [
+												'label'=>'<span style="color: ' . (empty($data->bill_landing_no) ? 'red' : 'grey') . ';">Bill of Lading No.:*</span>',
+												'cols'=>'4',
+												'id'=>'bill_landing_no',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->bill_landing_no) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('vessel_name', [
+												'label'=>'<span style="color: ' . (empty($data->vessel_name) ? 'red' : 'grey') . ';">Vessel Name:*</span>',
+												'cols'=>'4',
+												'id'=>'vessel_name',
+												'placeholder' => '',
+												'required'=>'required',
+											],$data->vessel_name) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('country_origin', [
+												'label'=>'<span style="color: ' . (empty($data->country_origin) ? 'red' : 'grey') . ';">Country of Origin:*</span>',
+												'cols'=>'4',
+												'id'=>'country_origin',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->country_origin) !!}
+
+											{!! \App\Core\Helpers\__form2::textbox('port_entry', [
+												'label'=>'<span style="color: ' . (empty($data->port_entry) ? 'red' : 'grey') . ';">Port of Entry:*</span>',
+												'cols'=>'4',
+												'id'=>'port_entry',
+												'placeholder' => '',
+												'required'=>'required',
+											],$data->port_entry) !!}
+
 											{!! \App\Core\Helpers\__form2::textbox('name', [
-											'label'=>'<span style="color: ' . (empty($data->name) ? 'red' : 'grey') . ';">Name:*</span>',
-											'cols'=>'4',
-											'id'=>'name',
-											'placeholder' => '',
-											'required'=>'required',
+												'label'=>'<span style="color: ' . (empty($data->name) ? 'red' : 'grey') . ';">Company Representative:*</span>',
+												'cols'=>'4',
+												'id'=>'name',
+												'placeholder' => '',
+												'required'=>'required',
 											],$data->name) !!}
 
 											{!! \App\Core\Helpers\__form2::textbox('designation', [
@@ -74,100 +170,24 @@
 												'required'=>'required',
 											], $data->designation) !!}
 
-											{!! \App\Core\Helpers\__form2::textbox('company', [
-													'label'=>'<span style="color: ' . (empty($data->company) ? 'red' : 'grey') . ';">Company Name:*</span>',
-													'cols'=>'4',
-													'id'=>'company',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->company) !!}
-
-											{!! \App\Core\Helpers\__form2::textbox('tin', [
-													'label'=>'<span style="color: ' . (empty($data->tin) ? 'red' : 'grey') . ';">Consignee TIN No.:*</span>',
-													'cols'=>'4',
-													'id'=>'tin',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->tin) !!}
-
 											{!! \App\Core\Helpers\__form2::textbox('contact_no', [
-													'label'=>'<span style="color: ' . (empty($data->contact_no) ? 'red' : 'grey') . ';">Contact No.:*</span>',
-													'cols'=>'4',
-													'class'=>'form-control-message',
-													'id'=>'contact_no',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->contact_no) !!}
+												'label'=>'<span style="color: ' . (empty($data->contact_no) ? 'red' : 'grey') . ';">Contact No.:*</span>',
+												'cols'=>'4',
+												'class'=>'form-control-message',
+												'id'=>'contact_no',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->contact_no) !!}
 
 											{!! \App\Core\Helpers\__form2::textbox('email', [
-	//												'label'=>'<span style="color: ' . (empty($data->email) ? 'red' : 'grey') . ';">Email:*</span>',
-													'label'=>'Email:*',
-													'cols'=>'4',
-													'type'=>'email',
-													'id'=>'email',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->email) !!}
-
-
-											{!! \App\Core\Helpers\__form2::textbox('address', [
-													'label'=>'<span style="color: ' . (empty($data->address) ? 'red' : 'grey') . ';">Address:*</span>',
-													'cols'=>'4',
-													'id'=>'adress',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->address) !!}
-
-											{!! \App\Core\Helpers\__form2::textbox('quantity_mt', [
-													'label'=>'<span style="color: ' . (empty($data->quantity_mt) ? 'red' : 'grey') . ';">Quantity in Mt:*</span>',
-													'cols'=>'4',
-													'id'=>'quantity_mt',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->quantity_mt) !!}
-
-											{!! \App\Core\Helpers\__form2::textbox('bill_landing_no', [
-													'label'=>'<span style="color: ' . (empty($data->bill_landing_no) ? 'red' : 'grey') . ';">Bill of Lading No.:*</span>',
-													'cols'=>'4',
-													'id'=>'bill_landing_no',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->bill_landing_no) !!}
-
-											{!! \App\Core\Helpers\__form2::textbox('country_origin', [
-													'label'=>'<span style="color: ' . (empty($data->country_origin) ? 'red' : 'grey') . ';">Country of Origin:*</span>',
-													'cols'=>'4',
-													'id'=>'country_origin',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->country_origin) !!}
-
-											{!! \App\Core\Helpers\__form2::textbox('prod_description', [
-													'label'=>'<span style="color: ' . (empty($data->prod_description) ? 'red' : 'grey') . ';">Product Description:*</span>',
-													'cols'=>'8',
-													'id'=>'prod_description',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->prod_description) !!}
-
-											{!! \App\Core\Helpers\__form2::textbox('port_discharge', [
-													'label'=>'<span style="color: ' . (empty($data->port_discharge) ? 'red' : 'grey') . ';">Port of Discharge:*</span>',
-													'cols'=>'4',
-													'id'=>'port_discharge',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->port_discharge) !!}
-
-											{!! \App\Core\Helpers\__form2::textbox('purpose_importation', [
-													'label'=>'<span style="color: ' . (empty($data->purpose_importation) ? 'red' : 'grey') . ';">Purpose of Importation:*</span>',
-													'cols'=>'8',
-													'id'=>'purpose_importation',
-													'placeholder' => '',
-													'required'=>'required',
-												], $data->purpose_importation) !!}
-
-
-
+												'label'=>'<span style="color: ' . (empty($data->email) ? 'red' : 'grey') . ';">Email:*</span>',
+//												'label'=>'Email:*',
+												'cols'=>'4',
+												'type'=>'email',
+												'id'=>'email',
+												'placeholder' => '',
+												'required'=>'required',
+											], $data->email) !!}
 
 
 											<div class="col-md-12">

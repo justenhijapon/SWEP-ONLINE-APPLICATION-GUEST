@@ -194,6 +194,12 @@ class ImportedCommoditiesController extends Controller
         $data->contact_no = $request->contact_no;
         $data->email = $request->email;
         $data->address = $request->address;
+        $data->commodity = $request->commodity;
+        $data->h_s_code = $request->h_s_code;
+        $data->volume = $request->volume;
+        $data->packaging = $request->packaging;
+        $data->vessel_name = $request->vessel_name;
+        $data->port_entry = $request->port_entry;
         $data->application_type = 'Clearance for Imported Commodities';
         $data->user_created = $user->slug;
         $data->user_updated = $user->slug;
@@ -205,6 +211,14 @@ class ImportedCommoditiesController extends Controller
 //        $ic_submited->user_created = $data->user_created;
 //        $ic_submited->submission_date = now();
 //        $ic_submited->ip_created = $ipAddress;
+
+
+
+
+
+
+
+
 
         // Update submission_status only if present in the request
         if ($request->has('submission')) {

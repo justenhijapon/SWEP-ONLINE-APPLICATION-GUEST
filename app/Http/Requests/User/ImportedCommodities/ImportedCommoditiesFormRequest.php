@@ -29,13 +29,27 @@ class ImportedCommoditiesFormRequest extends FormRequest
                 'contact_no'=>'required',
                 'email'=>'required',
                 'address'=>'required',
-                'quantity_mt'=>'required',
                 'bill_landing_no'=>'required',
                 'country_origin'=>'required',
-                'prod_description'=>'required',
-                'port_discharge'=>'required',
-                'purpose_importation'=>'required',
+                'commodity'=>'required',
+                'h_s_code'=>'required',
+                'volume'=>'required',
+                'quantity_mt'=>'required',
+                'packaging'=>'required',
+                'vessel_name'=>'required',
+                'port_entry'=>'required',
+//                'prod_description'=>'required',
+//                'port_discharge'=>'required',
+//                'purpose_importation'=>'required',
             ];
+
+
+
+
+
+
+
+
         }
 
         if ($this->method() == 'PATCH') {
@@ -48,12 +62,18 @@ class ImportedCommoditiesFormRequest extends FormRequest
                 'contact_no'=>'required',
                 'email'=>'required',
                 'address'=>'required',
-                'quantity_mt'=>'required',
                 'bill_landing_no'=>'required',
                 'country_origin'=>'required',
-                'prod_description'=>'required',
-                'port_discharge'=>'required',
-                'purpose_importation'=>'required',
+                'commodity'=>'required',
+                'h_s_code'=>'required',
+                'volume'=>'required',
+                'quantity_mt'=>'required',
+                'packaging'=>'required',
+                'vessel_name'=>'required',
+                'port_entry'=>'required',
+//                'prod_description'=>'required',
+//                'port_discharge'=>'required',
+//                'purpose_importation'=>'required',
             ];
         }
 

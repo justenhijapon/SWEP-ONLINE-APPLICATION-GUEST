@@ -203,13 +203,14 @@
 											<div class="panel-body">
 												<div class="row">
 
-													{!! \App\Core\Helpers\__form2::textbox('business_name', ['label'=>'Business Name:*', 'cols'=>'12', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
+													{!! \App\Core\Helpers\__form2::textbox('business_name', ['label'=>'Company (Consignee) Name:*', 'cols'=>'8', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
 													{!! \App\Core\Helpers\__form2::textbox('business_tin', ['label'=>'TIN:*', 'cols'=>'4', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('business_phone', ['label'=>'Business Contact:*', 'cols'=>'4', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('position', ['label'=>'Position:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
+{{--													{!! \App\Core\Helpers\__form2::textbox('business_phone', ['label'=>'Business Contact:*', 'cols'=>'4', 'placeholder' => '',]) !!}--}}
 													{!! \App\Core\Helpers\__form2::textbox('business_street', ['label'=>'Street No./Lot No./Subd./Bldg.:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
 													{!! \App\Core\Helpers\__form2::textbox('business_barangay', ['label'=>'Barangay:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
 													{!! \App\Core\Helpers\__form2::textbox('business_city', ['label'=>'Municipality/City:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
+{{--													{!! \App\Core\Helpers\__form2::textbox('position', ['label'=>'Position:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}--}}
+
 
 												</div>
 											</div>
@@ -279,7 +280,7 @@
 							<div class="form-group">
 								<label>Password</label>
 								<div class="input-group">
-									<input type="password" id="passwordID" name="password" class="form-control" placeholder="Password">
+									<input type="password" id="passwordID" name="password" class="form-control" placeholder="Password" autocomplete="off">
 										<span class="input-group-addon" style="padding: 0">
 											<button type="button" class="btn btn-light" onclick="togglePasswordID()"  style=" border: none; background: transparent;">
 												<i id="toggleIcon" class="fa fa-eye"></i>
