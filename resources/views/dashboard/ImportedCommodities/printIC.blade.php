@@ -146,16 +146,16 @@
 
     <table style="margin-top: 10px">
         <tr>
-            <td>Company (Consignee) Name: <b>{{$data->company}}</b></td>
+            <td>Company (Consignee) Name: <b>{{\Illuminate\Support\Str::title($data->company)}}</b></td>
         </tr>
         <tr>
             <td>TIN: <b>{{$data->tin}}</b></td>
         </tr>
         <tr>
-            <td>Business Address: <b>{{$data->address}}</b></td>
+            <td>Business Address: <b>{{\Illuminate\Support\Str::title($data->address)}}</b></td>
         </tr>
         <tr>
-            <td>Commodity: <b>{{$data->commodity}}</b></td>
+            <td>Commodity: <b>{{\Illuminate\Support\Str::title($data->commodity)}}</b></td>
         </tr>
         <tr>
             <td>H.S. Code: <b>{{$data->h_s_code}}</b></td>
@@ -164,25 +164,25 @@
             <td>Volume (Net Weight in Kilograms): <b>{{$data->volume}}</b></td>
         </tr>
         <tr>
-            <td>Quantity and Packaging (Ex: Can, Drum, Bag, Carton, Etc.):  <b>{{$data->quantity_mt}} {{$data->packaging}}</b></td>
+            <td>Quantity and Packaging (Ex: Can, Drum, Bag, Carton, Etc.):  <b>{{$data->quantity_mt}} {{\Illuminate\Support\Str::title($data->packaging)}}</b></td>
         </tr>
         <tr>
             <td>Bill of Landing No.: <b>{{$data->bill_landing_no}}</b></td>
         </tr>
         <tr>
-            <td>Vessel Name: <b>{{$data->vessel_name}}</b></td>
+            <td>Vessel Name: <b>{{\Illuminate\Support\Str::title($data->vessel_name)}}</b></td>
         </tr>
         <tr>
-            <td>Country of Origin:  <b>{{$data->country_origin}}</b></td>
+            <td>Country of Origin:  <b>{{\Illuminate\Support\Str::title($data->country_origin)}}</b></td>
         </tr>
         <tr>
-            <td>Port of Entry: <b>{{$data->port_entry}}</b></td>
+            <td>Port of Entry: <b>{{\Illuminate\Support\Str::title($data->port_entry)}}</b></td>
         </tr>
         <tr>
-            <td>Company Representative: <b>{{$data->name}}</b></td>
+            <td>Company Representative: <b>{{\Illuminate\Support\Str::title($data->name)}}</b></td>
         </tr>
         <tr>
-            <td>Designation: <b>{{$data->designation}}</b></td>
+            <td>Designation: <b style="text-transform: capitalize">{{$data->designation}}</b></td>
         </tr>
         <tr>
             <td>Cellphone No.: <b>{{$data->contact_no}}</b></td>
