@@ -329,6 +329,7 @@ class ImportedCommoditiesController extends Controller
     }
 
 
+
     public function orderOfPayment($slug)
     {
         $data = ImportedCommodities::where('slug', '=', $slug)->first();

@@ -41,6 +41,7 @@
 
 @section('modal-body')
 
+
           <!-- Hidden input to send 'received' status when form submits -->
           <input type="hidden" name="received" id="receivedInput" value="1">
      <style>
@@ -93,30 +94,31 @@
                font-family: Cambria;
                color: black;
           }
+          .table-style{
+               font-family: Cambria;
+               table{
+                    margin-top: 0;
+                    margin-left: 40px;
+                    margin-right: 65px;
 
-          table{
-               margin-top: 0;
-               margin-left: 40px;
-               margin-right: 65px;
+               }
+               table, td {
+
+                    border-collapse: collapse;
+                    color:black;
+               }
+               td{
+                    word-wrap: break-word;
+                    word-break: normal;
+                    font-size: 13px;
+               }
 
           }
-          table, td {
-               /*border: 1px solid pink;*/
-               /*border-right: solid blue 1px;*/
-               border-collapse: collapse;
-               /*border: 1px solid black;*/
-               color:black;
-               /*font-family: Cambria;*/
-          }
-          td{
-               /*width: 100px;*/
-               word-wrap: break-word;
-               word-break: normal;
-               /*font-weight: bold;*/
-               font-size: 13px;
-          }
+
+
+
      </style>
-     <div class="row">
+     <div class="row table-style">
           <div class="col-md-12">
                <div style="height: 800px; width: 100%; overflow: auto; border: 2px solid #e1edf7; padding-left: 20px; padding-bottom: 20px">
 
@@ -133,9 +135,9 @@
                          <tr>
                               <td style="width: 15%"></td>
                               <td style="width: 85%">
-                                   <h4 style="margin: 0;">
+                                   <b style="margin: 0;">
                                         APPLICATION FOR CLEARANCE TO RELEASE OTHER SUGAR COMMODITY
-                                   </h4>
+                                   </b>
                               </td>
                          </tr>
                     </table>
@@ -161,7 +163,7 @@
                     <table style="margin-top: 10px">
                          <tr>
                               <td style="text-indent: 40px">Attention:</td>
-                              <td style="text-indent: 40px"><h4>REGULATION DEPARTMENT</h4></td>
+                              <td style="text-indent: 40px"><b>REGULATION DEPARTMENT</b></td>
                          </tr>
                     </table>
 

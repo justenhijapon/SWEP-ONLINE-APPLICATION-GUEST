@@ -29,5 +29,6 @@
 @isset($form_id)
 	</form>
 @endisset
+{{--@include('admin-layouts.js-plugins')--}}
 @include('layouts.js-plugins')
 @yield('scripts')

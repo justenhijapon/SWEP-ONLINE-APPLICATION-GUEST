@@ -58,6 +58,7 @@ Route::group(['as' => 'auth.'], function () {
     Route::post('admin/admins/update-status/{id}', [AdminsController::class, 'updateStatus'])
         ->name('admin.admins.update.status');
 
+
     Route::post('admin/users/update-status/{slug}', [UserController::class, 'updateStatus'])
         ->name('admin.users.update.status');
 
@@ -82,6 +83,8 @@ Route::group(['as' => 'auth.'], function () {
 //        Route::resource('/sucrose','Admin\SucroseController');
         Route::resource('/preRegistration','Admin\PreRegistrationController');
         Route::post('/preRegistration/approved/{id}','Admin\PreRegistrationController@approved')->name('preRegistration.approved');
+
+
 
 
 

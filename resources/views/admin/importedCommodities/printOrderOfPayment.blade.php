@@ -8,7 +8,7 @@
     <style>
         @page {
             size: A4;
-            margin: 20mm;
+            margin: 0mm;
         }
         body {
             font-family: Arial, sans-serif;

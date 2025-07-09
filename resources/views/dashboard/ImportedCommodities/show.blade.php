@@ -99,13 +99,14 @@
         <table style="margin-top: 20px; width: 100%;">
             <tr>
                 <td style="width: 15%"></td>
-                <td style="width: 85%">
+                <td style="width: 85%;">
                     <h4 style="margin: 0;">
                         APPLICATION FOR CLEARANCE TO RELEASE OTHER SUGAR COMMODITY
                     </h4>
                 </td>
             </tr>
         </table>
+
         <table style="margin-top: 20px">
 
             <tr>
