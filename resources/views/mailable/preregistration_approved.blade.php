@@ -8,7 +8,7 @@
 <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
     <h2 style="color: #28a745;">✅ Registration Approved</h2>
 
-    <p>Dear {{ $user->first_name }} {{ $user->last_name }},</p>
+    <p>Dear {{ \Illuminate\Support\Str::title($user->first_name) }} {{ \Illuminate\Support\Str::title($user->last_name) }},</p>
 
     <p>We are pleased to inform you that your registration has been <strong>approved</strong>. You can now access your account and use our services.</p>
 

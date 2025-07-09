@@ -8,7 +8,7 @@
 <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
     <h2 style="color: #dc3545;">⚠️ Application Taken Back</h2>
 
-    <p style="text-transform: capitalize;">Dear {{ $application->name }},</p>
+    <p style="text-transform: capitalize;">Dear {{ \Illuminate\Support\Str::title($application->name) }},</p>
 
     <p>We would like to inform you that your application has been <strong>taken back</strong> for further review or action. This may be due to missing information, the need for clarification, or other administrative reasons.</p>
 

@@ -64,7 +64,7 @@
 												'id'=>'company',
 												'placeholder' => '',
 												'required'=>'required',
-											], $data->company) !!}
+											], \Illuminate\Support\Str::title($data->company)) !!}
 
 											{!! \App\Core\Helpers\__form2::textbox('tin', [
 												'label'=>'<span style="color: ' . (empty($data->tin) ? 'red' : 'grey') . ';">TIN:*</span>',
@@ -80,7 +80,7 @@
 												'id'=>'address',
 												'placeholder' => '',
 												'required'=>'required',
-											], $data->address) !!}
+											], \Illuminate\Support\Str::title($data->address)) !!}
 
 											{!! \App\Core\Helpers\__form2::textbox('commodity', [
 												'label'=>'<span style="color: ' . (empty($data->commodity) ? 'red' : 'grey') . ';">Commodity:*</span>',
@@ -160,7 +160,7 @@
 												'id'=>'name',
 												'placeholder' => '',
 												'required'=>'required',
-											],$data->name) !!}
+											],\Illuminate\Support\Str::title($data->name)) !!}
 
 											{!! \App\Core\Helpers\__form2::textbox('designation', [
 												'label'=>'<span style="color: ' . (empty($data->designation) ? 'red' : 'grey') . ';">Applicant Designation:*</span>',

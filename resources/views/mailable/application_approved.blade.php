@@ -8,7 +8,7 @@
 <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
     <h2 style="color: #28a745;">✅ Application Approved</h2>
 
-    <p>Dear {{ $application->name }},</p>
+    <p>Dear {{ \Illuminate\Support\Str::title($application->name) }},</p>
 
     <p>We are pleased to inform you that your application has been <strong>approved</strong>. You may now proceed with the next steps as indicated in your account dashboard.</p>
 
