@@ -53,7 +53,7 @@ $random = Str::random();
             'class'=>'text-uppercase',
             'placeholder' => '',
             'required'=>'required',
-        ], $data->fullname) !!}
+        ], \Illuminate\Support\Str::title($data->fullname)) !!}
 
 
         {!! \App\Core\Helpers\__form2::textbox('company', [
@@ -62,7 +62,7 @@ $random = Str::random();
 
             'placeholder' => '',
             'required'=>'required',
-        ], $data->company) !!}
+        ], \Illuminate\Support\Str::title($data->company)) !!}
 
 
 {{--        {!! \App\Core\Helpers\__form2::textbox('amount_in_word', [--}}

@@ -65,11 +65,11 @@
         {!! \App\Core\Helpers\__form2::textbox('fullname', [
             'label'=>'To:',
             'cols'=>'6',
-            'class'=>'text-uppercase',
+//            'class'=>'text-uppercase',
             'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
-        ], $data->fullname) !!}
+        ], \Illuminate\Support\Str::title($data->fullname)) !!}
 
 
         {!! \App\Core\Helpers\__form2::textbox('company', [
@@ -78,7 +78,7 @@
             'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
-        ], $data->company) !!}
+        ], \Illuminate\Support\Str::title($data->company)) !!}
 
 
 {{--        {!! \App\Core\Helpers\__form2::textbox('amount_in_word', [--}}
@@ -127,7 +127,7 @@
             'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
-        ], $data->certified_correct) !!}
+        ], \Illuminate\Support\Str::title($data->certified_correct)) !!}
 
         {!! \App\Core\Helpers\__form2::textbox('approved_by', [
             'label'=>'Approved By:',
@@ -135,7 +135,7 @@
             'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
-        ], $data->approved_by) !!}
+        ], \Illuminate\Support\Str::title($data->approved_by)) !!}
 
     </div>
 @endsection
