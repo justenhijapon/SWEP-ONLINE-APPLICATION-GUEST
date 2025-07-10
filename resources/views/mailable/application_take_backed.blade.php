@@ -14,9 +14,19 @@
 
     <h4>Application Details:</h4>
     <ul>
-        <li><strong>Email:</strong> {{ $application->email }}</li>
+        <li><strong>Application for:</strong> Application for Clearance to Release Other Sugar Commodity</li>
+        <li><strong>Company:</strong> {{$application->company}}</li>
+        <li><strong>Commodity:</strong> {{ $application->commodity }}</li>
+        <li><strong>Reference No.:</strong> {{ $application->slug }}</li>
         <!-- You can add other relevant details if necessary -->
     </ul>
+
+    @if(!empty($remarks))
+        <h4>Remarks:</h4>
+        <p style="background: #f8f9fa; padding: 10px; border-left: 4px solid #dc3545;">
+            {{ $remarks }}
+        </p>
+    @endif
 
     <p>Please check your account or contact our support team for more information on the next steps.</p>
 
@@ -28,6 +38,12 @@
     <br>
     <p>Best regards,<br>
         <strong>SRA Online Application</strong></p>
+
+    <hr style="margin-top: 30px; border: none; border-top: 1px solid #ccc;">
+    <p style="font-size: 12px; color: #777;">
+        This is a system-generated message. Please do not reply.
+    </p>
+
 </div>
 </body>
 </html>

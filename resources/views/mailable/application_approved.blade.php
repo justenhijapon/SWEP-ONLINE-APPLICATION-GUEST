@@ -14,8 +14,10 @@
 
     <h4>Application Summary:</h4>
     <ul>
+        <li><strong>Application for:</strong> Application for Clearance to Release Other Sugar Commodity</li>
+        <li><strong>Company:</strong> {{$application->company}}</li>
+        <li><strong>Commodity:</strong> {{ $application->commodity }}</li>
         <li><strong>Reference No.:</strong> {{ $application->slug }}</li>
-        <li><strong>Email:</strong> {{ $application->email }}</li>
         <!-- Add more relevant application details if needed -->
     </ul>
 
@@ -26,6 +28,12 @@
     <br>
     <p>Best regards,<br>
         <strong>SRA Online Application</strong></p>
+
+    <hr style="margin-top: 30px; border: none; border-top: 1px solid #ccc;">
+    <p style="font-size: 12px; color: #777;">
+        This is a system-generated message. Please do not reply.
+    </p>
+
 </div>
 </body>
 </html>

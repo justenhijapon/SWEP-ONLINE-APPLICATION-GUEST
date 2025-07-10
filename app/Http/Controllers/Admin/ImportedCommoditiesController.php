@@ -269,7 +269,7 @@ class ImportedCommoditiesController extends Controller
 
         // 🔔 Send email directly to applicant (from ImportedCommodities model)
         if (!empty($data->email)) {
-            Mail::to($data->email)->send(new ApplicationTakeBacked($data));
+            Mail::to($data->email)->send(new ApplicationTakeBacked($data, $ic_revoked->remarks));
         }
 
 //

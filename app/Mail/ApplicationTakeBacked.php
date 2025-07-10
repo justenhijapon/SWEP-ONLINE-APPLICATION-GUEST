@@ -13,10 +13,12 @@ class ApplicationTakeBacked extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $application;
+    public $remarks;
 
-    public function __construct($application)
+    public function __construct($application, $remarks)
     {
         $this->application = $application;
+        $this->remarks = $remarks;
     }
 
     public function build()
@@ -29,7 +31,8 @@ class ApplicationTakeBacked extends Mailable implements ShouldQueue
         return $this->subject('Your Application Has Been Taken Back | '.$result)
             ->view('mailable.application_take_backed')
             ->with([
-                'application' => $this->application
+                'application' => $this->application,
+                'remarks' => $this->remarks
             ]);
     }
 

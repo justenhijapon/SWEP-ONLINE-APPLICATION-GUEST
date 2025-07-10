@@ -16,7 +16,8 @@
     <ul>
 {{--        <li><strong>Username:</strong> {{ $user->email }}</li>--}}
         <!-- Do NOT include the password for security reasons -->
-        <li><strong>Email:</strong> {{ $user->email }}</li>
+        <li><strong>Company:</strong> {{ $user->business_name }}</li>
+{{--        <li><strong>Email:</strong> {{ $user->email }}</li>--}}
     </ul>
 
     <p>You may now <a href="{{ url('/') }}">log in to your account</a> using your credentials.</p>
@@ -29,6 +30,12 @@
     <p>Best regards,<br>
         <strong>SRA Online Application</strong></p>
 {{--        <strong>{{ config('app.name') }}</strong></p>--}}
+
+
+    <hr style="margin-top: 30px; border: none; border-top: 1px solid #ccc;">
+    <p style="font-size: 12px; color: #777;">
+        This is a system-generated message. Please do not reply.
+    </p>
 </div>
 </body>
 </html>

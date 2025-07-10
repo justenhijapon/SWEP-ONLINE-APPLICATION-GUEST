@@ -163,7 +163,7 @@
 											],\Illuminate\Support\Str::title($data->name)) !!}
 
 											{!! \App\Core\Helpers\__form2::textbox('designation', [
-												'label'=>'<span style="color: ' . (empty($data->designation) ? 'red' : 'grey') . ';">Applicant Designation:*</span>',
+												'label'=>'<span style="color: ' . (empty($data->designation) ? 'red' : 'grey') . ';">Designation:*</span>',
 												'cols'=>'4',
 												'id'=>'designation',
 												'placeholder' => '',

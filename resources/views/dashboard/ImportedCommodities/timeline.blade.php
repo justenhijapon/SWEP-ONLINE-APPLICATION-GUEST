@@ -4,58 +4,6 @@
 
 
 
-{{--        @foreach($timeline as $event)--}}
-{{--            <div class="timeline-item">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-5 date">--}}
-{{--                        @if($event['type'] == 'Submitted' || $event['type'] == 'Resubmitted')--}}
-{{--                            <i class="fa fa-arrow-circle-right text-{{ $event['type'] == 'Submitted' ? 'success' : 'warning' }}"></i>--}}
-{{--                        @else--}}
-{{--                            <i class="fa fa-times-circle text-danger"></i>--}}
-{{--                        @endif--}}
-{{--                        <p class="no-margin" style="margin: 0; font-size: 10px">--}}
-{{--                            {{ \Carbon\Carbon::parse($event['data']->submission_date)->format('M. d, Y | g:i A') }}--}}
-{{--                        </p>--}}
-{{--                        <small class="text-navy">--}}
-{{--                            {{ \Carbon\Carbon::parse($event['data']->submission_date)->diffForHumans() }}--}}
-{{--                        </small>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-7 content">--}}
-{{--                        <p class="m-b-xs">--}}
-{{--                            <strong class="badge label-{{ $event['type'] == 'Revoked' ? 'danger' : ($event['type'] == 'Submitted' ? 'success' : 'warning') }}">--}}
-{{--                                {{ $event['type'] }}--}}
-{{--                            </strong>--}}
-{{--                        </p>--}}
-{{--                        <small>--}}
-{{--                            @if($event['type'] == 'Submitted')--}}
-{{--                                Application submitted successfully.--}}
-{{--                            @elseif($event['type'] == 'Revoked')--}}
-{{--                                Your application was revoked. Please review and resubmit.<br>--}}
-{{--                                <strong>Remarks:</strong> <code>{{ $event['data']->remarks ?? 'No remarks provided' }}</code>--}}
-{{--                            @else--}}
-{{--                                Your application was resubmitted successfully.--}}
-{{--                            @endif--}}
-{{--                        </small>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            --}}{{-- Processing status after Submitted and Resubmitted --}}
-{{--            @if($event['type'] == 'Submitted' || $event['type'] == 'Resubmitted')--}}
-{{--                <div class="timeline-item">--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-5 date">--}}
-{{--                            <i class="fa fa-search"></i>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-7 content">--}}
-{{--                            <p class="m-b-xs"><strong class="badge label-info">Processing</strong></p>--}}
-{{--                            <small>Your application is being reviewed. Expect a response within 3 working days.</small>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            @endif--}}
-{{--        @endforeach--}}
-
         <style>
             .timeline-container {
                 max-height: 795px; /* Set max height */
@@ -81,7 +29,6 @@
         </style>
 
         <div class="timeline-container">
-{{--        <div class="timeline-container" style="max-height: 795px; overflow-y: auto; padding-right: 10px;">--}}
         @if($data->received != 0)
             <div class="timeline-item">
                 <div class="row">
