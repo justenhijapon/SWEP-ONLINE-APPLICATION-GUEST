@@ -34,6 +34,16 @@
         This is a system-generated message. Please do not reply.
     </p>
 
+    <hr style="border: none; border-top: 1px solid #ccc;">
+
+    <div style="text-align: center;">
+        <img src="https://sra.gov.ph/constra/images/SRA/SRA_DA%20logo.png" alt="SRA Logo" style="height: 60px;">
+        <p style="font-size: 12px; color: #777; margin: 0;">
+            Sugar Regulatory Administration<br>
+            Sugar Center Bldg., North Avenue, Diliman, Quezon City
+        </p>
+    </div>
+
 </div>
 </body>
 </html>
