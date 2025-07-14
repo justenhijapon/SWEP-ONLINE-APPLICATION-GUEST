@@ -50,12 +50,12 @@ class ImportedCommoditiesController extends Controller
                     return view('admin.importedCommodities.dt.NameDetails')->with(['data' => $data]);
                 })
 
-                ->editColumn('prod_description', function($data) {
-                    return view('admin.importedCommodities.dt.ProductDescription')->with(['data' => $data]);
+                ->editColumn('commodity', function($data) {
+                    return view('admin.importedCommodities.dt.commodityInformation')->with(['data' => $data]);
                 })
 
-                ->editColumn('purpose_importation', function($data) {
-                    return view('admin.importedCommodities.dt.PurposeImportation')->with(['data' => $data]);
+                ->editColumn('vessel_name', function($data) {
+                    return view('admin.importedCommodities.dt.shippingInformation')->with(['data' => $data]);
                 })
 
                 ->editColumn('status', function($data) {
@@ -98,12 +98,12 @@ class ImportedCommoditiesController extends Controller
                     return view('admin.importedCommodities.dt-revoked.NameDetails')->with(['data' => $data]);
                 })
 
-                ->editColumn('prod_description', function($data) {
-                    return view('admin.importedCommodities.dt-revoked.ProductDescription')->with(['data' => $data]);
+                ->editColumn('commodity', function($data) {
+                    return view('admin.importedCommodities.dt-revoked.commodityInformation')->with(['data' => $data]);
                 })
 
-                ->editColumn('purpose_importation', function($data) {
-                    return view('admin.importedCommodities.dt-revoked.PurposeImportation')->with(['data' => $data]);
+                ->editColumn('vessel_name', function($data) {
+                    return view('admin.importedCommodities.dt-revoked.shippingInformation')->with(['data' => $data]);
                 })
 
                 ->editColumn('status', function($data) {
@@ -147,12 +147,12 @@ class ImportedCommoditiesController extends Controller
                     return view('admin.importedCommodities.dt-approved.NameDetails')->with(['data' => $data]);
                 })
 
-                ->editColumn('prod_description', function($data) {
-                    return view('admin.importedCommodities.dt-approved.ProductDescription')->with(['data' => $data]);
+                ->editColumn('commodity', function($data) {
+                    return view('admin.importedCommodities.dt-approved.commodityInformation')->with(['data' => $data]);
                 })
 
-                ->editColumn('purpose_importation', function($data) {
-                    return view('admin.importedCommodities.dt-approved.PurposeImportation')->with(['data' => $data]);
+                ->editColumn('vessel_name', function($data) {
+                    return view('admin.importedCommodities.dt-approved.shippingInformation')->with(['data' => $data]);
                 })
 
                 ->editColumn('status', function($data) {

@@ -9,6 +9,7 @@
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Application</li>
         </ol>
+
     </section>
 
     <section class="content">
@@ -23,17 +24,16 @@
                 <div id="applicationTableContainer" hidden="" class="d-flex flex-wrap">
                     <table class="table table-bordered table-condensed table-striped" id="applicationTable" style="width: 100%">
                         <thead>
-                        <tr>
+                        <tr style="">
                             <th width="10%">Reference No.</th>
-{{--                            <th width="10%">Application Type</th>--}}
-                            <th width="10%">Name|Details</th>
-                            <th width="20%">Product Description</th>
-                            <th width="20%">Purpose of Importation</th>
-                            <th width="10%">Application Status</th>
-                            <th width="20%" class="action">Action</th>
+                            <th width="20%">Company Details</th>
+                            <th width="20%">Commodity Information</th>
+                            <th width="20%">Shipping Information</th>
+                            <th width="20%">Application Status</th>
+                            <th width="10%" class="action">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="font-family: Calibri;">
                         </tbody>
                     </table>
                 </div>
@@ -108,6 +108,7 @@
 
 @section('scripts')
 
+
     @include('admin.importedCommodities.script.scrpt_revoked')
     <script>
         $(document).on('click', '.prevent-close', function(event) {
@@ -158,10 +159,9 @@
                 "ajax" : '{{ route("admin.importedCommodities.index") }}',
                 "columns": [
                     { "data": "slug"},
-                    // { "data": "application_type"},
                     { "data": "name"},
-                    { "data": "prod_description"},
-                    { "data": "purpose_importation"},
+                    { "data": "commodity"},
+                    { "data": "vessel_name"},
                     { "data": "status"},
                     { "data": "action" }
                 ],
@@ -172,12 +172,32 @@
                     {
                         "targets" : 0,
                         "orderable" : false,
-                        "class" : 'action'
+                        "width": '10%'
+                        // "class" : 'action'
                     },
 
                     {
                         "targets": 1,
-                        // "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 2,
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 3,
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 4,
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 5,
+                        "class": 'action',
+                        "orderable" : false,
+                        "width": '10%'
+
                     }
                 ],
                 // "order" : [[2, 'desc']],

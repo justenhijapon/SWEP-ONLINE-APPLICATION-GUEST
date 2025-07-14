@@ -25,15 +25,14 @@
                         <thead>
                         <tr>
                             <th width="10%">Reference No.</th>
-{{--                            <th width="10%">Application Type</th>--}}
-                            <th width="10%">Name|Details</th>
-                            <th width="20%">Product Description</th>
-                            <th width="20%">Purpose of Importation</th>
-                            <th width="10%">Application Status</th>
-                            <th width="20%" class="action">Action</th>
+                            <th width="20%">Company Details</th>
+                            <th width="20%">Commodity Information</th>
+                            <th width="20%">Shipping Information</th>
+                            <th width="20%">Application Status</th>
+                            <th width="10%" class="action">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="font-family: Calibri">
                         </tbody>
                     </table>
                 </div>
@@ -166,10 +165,9 @@
                 "ajax" : '{{ route("admin.importedCommodities.approved") }}',
                 "columns": [
                     { "data": "slug"},
-                    // { "data": "application_type"},
                     { "data": "name"},
-                    { "data": "prod_description"},
-                    { "data": "purpose_importation"},
+                    { "data": "commodity"},
+                    { "data": "vessel_name"},
                     { "data": "status"},
                     { "data": "action" }
                 ],

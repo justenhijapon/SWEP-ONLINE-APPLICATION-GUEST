@@ -24,16 +24,15 @@
                     <table class="table table-bordered table-condensed table-striped" id="applicationTable" style="width: 100%">
                         <thead>
                         <tr>
-                            <th width="10%">Reference No.</th>
-{{--                            <th width="10%">Application Type</th>--}}
-                            <th width="10%">Name|Details</th>
-                            <th width="20%">Product Description</th>
-                            <th width="20%">Purpose of Importation</th>
-                            <th width="10%">Application Status</th>
-                            <th width="20%" class="action">Action</th>
+                            <th>Reference No.</th>
+                            <th>Company Details</th>
+                            <th>Commodity Information</th>
+                            <th>Shipping Information</th>
+                            <th>Application Status</th>
+                            <th class="action">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="font-family: Calibri">
                         </tbody>
                     </table>
                 </div>
@@ -181,28 +180,45 @@
                 "ajax" : '{{ route("admin.importedCommodities.revoked") }}',
                 "columns": [
                     { "data": "slug"},
-                    // { "data": "application_type"},
                     { "data": "name"},
-                    { "data": "prod_description"},
-                    { "data": "purpose_importation"},
+                    { "data": "commodity"},
+                    { "data": "vessel_name"},
                     { "data": "status"},
                     { "data": "action" }
                 ],
                 "buttons": [
                     {!! __js::dt_buttons() !!}
                 ],
-                "columnDefs":[
+                "columnDefs": [
                     {
-                        "targets" : 0,
-                        "orderable" : false,
-                        "class" : 'action'
+                        "targets": 0,
+                        "orderable": false,
+                        "width": '10%'
                     },
-
                     {
                         "targets": 1,
-                        // "render" : $.fn.dataTable.render.moment( 'MMMM D, YYYY' )
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 2,
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 3,
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 4,
+                        "width": '20%'
+                    },
+                    {
+                        "targets": 5,
+                        "className": 'action', // use className instead of class
+                        "orderable": false,
+                        "width": '10%'
                     }
                 ],
+
                 // "order" : [[2, 'desc']],
                 "responsive": false,
                 "initComplete": function( settings, json ) {
