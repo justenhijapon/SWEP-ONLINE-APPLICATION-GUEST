@@ -88,19 +88,6 @@
 										</div>
 									</div>
 
-{{--									{!! \App\Core\Helpers\__form2::textbox('password', [--}}
-{{--									   'label'=>'Password:*',--}}
-{{--									   'cols'=>'4',--}}
-{{--									   'type'=>'password',--}}
-{{--									   'placeholder' => '',--}}
-{{--								   ]) !!}--}}
-
-{{--									{!! \App\Core\Helpers\__form2::textbox('password_confirmation', [--}}
-{{--                                       'label'=>'Confirmation Password:*',--}}
-{{--                                       'cols'=>'4',--}}
-{{--                                       'type'=>'password',--}}
-{{--                                       'placeholder' => '',--}}
-{{--                                   ]) !!}--}}
 
 									{!! \App\Core\Helpers\__form2::textbox('email', [
                                        'label'=>'Email:*',
@@ -143,79 +130,85 @@
 									   'class'=>'text-uppercase',
                                        'placeholder' => '',
                                    ]) !!}
-
-									{!! \App\Core\Helpers\__form2::select('gender', [
-                                       'label'=>'Gender:*',
-                                       'cols'=>'4',
-                                       'options' => ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'],
-                                   ]) !!}
-
-									{!! \App\Core\Helpers\__form2::textbox('birthday', [
-                                       'label'=>'Birthday:*',
-                                       'cols'=>'4',
-                                       'type'=>'date',
-                                   ]) !!}
-
 									{!! \App\Core\Helpers\__form2::textbox('phone', [
                                        'label'=>'Contact Number:*',
                                        'cols'=>'4',
+									   'class'=>'text-uppercase',
                                        'placeholder' => '',
                                    ]) !!}
 
-									<div class="col-sm-12 m-t-lg">
-										<div class="panel panel-primary">
-											<div class="panel-heading">
-												Address
-											</div>
-											<div class="panel-body">
-												<div class="row">
+{{--									{!! \App\Core\Helpers\__form2::select('gender', [--}}
+{{--                                       'label'=>'Gender:*',--}}
+{{--                                       'cols'=>'4',--}}
+{{--                                       'options' => ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'],--}}
+{{--                                   ]) !!}--}}
 
-													{!! \App\Core\Helpers\__form2::textbox('street', [
-													   'label'=>'Street No./Lot No./Subd./Bldg.:*',
-													   'cols'=>'4',
-													   'class'=>'text-uppercase',
-													   'placeholder' => '',
-												   ]) !!}
+{{--									{!! \App\Core\Helpers\__form2::textbox('birthday', [--}}
+{{--                                       'label'=>'Birthday:*',--}}
+{{--                                       'cols'=>'4',--}}
+{{--                                       'type'=>'date',--}}
+{{--                                   ]) !!}--}}
 
-													{!! \App\Core\Helpers\__form2::textbox('barangay', [
-													   'label'=>'Barangay:*',
-													   'cols'=>'4',
-													   'class'=>'text-uppercase',
-													   'placeholder' => '',
-												   ]) !!}
+{{--									{!! \App\Core\Helpers\__form2::textbox('phone', [--}}
+{{--                                       'label'=>'Contact Number:*',--}}
+{{--                                       'cols'=>'4',--}}
+{{--                                       'placeholder' => '',--}}
+{{--                                   ]) !!}--}}
 
-													{!! \App\Core\Helpers\__form2::textbox('city', [
-													   'label'=>'Municipality/City:*',
-													   'cols'=>'4',
-													   'class'=>'text-uppercase',
-													   'placeholder' => '',
-												   ]) !!}
+{{--									<div class="col-sm-12 m-t-lg">--}}
+{{--										<div class="panel panel-primary">--}}
+{{--											<div class="panel-heading">--}}
+{{--												Address--}}
+{{--											</div>--}}
+{{--											<div class="panel-body">--}}
+{{--												<div class="row">--}}
 
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-12 m-t-lg">
-										<div class="panel panel-primary">
-											<div class="panel-heading">
-												Business Information
-											</div>
-											<div class="panel-body">
-												<div class="row">
+{{--													{!! \App\Core\Helpers\__form2::textbox('street', [--}}
+{{--													   'label'=>'Street No./Lot No./Subd./Bldg.:*',--}}
+{{--													   'cols'=>'4',--}}
+{{--													   'class'=>'text-uppercase',--}}
+{{--													   'placeholder' => '',--}}
+{{--												   ]) !!}--}}
 
-													{!! \App\Core\Helpers\__form2::textbox('business_name', ['label'=>'Company (Consignee) Name:*', 'cols'=>'8', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('business_tin', ['label'=>'TIN:*', 'cols'=>'4', 'placeholder' => '',]) !!}
+{{--													{!! \App\Core\Helpers\__form2::textbox('barangay', [--}}
+{{--													   'label'=>'Barangay:*',--}}
+{{--													   'cols'=>'4',--}}
+{{--													   'class'=>'text-uppercase',--}}
+{{--													   'placeholder' => '',--}}
+{{--												   ]) !!}--}}
+
+{{--													{!! \App\Core\Helpers\__form2::textbox('city', [--}}
+{{--													   'label'=>'Municipality/City:*',--}}
+{{--													   'cols'=>'4',--}}
+{{--													   'class'=>'text-uppercase',--}}
+{{--													   'placeholder' => '',--}}
+{{--												   ]) !!}--}}
+
+{{--												</div>--}}
+{{--											</div>--}}
+{{--										</div>--}}
+{{--									</div>--}}
+{{--									<div class="col-sm-12 m-t-lg">--}}
+{{--										<div class="panel panel-primary">--}}
+{{--											<div class="panel-heading">--}}
+{{--												Business Information--}}
+{{--											</div>--}}
+{{--											<div class="panel-body">--}}
+{{--												<div class="row">--}}
+
+{{--													{!! \App\Core\Helpers\__form2::textbox('business_name', ['label'=>'Company (Consignee) Name:*', 'cols'=>'8', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}--}}
+{{--													{!! \App\Core\Helpers\__form2::textbox('business_tin', ['label'=>'TIN:*', 'cols'=>'4', 'placeholder' => '',]) !!}--}}
 {{--													{!! \App\Core\Helpers\__form2::textbox('business_phone', ['label'=>'Business Contact:*', 'cols'=>'4', 'placeholder' => '',]) !!}--}}
-													{!! \App\Core\Helpers\__form2::textbox('business_street', ['label'=>'Street No./Lot No./Subd./Bldg.:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('business_barangay', ['label'=>'Barangay:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
-													{!! \App\Core\Helpers\__form2::textbox('business_city', ['label'=>'Municipality/City:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}
+{{--													{!! \App\Core\Helpers\__form2::textbox('business_street', ['label'=>'Street No./Lot No./Subd./Bldg.:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}--}}
+{{--													{!! \App\Core\Helpers\__form2::textbox('business_barangay', ['label'=>'Barangay:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}--}}
+{{--													{!! \App\Core\Helpers\__form2::textbox('business_city', ['label'=>'Municipality/City:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}--}}
 {{--													{!! \App\Core\Helpers\__form2::textbox('position', ['label'=>'Position:*', 'cols'=>'4', 'class'=>'text-uppercase', 'placeholder' => '',]) !!}--}}
 
 
-												</div>
-											</div>
-										</div>
-									</div>
+{{--												</div>--}}
+{{--											</div>--}}
+{{--										</div>--}}
+{{--									</div>--}}
 									<div class="col-sm-12 m-t-lg">
 										<div class="panel panel-primary">
 											<div class="panel-heading">
@@ -230,7 +223,7 @@
 													</div>
 													<div class="col-md-6 form-group">
 														<label>
-{{--															<input type="hidden" name="consent" value="0">--}}
+															<input type="hidden" name="consent" value="0">
 															<input type="checkbox" id="consentCheckbox" name="consent" value="1" {{ old('consent') == 1 ? 'checked' : '' }} required>
 															I agree to declaration of consent
 														</label>

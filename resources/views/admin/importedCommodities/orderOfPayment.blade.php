@@ -62,23 +62,23 @@
 
         <div class="col-md-12"></div>
 
-        {!! \App\Core\Helpers\__form2::textbox('fullname', [
+        {!! \App\Core\Helpers\__form2::textbox('company', [
             'label'=>'To:',
             'cols'=>'6',
 //            'class'=>'text-uppercase',
             'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
-        ], \Illuminate\Support\Str::title($data->fullname)) !!}
+        ], \Illuminate\Support\Str::title($data1->company)) !!}
 
 
-        {!! \App\Core\Helpers\__form2::textbox('company', [
-            'label'=>'Company:',
+        {!! \App\Core\Helpers\__form2::textbox('commodity', [
+            'label'=>'Commodity:',
             'cols'=>'6',
             'id'=>'slug',
             'placeholder' => '',
             'required'=>'required',
-        ], \Illuminate\Support\Str::title($data->company)) !!}
+        ], \Illuminate\Support\Str::title($data1->commodity)) !!}
 
 
 {{--        {!! \App\Core\Helpers\__form2::textbox('amount_in_word', [--}}
@@ -100,10 +100,11 @@
         {!! \App\Core\Helpers\__form2::textbox('metric_tons', [
             'label'=>'Metric Tons:',
             'cols'=>'6',
-            'id'=>'slug',
+            'id'=>'metric_tons', // unique
             'placeholder' => '',
             'required'=>'required',
         ], $data->metric_tons) !!}
+
 
         {!! \App\Core\Helpers\__form2::textbox('boc_entry_no', [
             'label'=>'BOC Entry No.:',
@@ -113,13 +114,24 @@
             'required'=>'required',
         ], $data->boc_entry_no) !!}
 
-        {!! \App\Core\Helpers\__form2::textbox('amount', [
-           'label'=>'Amount:',
-           'cols'=>'6',
-           'id'=>'slug',
-           'placeholder' => '',
-            'required'=>'required',
-       ], $data->amount) !!}
+{{--        {!! \App\Core\Helpers\__form2::textbox('amount', [--}}
+{{--            'label'=>'Amount:',--}}
+{{--            'cols'=>'6',--}}
+{{--            'id'=>'amount', // unique--}}
+{{--            'placeholder' => '',--}}
+{{--            'readonly'=>'readonly',--}}
+{{--        ], $data->amount) !!}--}}
+
+        {!! \App\Core\Helpers\__form2::textbox('amount_display', [
+          'label'=>'Amount:',
+          'cols'=>'6',
+          'id'=>'amount_display', // display only
+          'placeholder' => '',
+          'readonly'=>'readonly',
+        ], number_format($data->amount, 2)) !!}
+
+        <input type="hidden" name="amount" id="amount" value="{{ $data->amount }}">
+
 
         {!! \App\Core\Helpers\__form2::textbox('certified_correct', [
             'label'=>'Certified Correct:',
@@ -129,6 +141,14 @@
             'required'=>'required',
         ], \Illuminate\Support\Str::title($data->certified_correct)) !!}
 
+        {!! \App\Core\Helpers\__form2::textbox('designation_cert_correct', [
+            'label'=>'Designation:',
+            'cols'=>'6',
+            'id'=>'slug',
+            'placeholder' => '',
+            'required'=>'required',
+        ], \Illuminate\Support\Str::title($data->designation_cert_correct)) !!}
+
         {!! \App\Core\Helpers\__form2::textbox('approved_by', [
             'label'=>'Approved By:',
             'cols'=>'6',
@@ -137,7 +157,20 @@
             'required'=>'required',
         ], \Illuminate\Support\Str::title($data->approved_by)) !!}
 
+        {!! \App\Core\Helpers\__form2::textbox('designation_approve_by', [
+            'label'=>'Designation:',
+            'cols'=>'6',
+            'id'=>'slug',
+            'placeholder' => '',
+            'required'=>'required',
+        ], \Illuminate\Support\Str::title($data->designation_approve_by)) !!}
+
+{{--        <input type="text" name="metric_tons" id="slug" value="10">--}}
+{{--        <input type="text" name="amount" id="slug" value="600">--}}
+
     </div>
+
+
 @endsection
 
 @section('modal-footer')
@@ -148,6 +181,52 @@
 
 
 @section('scripts')
+
+    <script>
+        $(document).ready(function () {
+            let $metricTons = $('input[name="metric_tons"]');
+            let $amountDisplay = $('#amount_display');
+            let $amountHidden = $('#amount');
+
+            // Initial formatting on page load
+            let initialAmount = parseFloat($amountHidden.val()) || 0;
+            $amountDisplay.val(formatCurrency(initialAmount));
+
+            // Auto-calculate on Metric Tons change
+            $metricTons.on('input', function () {
+                let mt = parseFloat($(this).val()) || 0;
+                let total = mt * 60;
+
+                $amountDisplay.val(formatCurrency(total)); // display formatted
+                $amountHidden.val(total.toFixed(2)); // store plain
+            });
+
+            function formatCurrency(value) {
+                return '₱ ' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+        });
+    </script>
+
+
+
+
+
+
+    {{--    <script>--}}
+{{--        $(document).ready(function () {--}}
+{{--            // Siguraduhing target natin yung tamang 'name' mula sa HTML output ng helper--}}
+{{--            let $metricTons = $('input[name="metric_tons"]');--}}
+{{--            let $amount = $('input[name="amount"]');--}}
+
+{{--            $metricTons.on('input', function () {--}}
+{{--                let mt = parseFloat($(this).val()) || 0;--}}
+{{--                let total = mt * 60;--}}
+{{--                $amount.val(total.toFixed(2));--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+
+
 
 
 

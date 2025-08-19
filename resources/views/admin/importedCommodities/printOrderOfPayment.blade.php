@@ -228,7 +228,7 @@
                             <td style="border: grey solid 1px">Certificate of Origin</td>
                             <td style="border: grey solid 1px">0.50/Lkg-Bag</td>
                             <td style=""></td>
-                            <td style="border: grey solid 1px"></td>
+                            <td style="border: grey solid 1px; text-align: center"><span style="color: black;">✔</span></td>
                             <td style="border: grey solid 1px">Other Sugar & Sugar Confectionery</td>
                             <td style="border: grey solid 1px">3.00/Lkg-Bag</td>
                         </tr>
@@ -404,14 +404,14 @@
                             <td class="border-bottom" style="text-align: left; padding-left: 5%; width: 26%">Lkg-Bags:</td>
                             <td class="border-all" style="text-align: right; width: 15%; background-color: #C8DBF9">{{$data->lkg_bags}}.000</td>
                             <td style="width: 3%"></td>
-                            <td class="border-all" style="text-align: center; width: 71%; background-color: #C8DBF9">{{$data->boc_entry_no}}</td>
+                            <td class="border-all" style="text-align: center; width: 71%; background-color: #C8DBF9">Bill of Lading No.: {{$data->boc_entry_no}}</td>
                         </tr>
 
                         <tr>
                             <td  class="border-bottom" style="text-align: left; padding-left: 5%; width: 26%">METRIC TONS:</td>
                             <td  class="border-bottom" style="text-align: right; padding-left: 5%; width: 15%">{{$data->metric_tons}}</td>
                             <td style="width: 3%"></td>
-                            <td class="border-all" style="text-align: center; width: 71%; background-color: #C8DBF9">{{$data->boc_entry_note}}</td>
+                            <td class="border-all" style="text-align: center; width: 71%; background-color: #C8DBF9">{{$data->commodity}}</td>
                         </tr>
                     </table>
 
@@ -426,9 +426,16 @@
 
                     <table style="margin-top: 20px">
                         <tr style="margin-top: 10px">
-                            <td style="width: 35%; height: 12px; font-size: 12px; padding: 2px; background-color: #C8DBF9; text-align: center; text-transform: capitalize">{{$data->certified_correct}}</td>
+                            <td style="width: 35%; height: 12px; font-size: 12px; padding: 2px; background-color: #C8DBF9; text-align: center; text-transform: capitalize; line-height: 10px">{{$data->certified_correct}}</td>
                             <td style="width: 15%"></td>
                             <td style="width: 35%; font-size: 12px; padding: 2px; background-color: #C8DBF9; text-align: center; text-transform: capitalize">{{$data->approved_by}}</td>
+                            <td style="width: 15%"></td>
+                        </tr>
+
+                        <tr style="margin-top: 10px">
+                            <td style="width: 35%; height: 10px; font-size: 10px; padding: 2px; background-color: #C8DBF9; text-align: center; text-transform: capitalize;"><i>{{$data->designation_cert_correct}}</i></td>
+                            <td style="width: 15%"></td>
+                            <td style="width: 35%; font-size: 10px; padding: 2px; background-color: #C8DBF9; text-align: center; text-transform: capitalize;"><i>{{$data->designation_approve_by}}</i></td>
                             <td style="width: 15%"></td>
                         </tr>
 

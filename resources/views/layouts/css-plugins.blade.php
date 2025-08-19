@@ -1,6 +1,9 @@
 
 <link href="{{asset('template/inspinia/css/bootstrap.min.css')}}" rel="stylesheet">
-<link href="{{asset('template/inspinia/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+{{--<link href="{{asset('template/inspinia/font-awesome/css/font-awesome.css')}}" rel="stylesheet">--}}
+{{--<link href="{{asset('template/inspinia/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">--}}
+<link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/font-awesome/css/font-awesome.min.css')}}">
+
 <!-- Toastr style -->
 <link href="{{asset('template/inspinia/css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
 <!-- Gritter -->
@@ -17,7 +20,7 @@
 <link href="{{asset('template/inspinia/css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
 <link href="{{asset('template/inspinia/css/plugins/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet">
 
-<link href="{{asset('template/inspinia/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+
 
 {{--<link rel="icon" href="{{asset('images/sra_logo_sm.png')}}">--}}
 {{-- Datatables--}}

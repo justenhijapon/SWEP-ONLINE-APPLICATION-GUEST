@@ -207,12 +207,17 @@ class ImportedCommoditiesController extends Controller
     public function orderPayment($slug)
     {
         $data = OrderOfPayment::where('slug', $slug)->first();
+        $data1 = ImportedCommodities::where('slug', $slug)->first();
 
         if (!$data) {
             return response()->json(['error' => 'Order of Payment not found'], 404);
         }
 
-        return view('admin.importedCommodities.orderOfPayment', compact('data'));
+        if (!$data1) {
+            return response()->json(['error' => 'Order of Payment not found'], 404);
+        }
+
+        return view('admin.importedCommodities.orderOfPayment', compact('data', 'data1'));
     }
 
 
@@ -228,7 +233,7 @@ class ImportedCommoditiesController extends Controller
 
         $app_data->reference_no = $request->reference_no;
         $app_data->fullname = $request->fullname;
-        $app_data->company = $request->company;
+        $app_data->commodity = $request->commodity;
         $app_data->amount = $request->amount;
 //        $app_data->amount_in_word = $request->amount_in_word;
         $app_data->lkg_bags = $request->lkg_bags;
@@ -236,7 +241,9 @@ class ImportedCommoditiesController extends Controller
         $app_data->boc_entry_no = $request->boc_entry_no;
         $app_data->boc_entry_note = $request->boc_entry_note;
         $app_data->certified_correct = $request->certified_correct;
+        $app_data->designation_cert_correct = $request->designation_cert_correct;
         $app_data->approved_by = $request->approved_by;
+        $app_data->designation_approve_by = $request->designation_approve_by;
         $app_data->date = $request->date;
         $app_data->verify = true;
         $app_data->save();

@@ -44,12 +44,18 @@ Route::group(['as' => 'auth.'], function () {
         Route::post('/profile/upload', 'ProfileController@upload')->name('profile.upload');
 //        Route::post('/profile/upload', [ProfileController::class, 'upload'])->name('profile.upload');
 
+        Route::post('/uploadProofPayment/{slug}', 'User\ImportedCommoditiesController@uploadProofPayment')
+            ->name('uploadProofPayment');
+
+
+
         /** MENU **/
 
         Route::resource('std/premix','PremixController',[
             'as' => 'std'
         ]);
         Route::resource('ImportedCommodities','User\ImportedCommoditiesController');
+
 
 	});
 

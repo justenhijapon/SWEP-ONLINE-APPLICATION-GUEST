@@ -54,7 +54,8 @@ class OrderOfPaymentController extends Controller
     public function edit($slug)
     {
         $data = OrderOfPayment::where('slug', '=', $slug)->first();
-        return view('admin.orderOfPayment.edit', compact('data'));
+        $data1 = ImportedCommodities::where('slug', $slug)->first();
+        return view('admin.orderOfPayment.edit', compact('data', 'data1'));
     }
 
 

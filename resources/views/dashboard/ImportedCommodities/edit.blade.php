@@ -30,16 +30,17 @@
 						<div class="col-md-9">
 							<div class="panel panel-primary">
 								<div class="panel-heading">
-									<h4>Application For Clearance for the Release of Other Sugar Commodity</h4>
+{{--									<h4>Application For Clearance for the Release of Other Sugar Commodity</h4>--}}
+									<h4>Clearance for the Release of Imported Commodities Under Tariff Heading 1702 (Other Sugar) and 1704 (Sugar Confectionery)</h4>
 								</div>
 									<form id="importedCommoditiesForm" method="POST" autocomplete="off" enctype="multipart/form-data">
 										<div class="panel-body">
-										<div class="row">
-
+											<div class="row">
 											{!! \App\Core\Helpers\__form2::textbox('date', [
 													'label'=>'<span style="color: ' . (empty($data->date) ? 'red' : 'grey') . ';">Application Date:*</span>',
 													'type'=>'date',
 													'cols'=>'4',
+//                                                    'class'=>'col-sm-4',
 													'id'=>'date',
 													'placeholder' => '',
 													'required'=>'required',
@@ -57,6 +58,17 @@
 													<code class="no-padding">Fields with asterisks(*) are mandatory</code>
 												</div>
 											</div>
+											<div class="col-md-12">
+												<div class="panel panel-primary">
+													<div class="panel-heading">
+														<h3>CONSIGNEE DETAILS</h3>
+													</div>
+													<div class="panel-body">
+														<div class="row">
+{{--															@include('dashboard.ImportedCommodities.timeline')--}}
+
+
+
 
 											{!! \App\Core\Helpers\__form2::textbox('company', [
 												'label'=>'<span style="color: ' . (empty($data->company) ? 'red' : 'grey') . ';">Company (Consignee) Name:*</span>',
@@ -190,6 +202,11 @@
 											], $data->email) !!}
 
 
+														</div>
+													</div>
+												</div>
+											</div>
+
 											<div class="col-md-12">
 												@php
 													$attachmentFields = [
@@ -306,7 +323,7 @@
 											</div>
 
 										</div>
-									</div>
+										</div>
 									</form>
 							</div>
 						</div>
@@ -647,6 +664,56 @@
 
 
 
+	</script>
+
+
+	<script>
+		$(function(){
+			$('#proof_payment').on('change', function(){
+				let slug = $(this).data('slug');
+				let formData = new FormData(document.getElementById('attach_proof_payment'));
+
+				$.ajax({
+					url: "/dashboard/uploadProofPayment/" + slug, // ✅ fixed spelling
+					method: "POST",
+					data: formData,
+					processData: false,
+					contentType: false,
+					beforeSend: function(){
+						toastr.info("Uploading proof of payment...");
+					},
+					success: function(response){
+						location.reload();
+						toastr.success(response.message);
+
+						if(response.file_url){
+							let previewBtn = $('button[data-target="#filePreviewModalProofPayment"]');
+							if(previewBtn.length){
+								previewBtn.attr('data-file-url', response.file_url).show();
+							} else {
+								$('.input-group').append(`
+                            <button type="button" class="btn btn-info btn-flat ml-2"
+                                data-toggle="modal"
+                                data-target="#filePreviewModalProofPayment"
+                                data-file-url="${response.file_url}">
+                                File Preview
+                            </button>
+                        `);
+							}
+						}
+					},
+					error: function(){
+						toastr.error("Failed to upload file. Please try again.");
+					}
+				});
+			});
+
+			$('#filePreviewModalProofPayment').on('show.bs.modal', function (event) {
+				let button = $(event.relatedTarget);
+				let fileUrl = button.data('file-url');
+				$('#filePreviewFrameProofPayment').attr('src', fileUrl);
+			});
+		});
 	</script>
 
 @endsection

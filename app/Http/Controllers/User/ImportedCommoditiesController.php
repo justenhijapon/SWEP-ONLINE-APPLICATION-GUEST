@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\ImportedCommodities\ImportedCommoditiesFormRequest;
+use App\Http\Requests\User\ImportedCommodities\ProofPaymentFormRequest;
 use App\Models\Admin\OrderOfPayment;
 use App\Models\User;
 use App\Models\User\ICSubmitted;
@@ -213,13 +214,6 @@ class ImportedCommoditiesController extends Controller
 //        $ic_submited->ip_created = $ipAddress;
 
 
-
-
-
-
-
-
-
         // Update submission_status only if present in the request
         if ($request->has('submission')) {
             $data->submission = $request->submission;
@@ -294,6 +288,28 @@ class ImportedCommoditiesController extends Controller
 //        return redirect()->to('/');
         return response()->json(['slug' => $data->slug]);
     }
+
+    public function uploadProofPayment(ProofPaymentFormRequest $request, $slug)
+    {
+        $data = ImportedCommodities::where('slug', $slug)->firstOrFail();
+
+        if ($proofPayment = $this->handleFileUpload($request, 'proof_payment', $slug)) {
+            $data->proof_payment_path = $proofPayment;
+        }
+
+        $data->save();
+
+        return response()->json([
+            'message' => 'Proof of payment uploaded successfully.',
+            'file_url' => asset('storage/' . $proofPayment)
+        ]);
+    }
+
+
+
+
+
+
 
     private function handleFileUpload(Request $request, $fileInputName, $slug)
     {

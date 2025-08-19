@@ -259,7 +259,9 @@
                         errored_modal(btn,response);
                     }
                 })
+
             })
+
 
         });
 
@@ -270,4 +272,81 @@
 {{--            $('.btn-group .btn').css('width', 'auto'); // Reset width when modal closes--}}
 {{--        });--}}
 {{--    </script>--}}
+
+{{--    <script>--}}
+{{--        document.addEventListener('DOMContentLoaded', function () {--}}
+{{--            // hanapin gamit ang eksaktong name sa HTML output--}}
+{{--            const metricTonsInput = document.querySelector('input[name="metric_tons"]');--}}
+{{--            const amountInput = document.querySelector('input[name="amount"]');--}}
+
+{{--            if (!metricTonsInput || !amountInput) {--}}
+{{--                console.error("Cant find the input fields. Check name/id sa HTML output.");--}}
+{{--                return;--}}
+{{--            }--}}
+
+{{--            metricTonsInput.addEventListener('input', function () {--}}
+{{--                let metricTons = parseFloat(metricTonsInput.value) || 0;--}}
+{{--                let amount = metricTons * 60;--}}
+{{--                amountInput.value = amount.toFixed(2);--}}
+{{--            });--}}
+{{--            console.log(metricTonsInput, amountInput);--}}
+
+{{--        });--}}
+{{--    </script>--}}
+
+{{--    <script>--}}
+{{--        document.addEventListener('DOMContentLoaded', function () {--}}
+{{--            const metricTonsInput = document.getElementById('metric_tons');--}}
+{{--            const amountInput = document.getElementById('amount');--}}
+
+{{--            if (!metricTonsInput || !amountInput) {--}}
+{{--                console.error("Hindi makita ang mga input fields.");--}}
+{{--                return;--}}
+{{--            }--}}
+
+{{--            function computeAmount() {--}}
+{{--                let metricTons = parseFloat(metricTonsInput.value) || 0;--}}
+{{--                let amount = metricTons * 60;--}}
+{{--                amountInput.value = amount.toFixed(2);--}}
+{{--                console.log("metricTons:", metricTons, "→ amount:", amount);--}}
+{{--            }--}}
+
+{{--            // initial compute (pag load pa lang)--}}
+{{--            computeAmount();--}}
+
+{{--            // update every time nagta-type ka--}}
+{{--            metricTonsInput.addEventListener('input', computeAmount);--}}
+{{--        });--}}
+{{--    </script>--}}
+
+{{--    <script>--}}
+{{--        document.addEventListener('DOMContentLoaded', function () {--}}
+{{--            const metricTonsInput = document.getElementById('metric_tons');--}}
+{{--            const amountInput = document.getElementById('amount');--}}
+
+{{--            if (!metricTonsInput || !amountInput) {--}}
+{{--                console.error("Hindi makita ang mga input fields.");--}}
+{{--                return;--}}
+{{--            }--}}
+
+{{--            function computeAmount() {--}}
+{{--                let metricTons = parseFloat(metricTonsInput.value) || 0;--}}
+{{--                let amount = metricTons * 60;--}}
+{{--                amountInput.value = amount.toFixed(2);--}}
+{{--                console.log("metricTons:", metricTons, "→ amount:", amount);--}}
+{{--            }--}}
+
+{{--            // initial compute (pag load pa lang)--}}
+{{--            computeAmount();--}}
+
+{{--            // update every time nagta-type ka--}}
+{{--            metricTonsInput.addEventListener('input', computeAmount);--}}
+{{--        });--}}
+{{--    </script>--}}
+
+
+
+
+
+
 @endsection

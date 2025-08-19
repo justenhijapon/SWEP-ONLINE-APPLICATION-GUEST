@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\User\ImportedCommodities;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderOfPayment extends Model
@@ -38,6 +39,10 @@ class OrderOfPayment extends Model
         'tin',
 
     ];
+
+    public function importedCommodity(){
+        return $this->belongsTo('App\Models\User\ImportedCommodities','slug','slug');
+    }
 
 }
 

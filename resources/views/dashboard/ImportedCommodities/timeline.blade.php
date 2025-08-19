@@ -40,8 +40,8 @@
                         </small>
                     </div>
                     <div class="col-7 content">
-                        <p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Approved' : $data->received }}</strong></p>
-                        <small>Your application has been validated and approved.  Print the attached Order of Payment (download) and settle the payment immediately at SRA Main Office, North Avenue, Diliman, Quezon City.</small>
+                        <p class="m-b-xs"><strong class="badge label-success">{{ $data->received == 1 ? 'Processed' : $data->received }}</strong></p>
+                        <small>Your application has been validated.  Print the attached Order of Payment (download) and settle the payment immediately at SRA Main Office, North Avenue, Diliman, Quezon City.</small>
 
                         @php
                             $OP = \App\Models\Admin\OrderOfPayment::where('slug', $data->slug)->first();
@@ -50,7 +50,7 @@
                         @if($OP && $OP->verify == 1)
 
                             <p>
-                                <a href="javascript:void(0);" class="download_OP_btn" data-slug="{{ $data->slug }}">
+                                <a href="F:void(0);" class="download_OP_btn" data-slug="{{ $data->slug }}">
                                     <li class="fa fa-file-pdf-o"></li> Download Order of Payment
                                 </a>
                             </p>
@@ -58,6 +58,58 @@
                         @else
                                 <p>No order of payment found.</p>
                         @endif
+                        <small> Attach the proof of payment & SRA payment details form (If paid over the counter, Online Banking or any other payment channel)</small>
+
+                        <form id="attach_proof_payment" enctype="multipart/form-data" autocomplete="off">
+                            @csrf
+                            <label style="margin-top: 10px">Attach Proof of Payment</label>
+                            @if(!empty($data->proof_payment_path))
+                                <button type="button" class="btn btn-info btn-flat ml-2" style="margin-bottom: 15px; height: 30px;"
+                                        data-toggle="modal"
+                                        data-target="#filePreviewModalProofPayment"
+                                        data-file-url="{{ asset('show_file_custom_user/imported_commodities/' . $data->slug . '/proof_payment_path') }}">
+                                    <li class="fa fa-file-pdf-o"></li>
+                                    File Preview
+                                </button>
+                            @endif
+                            <div class="input-group input-group-sm" style="margin-bottom: 10px/'">
+                                <input type="file"
+                                       class="form-control"
+                                       name="proof_payment"
+                                       id="proof_payment"
+                                       accept=".jpg,.jpeg,.png,.pdf"
+                                       data-slug="{{ $data->slug }}"
+                                        style="height: 30px; font-size: 10px"> {{-- slug from record --}}
+
+                                <input type="text"
+                                       class="form-control"
+                                       value="{{basename($data->proof_payment_path)}}"
+                                       style="width: 40px; wheight: 30px; font-size: 10px"
+                                       readonly>
+                            </div>
+
+                        </form>
+
+                        {{-- File Preview Modal --}}
+                        <div class="modal fade" id="filePreviewModalProofPayment" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Proof of Payment Preview</h5>
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <iframe id="filePreviewFrameProofPayment" src="" width="100%" height="500px" style="border: none;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
 
                     </div>
                 </div>
@@ -142,6 +194,12 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
+
+
+
+
+
+

@@ -101,51 +101,52 @@ class PreRegistrationController extends Controller
         $preReg->last_name = $request->last_name;
         $preReg->first_name = $request->first_name;
         $preReg->middle_name = $request->middle_name;
-        $preReg->gender = $request->gender;
-        $preReg->phone = $request->phone;
         $preReg->email = $request->email;
-        $preReg->birthday = $request->birthday;
-        $preReg->street = $request->street;
-        $preReg->barangay = $request->barangay;
-        $preReg->city = $request->city;
-        $preReg->business_name = $request->business_name;
-        $preReg->business_tin = $request->business_tin;
-        $preReg->business_phone = $request->business_phone;
-        $preReg->position = $request->position;
-        $preReg->business_street = $request->business_street;
-        $preReg->business_barangay = $request->business_barangay;
-        $preReg->business_city = $request->business_city;
         $preReg->status = 'FOR APPROVAL';
         $preReg->is_verified = false;
         $preReg->consent = $request->consent;
         $preReg->created_at = Carbon::now();
         $preReg->updated_at = Carbon::now();
+        $preReg->phone = $request->phone;
+
         $preReg->save();
+//        $preReg->gender = $request->gender;
+//        $preReg->birthday = $request->birthday;
+//        $preReg->street = $request->street;
+//        $preReg->barangay = $request->barangay;
+//        $preReg->city = $request->city;
+//        $preReg->business_name = $request->business_name;
+//        $preReg->business_tin = $request->business_tin;
+//        $preReg->business_phone = $request->business_phone;
+//        $preReg->position = $request->position;
+//        $preReg->business_street = $request->business_street;
+//        $preReg->business_barangay = $request->business_barangay;
+//        $preReg->business_city = $request->business_city;
+
 
         $appData = new User\ImportedCommodities();
-        $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
-        $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
+//        $fullname= $preReg->first_name . ' ' . ($preReg->middle_name ? strtoupper(substr($preReg->middle_name, 0, 1)) . '. ' : '') . $preReg->last_name;
+//        $full_address = $preReg->business_street . ', ' . $preReg->business_barangay . ', ' . $preReg->business_city;
         $appData->slug = strtoupper($this->hyphenateApp(str_shuffle(str_random(5) . rand(1000, 9999)))) . '-' . date('my');
         $appData->user_created = $preReg ->slug;
-        $appData->name = $fullname;
-        $appData->contact_no = $request->business_phone;
-        $appData->designation = $request->position;
-        $appData->company = $request->business_name;
-        $appData->tin = $request->business_tin;
-        $appData->address = $full_address;
-        $appData->email = $request->email;
-        $appData->consent = $request->consent;
+//        $appData->name = $fullname;
+//        $appData->email = $request->email;
+//        $appData->consent = $request->consent;
         $appData-> ip_created = $ipAddress;
         $appData->save();
+//        $appData->contact_no = $request->business_phone;
+//        $appData->designation = $request->position;
+//        $appData->company = $request->business_name;
+//        $appData->tin = $request->business_tin;
+//        $appData->address = $full_address;
 
         $OP = new OrderOfPayment();
         $OP->slug = $appData->slug;
-        $OP->fullname = $fullname;
-        $OP->position = $request->position;
-        $OP->company = $request->business_name;
-        $OP->tin = $appData->tin;
+//        $OP->fullname = $fullname;
         $OP->save();
-
+//        $OP->position = $request->position;
+//        $OP->company = $request->business_name;
+//        $OP->tin = $appData->tin;
 
     }
 
@@ -155,70 +156,72 @@ class PreRegistrationController extends Controller
     }
 
 
-    public function approved($id)
-    {
-        DB::beginTransaction();
-
-        try {
-            $preReg = PreRegistrationModel::where('slug', $id)->firstOrFail();
-
-            $user = new User();
-            $user->slug = $preReg->slug;
-            $user->username = $preReg->username;
-            $user->password = Hash::make($preReg->password);
-            $user->temp_pass = $preReg->password;
-            $user->last_name = $preReg->last_name;
-            $user->first_name = $preReg->first_name;
-            $user->middle_name = $preReg->middle_name;
-            $user->phone = $preReg->phone;
-            $user->email = $preReg->email;
-            $user->birthday = $preReg->birthday;
-            $user->street = $preReg->street;
-            $user->barangay = $preReg->barangay;
-            $user->city = $preReg->city;
-            $user->business_name = $preReg->business_name;
-            $user->business_tin = $preReg->business_tin;
-            $user->business_phone = $preReg->business_phone;
-            $user->position = $preReg->position;
-            $user->business_street = $preReg->business_street;
-            $user->business_barangay = $preReg->business_barangay;
-            $user->business_city = $preReg->business_city;
-            $user->is_active = true;
-            $user->is_verified = true;
-            $user->created_at = now();
-            $user->updated_at = now();
-            $user->save();
-
-            $preReg->status = 'APPROVED';
-            $preReg->is_verified = true;
-            $preReg->save();
-
-            // Send the confirmation email
-            Mail::to($user->email)->send(new PreRegistrationApproved($user));
-
-            DB::commit();
-
-            return back()->with('success', 'Applicant approved and notification email sent.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return back()->with('error', 'Something went wrong. Approval failed: ' . $e->getMessage());
-        }
-    }
-
-//    public function approved($id){
+//    public function approved($id)
+//    {
+//        DB::beginTransaction();
 //
-//        $preReg = PreRegistrationModel::where('slug',$id)->first();
-//        $user = new User();
-//        $user->slug = $preReg->slug;
-//        $user->username = $preReg->username;
-//        $user->password = Hash::make($preReg->password);
-//        $user->temp_pass = $preReg->password;
-//        $user->last_name = $preReg->last_name;
-//        $user->first_name = $preReg->first_name;
-//        $user->middle_name = $preReg->middle_name;
+//        try {
+//            $preReg = PreRegistrationModel::where('slug', $id)->firstOrFail();
+//
+//            $user = new User();
+//            $user->slug = $preReg->slug;
+//            $user->username = $preReg->username;
+//            $user->password = Hash::make($preReg->password);
+//            $user->temp_pass = $preReg->password;
+//            $user->last_name = $preReg->last_name;
+//            $user->first_name = $preReg->first_name;
+//            $user->middle_name = $preReg->middle_name;
+//            $user->phone = $preReg->phone;
+//            $user->email = $preReg->email;
+//            $user->birthday = $preReg->birthday;
+//            $user->street = $preReg->street;
+//            $user->barangay = $preReg->barangay;
+//            $user->city = $preReg->city;
+//            $user->business_name = $preReg->business_name;
+//            $user->business_tin = $preReg->business_tin;
+//            $user->business_phone = $preReg->business_phone;
+//            $user->position = $preReg->position;
+//            $user->business_street = $preReg->business_street;
+//            $user->business_barangay = $preReg->business_barangay;
+//            $user->business_city = $preReg->business_city;
+//            $user->is_active = true;
+//            $user->is_verified = true;
+//            $user->created_at = now();
+//            $user->updated_at = now();
+//            $user->save();
+//
+//            $preReg->status = 'APPROVED';
+//            $preReg->is_verified = true;
+//            $preReg->save();
+//
+//            // Send the confirmation email
+//            if (!empty($user->email)) {
+//                Mail::to($user->email)->send(new PreRegistrationApproved($user));
+//            }
+//
+//            DB::commit();
+//
+//            return back()->with('success', 'Applicant approved and notification email sent.');
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//
+//            return back()->with('error', 'Something went wrong. Approval failed: ' . $e->getMessage());
+//        }
+//    }
+
+    public function approved($id){
+
+        $preReg = PreRegistrationModel::where('slug',$id)->first();
+        $user = new User();
+        $user->slug = $preReg->slug;
+        $user->username = $preReg->username;
+        $user->password = Hash::make($preReg->password);
+        $user->temp_pass = $preReg->password;
+        $user->last_name = $preReg->last_name;
+        $user->first_name = $preReg->first_name;
+        $user->middle_name = $preReg->middle_name;
 //        $user->phone = $preReg->phone;
-//        $user->email = $preReg->email;
+        $user->email = $preReg->email;
 //        $user->birthday = $preReg->birthday;
 //        $user->street = $preReg->street;
 //        $user->barangay = $preReg->barangay;
@@ -227,23 +230,27 @@ class PreRegistrationController extends Controller
 //        $user->business_tin = $preReg->business_tin;
 //        $user->business_phone = $preReg->business_phone;
 //        $user->position = $preReg->position;
-//        $user->business_street = $preReg->business_street;
-//        $user->business_barangay = $preReg->business_barangay;
-//        $user->business_city = $preReg->business_city;
-//        $user->is_active = true;
-//        $user->is_verified = true;
-//        $user->created_at = Carbon::now();
-//        $user->updated_at = Carbon::now();
-//        $user->save();
-//
-//        $preReg->status = 'APPROVED';
-//        $preReg->is_verified = true;
-//        $preReg->save();
-//
+        $user->business_street = $preReg->business_street;
+        $user->business_barangay = $preReg->business_barangay;
+        $user->business_city = $preReg->business_city;
+        $user->is_active = true;
+        $user->is_verified = true;
+        $user->created_at = Carbon::now();
+        $user->updated_at = Carbon::now();
+        $user->save();
+
+        $preReg->status = 'APPROVED';
+        $preReg->is_verified = true;
+        $preReg->save();
+
 //        Mail::to($user->email)->send(new PreRegistrationApproved($user));
-//        return back()->with('success', 'Applicant approved and notification email sent.');
-//
-//    }
+        //            // Send the confirmation email
+            if (!empty($user->email)) {
+                Mail::to($user->email)->send(new PreRegistrationApproved($user));
+            }
+        return back()->with('success', 'Applicant approved and notification email sent.');
+
+    }
 
     public function destroy($slug){
         $preReg = PreRegistrationModel::where('slug', '=', $slug)->first();

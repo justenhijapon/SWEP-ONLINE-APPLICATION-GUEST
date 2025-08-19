@@ -29,6 +29,7 @@ $random = Str::random();
         </div>
 
 
+
         {!! \App\Core\Helpers\__form2::textbox('reference_no', [
             'label'=>'Reference No. STD:',
             'cols'=>'6',
@@ -47,17 +48,17 @@ $random = Str::random();
 
         <div class="col-md-12"></div>
 
-        {!! \App\Core\Helpers\__form2::textbox('fullname', [
-            'label'=>'To:',
-            'cols'=>'6',
-            'class'=>'text-uppercase',
-            'placeholder' => '',
-            'required'=>'required',
-        ], \Illuminate\Support\Str::title($data->fullname)) !!}
+{{--        {!! \App\Core\Helpers\__form2::textbox('fullname', [--}}
+{{--            'label'=>'To:',--}}
+{{--            'cols'=>'6',--}}
+{{--            'class'=>'text-uppercase',--}}
+{{--            'placeholder' => '',--}}
+{{--            'required'=>'required',--}}
+{{--        ], \Illuminate\Support\Str::title($data->fullname)) !!}--}}
 
 
         {!! \App\Core\Helpers\__form2::textbox('company', [
-            'label'=>'Company:',
+            'label'=>'To:',
             'cols'=>'6',
 
             'placeholder' => '',
@@ -65,13 +66,12 @@ $random = Str::random();
         ], \Illuminate\Support\Str::title($data->company)) !!}
 
 
-{{--        {!! \App\Core\Helpers\__form2::textbox('amount_in_word', [--}}
-{{--            'label'=>'Amount in word:',--}}
-{{--            'cols'=>'6',--}}
-{{--           --}}
-{{--            'placeholder' => '',--}}
-{{--//            'required'=>'required',--}}
-{{--        ], $data->amount_in_word) !!}--}}
+        {!! \App\Core\Helpers\__form2::textbox('commodity', [
+            'label'=>'Commodity:',
+            'cols'=>'6',
+            'placeholder' => '',
+            'required'=>'required',
+        ], $data->commodity) !!}
 
         {!! \App\Core\Helpers\__form2::textbox('lkg_bags', [
             'label'=>'Lkg-Bags:',
@@ -80,11 +80,13 @@ $random = Str::random();
             'required'=>'required',
         ], $data->lkg_bags) !!}
 
+
         {!! \App\Core\Helpers\__form2::textbox('metric_tons', [
-            'label'=>'Metric Tons:',
-            'cols'=>'6',
-            'placeholder' => '',
-            'required'=>'required',
+        'label'=>'Metric Tons:',
+        'cols'=>'6',
+        'id'=>'metric_tons',
+        'placeholder' => '',
+        'required'=>'required',
         ], $data->metric_tons) !!}
 
         {!! \App\Core\Helpers\__form2::textbox('boc_entry_no', [
@@ -94,19 +96,44 @@ $random = Str::random();
             'required'=>'required',
         ], $data->boc_entry_no) !!}
 
-        {!! \App\Core\Helpers\__form2::textbox('amount', [
+{{--        {!! \App\Core\Helpers\__form2::textbox('amount', [--}}
+{{--           'label'=>'Amount:',--}}
+{{--           'id'=>'amount',--}}
+{{--           'cols'=>'6',--}}
+{{--           'placeholder' => '',--}}
+{{--            'required'=>'required',--}}
+{{--       ], $data->amount) !!}--}}
+        {{-- Display only (formatted) --}}
+        {!! \App\Core\Helpers\__form2::textbox('amount_display', [
            'label'=>'Amount:',
+           'id'=>'amount_display',
            'cols'=>'6',
            'placeholder' => '',
-            'required'=>'required',
-       ], $data->amount) !!}
+           'readonly' => 'readonly', // display only
+        ], "₱ " . number_format($data->amount, 2)) !!}
+
+        {{-- Hidden actual value to be saved --}}
+        <input type="hidden" name="amount" id="amount" value="{{ $data->amount }}">
+
+
+
+
+
 
         {!! \App\Core\Helpers\__form2::textbox('certified_correct', [
             'label'=>'Certified Correct:',
             'cols'=>'6',
             'placeholder' => '',
             'required'=>'required',
-        ], $data->certified_correct) !!}
+        ], \Illuminate\Support\Str::title($data->certified_correct)) !!}
+
+        {!! \App\Core\Helpers\__form2::textbox('designation_cert_correct', [
+           'label'=>'Designation:',
+           'cols'=>'6',
+           'id'=>'slug',
+           'placeholder' => '',
+           'required'=>'required',
+       ], \Illuminate\Support\Str::title($data->designation_cert_correct)) !!}
 
         {!! \App\Core\Helpers\__form2::textbox('approved_by', [
             'label'=>'Approved By:',
@@ -114,6 +141,18 @@ $random = Str::random();
             'placeholder' => '',
             'required'=>'required',
         ], $data->approved_by) !!}
+
+        {!! \App\Core\Helpers\__form2::textbox('designation_approve_by', [
+            'label'=>'Designation:',
+            'cols'=>'6',
+            'id'=>'slug',
+            'placeholder' => '',
+            'required'=>'required',
+        ], \Illuminate\Support\Str::title($data->designation_approve_by)) !!}
+
+        {{--        <input type="text" name="metric_tons" id="metric_tons" value="">--}}
+        {{--        <input type="text" name="amount" id="amount" value="" readonly>--}}
+
 
     </div>
 @endsection
@@ -171,6 +210,55 @@ $random = Str::random();
                     errored(form, response);
                 }
             })
+        });
+    </script>
+
+
+
+{{--    <script>--}}
+{{--        $(document).on('input', '#metric_tons', function () {--}}
+{{--            let metricTons = parseFloat($(this).val()) || 0;--}}
+{{--            let amount = metricTons * 60;--}}
+{{--            $('#amount').val(amount.toFixed(2));--}}
+{{--            console.log("metricTons:", metricTons, "→ amount:", amount);--}}
+{{--        });--}}
+{{--    </script>--}}
+
+{{--    <script>--}}
+{{--        $(document).on('input', '#metric_tons', function () {--}}
+{{--            let metricTons = parseFloat($(this).val()) || 0;--}}
+{{--            let amount = metricTons * 60;--}}
+
+{{--            // Format: ₱ 2,700.00--}}
+{{--            let formatted = "₱ " + amount.toLocaleString('en-US', {--}}
+{{--                minimumFractionDigits: 2,--}}
+{{--                maximumFractionDigits: 2--}}
+{{--            });--}}
+
+{{--            $('#amount').val(formatted);--}}
+
+{{--            // console.log("metricTons:", metricTons, "→ amount:", formatted);--}}
+{{--        });--}}
+{{--    </script>--}}
+
+    <script>
+        $(document).on('input', '#metric_tons', function () {
+            let metricTons = parseFloat($(this).val()) || 0;
+            let amount = metricTons * 60;
+
+            // format for display: ₱ 2,700.00
+            let formatted = "₱ " + amount.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            // update display field (readonly)
+            $('#amount_display').val(formatted);
+
+            // update hidden field (raw value for DB)
+            $('#amount').val(amount.toFixed(2));
+
+            // console.log("metricTons:", metricTons, "→ amount:", amount);
         });
     </script>
 

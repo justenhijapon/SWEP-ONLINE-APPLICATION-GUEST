@@ -100,8 +100,11 @@
             <tr>
                 <td style="width: 15%"></td>
                 <td style="width: 85%;">
-                    <h4 style="margin: 0;">
-                        APPLICATION FOR CLEARANCE TO RELEASE OTHER SUGAR COMMODITY
+                    <h4 style="margin: 0; text-indent: 40px">
+{{--                        APPLICATION FOR CLEARANCE TO RELEASE OTHER SUGAR COMMODITY--}}
+                        Clearance for Release of Imported Commodities Under Tariff Headings 1702
+                        <br>
+                        (Other Sugar) and 1702 (Sugar Confectionery)
                     </h4>
                 </td>
             </tr>
@@ -135,7 +138,7 @@
 
         <table style="margin-top: 10px">
             <tr>
-                <td>Sir:</td>
+                <td>Sir/Madam:</td>
             </tr>
         </table>
 
