@@ -136,7 +136,10 @@
                               <td style="width: 15%"></td>
                               <td style="width: 85%">
                                    <b style="margin: 0;">
-                                        APPLICATION FOR CLEARANCE TO RELEASE OTHER SUGAR COMMODITY
+{{--                                        APPLICATION FOR CLEARANCE TO RELEASE OTHER SUGAR COMMODITY--}}
+                                        Clearance for Release of Imported Commodities Under Tariff Headings 1702
+                                        <br>
+                                        (Other Sugar) and 1702 (Sugar Confectionery)
                                    </b>
                               </td>
                          </tr>

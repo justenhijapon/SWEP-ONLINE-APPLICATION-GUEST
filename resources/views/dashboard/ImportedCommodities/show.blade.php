@@ -100,7 +100,7 @@
             <tr>
                 <td style="width: 15%"></td>
                 <td style="width: 85%;">
-                    <h4 style="margin: 0; text-indent: 40px">
+                    <h4 style="margin: 0;">
 {{--                        APPLICATION FOR CLEARANCE TO RELEASE OTHER SUGAR COMMODITY--}}
                         Clearance for Release of Imported Commodities Under Tariff Headings 1702
                         <br>
